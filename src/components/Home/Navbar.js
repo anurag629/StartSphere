@@ -27,7 +27,7 @@ const Navbar = () => {
             label={
               <button
                 type="button"
-                className="flex text-sm bg-gray-700 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                className="flex text-sm bg-gray-700 rounded-full md:me-0 focus:ring-4 focus:ring-gray-400 dark:focus:ring-gray-600"
                 id="user-menu-button"
                 aria-expanded="false"
               >
@@ -39,17 +39,17 @@ const Navbar = () => {
             inline={true}
           >
             <Dropdown.Header>
-              <span className="block text-sm text-white">Bonnie Green</span>
+              <span className="block text-sm text-grey-400">Bonnie Green</span>
               <span className="block text-sm text-gray-400">name@gmail.com</span>
             </Dropdown.Header>
-            <Dropdown.Item className="text-white hover:bg-gray-600">
+            <Dropdown.Item className="text-grey-400 hover:bg-gray-600">
               Profile
             </Dropdown.Item>
-            <Dropdown.Item className="text-white hover:bg-gray-600">
+            <Dropdown.Item className="text-grey-400 hover:bg-gray-600">
               Settings
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item className="text-white hover:bg-gray-600">
+            <Dropdown.Item className="text-grey-400 hover:bg-gray-600">
               Sign out
             </Dropdown.Item>
           </Dropdown>
