@@ -1,4 +1,3 @@
-// src/pages/Home.js
 import React from 'react';
 import Navbar from '../components/Home/Navbar';
 import ProfileCard from '../components/Home/ProfileCard';
