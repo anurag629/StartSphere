@@ -1,9 +1,17 @@
-// src/components/Navbar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Dropdown } from 'flowbite-react';
+import api from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    navigate('/')
+  };
+
   return (
     <nav className="bg-gray-800 border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -11,11 +19,9 @@ const Navbar = () => {
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">StartSphere</span>
         </Link>
 
-        {/* Rectangular shape Search Bar Button */}
         <div className="relative w-full max-w-md focus-within:text-gray-600">
           <span className="absolute inset-y-0 flex items-center pl-3">
             <svg className="w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-
               <path fillRule="evenodd" clipRule="evenodd" d="M14.293 15.707a1 1 0 001.414-1.414l-2.5-2.5a1 1 0 00-1.414 0 1 1 0 000 1.414l2.5 2.5zM9 16a7 7 0 110-14 7 7 0 010 14z" />
             </svg>
           </span>
@@ -49,7 +55,7 @@ const Navbar = () => {
               Settings
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item className="text-grey-400 hover:bg-gray-600">
+            <Dropdown.Item className="text-grey-400 hover:bg-gray-600" onClick={handleLogout}>
               Sign out
             </Dropdown.Item>
           </Dropdown>

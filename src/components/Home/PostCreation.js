@@ -1,4 +1,3 @@
-// src/components/PostCreation.js
 import React from 'react';
 
 const PostCreation = () => {

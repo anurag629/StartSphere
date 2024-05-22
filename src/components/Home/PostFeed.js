@@ -1,4 +1,3 @@
-// src/components/PostFeed.js
 import React from 'react';
 
 const PostFeed = () => {
