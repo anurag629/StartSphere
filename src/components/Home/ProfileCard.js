@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // import api from '../../api/axios';
 
 const ProfileCard = () => {
