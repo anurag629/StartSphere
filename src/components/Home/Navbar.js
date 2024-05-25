@@ -13,6 +13,14 @@ const Navbar = () => {
     navigate('/')
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
+  const handleProfileUpdateClick = () => {
+    navigate('/profile/update');
+  }
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user.Name && user.Email) {
@@ -57,11 +65,11 @@ const Navbar = () => {
               <span className="block text-sm text-grey-400">{username}</span>
               <span className="block text-sm text-gray-400">{email}</span>
             </Dropdown.Header>
-            <Dropdown.Item className="text-grey-400 hover:bg-gray-600">
+            <Dropdown.Item className="text-grey-400 hover:bg-gray-600" onClick={handleProfileClick}>
               Profile
             </Dropdown.Item>
-            <Dropdown.Item className="text-grey-400 hover:bg-gray-600">
-              Settings
+            <Dropdown.Item className="text-grey-400 hover:bg-gray-600" onClick={handleProfileUpdateClick}>
+              Update Profile
             </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item className="text-grey-400 hover:bg-gray-600" onClick={handleLogout}>

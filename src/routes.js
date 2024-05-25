@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import Profile from './pages/Profile';
+import ProfileUpdate from './pages/ProfileUpdate';
 
 const RoutesConfig = () => {
   return (
@@ -14,6 +16,22 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/update"
+          element={
+            <ProtectedRoute>
+              <ProfileUpdate />
             </ProtectedRoute>
           }
         />
