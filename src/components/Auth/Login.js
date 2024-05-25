@@ -14,11 +14,12 @@ const Login = () => {
         Email: formData.email,
         Password: formData.password,
       });
-      localStorage.setItem('user', JSON.stringify(response.data));
-      console.log("login/response:: ", response.data)
-      setError('');
-      navigate('/home');
-      localStorage.setItem('userToken', response.data.token);
+      if (response) {
+        console.log("signup/response:: ", response.data)
+        localStorage.setItem('user', JSON.stringify(response.data));
+        setError('');
+        navigate('/');
+      }
 
     } catch (err) {
       setError('Login failed');

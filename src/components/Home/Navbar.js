@@ -1,16 +1,25 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Dropdown } from 'flowbite-react';
-import api from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate()
+  const [username, setUsername] = useState('Guest')
+  const [email, setEmail] = useState('guest@gmail.com')
 
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/')
   };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.Name && user.Email) {
+      setUsername(user.Name)
+      setEmail(user.Email)
+    }
+  }, [])
 
   return (
     <nav className="bg-gray-800 border-gray-700">
@@ -38,15 +47,15 @@ const Navbar = () => {
                 aria-expanded="false"
               >
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo" />
+                <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user profile" />
               </button>
             }
             arrowIcon={false}
             inline={true}
           >
             <Dropdown.Header>
-              <span className="block text-sm text-grey-400">Bonnie Green</span>
-              <span className="block text-sm text-gray-400">name@gmail.com</span>
+              <span className="block text-sm text-grey-400">{username}</span>
+              <span className="block text-sm text-gray-400">{email}</span>
             </Dropdown.Header>
             <Dropdown.Item className="text-grey-400 hover:bg-gray-600">
               Profile

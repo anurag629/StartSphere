@@ -16,11 +16,12 @@ const SignUp = () => {
         Password: formData.password,
         ConfirmPassword: formData.password,
       });
-      localStorage.setItem('user', JSON.stringify(response.data));
-      console.log("signup/response:: ", response.data)
-      setError('');
-      navigate('/home');
-
+      if (response) {
+        console.log("signup/response:: ", response.data)
+        localStorage.setItem('user', JSON.stringify(response.data));
+        setError('');
+        navigate('/');
+      }
     } catch (err) {
       setError('Sign up failed');
     }
