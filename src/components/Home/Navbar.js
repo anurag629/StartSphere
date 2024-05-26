@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    navigate('/')
+    navigate('/login')
   };
 
   useEffect(() => {
@@ -85,6 +85,9 @@ const Navbar = () => {
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-700 rounded-lg bg-gray-800 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-gray-800">
             <li>
               <Link to="/" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-500 md:p-0" aria-current="page">Home</Link>
+            </li>
+            <li>
+              <Link to="/user-posts" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Your Posts</Link>
             </li>
             <li>
               <Link to="/mynetwork" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">My Network</Link>
