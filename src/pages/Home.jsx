@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from '../components/Home/Navbar';
 import ProfileHeader from '../components/Home/ProfileHeader';
 import Footer from '../components/Home/Footer';
-import ProfileCard from '../components/Home/ProfileCard';
 import PostCreation from '../components/Home/PostCreation';
 import PostFeed from '../components/Home/PostFeed';
 

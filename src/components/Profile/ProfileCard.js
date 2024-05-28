@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import api from '../../api/axios';
-import PostCard from '../Home/Post/PostCard';
-import { PostContext } from '../../context/PostContext';
+import PostCard2 from '../Home/Post/PostCard2';
+import { useSelector } from 'react-redux';
 
 const ProfileCard = () => {
     const [profile, setProfile] = useState(null);
     const [error, setError] = useState('');
     const [startups, setStartups] = useState([]);
-
-    const { posts } = useContext(PostContext);
+    const posts = useSelector((state) => state.posts.posts)
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -192,7 +191,7 @@ const ProfileCard = () => {
             <div className="w-full mt-4">
             <div>
                     {posts.map((post, index) => (
-                        <PostCard
+                        <PostCard2
                             key={index}
                             title={post.title}
                             description={post.description}

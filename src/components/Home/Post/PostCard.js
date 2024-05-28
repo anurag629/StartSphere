@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const PostCard = ({ post }) => {
   const { postId, userId, title, imageUrl, description, userName, createdAt, updatedAt, likes, comments, shares } = post;
+  console.log(postId, userId, title, imageUrl, description, userName, createdAt, updatedAt, likes, comments, shares)
 
   return (
     <Link to={`/post/${postId}`}>
