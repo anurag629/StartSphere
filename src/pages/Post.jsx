@@ -10,13 +10,13 @@ function Post() {
     const { slug } = useParams()
     const navigate = useNavigate()
     const userData = useSelector((state) => state.auth.userData)
-    const isAuthor = post && userData ? (post.userId === userData._id) : false
+    const isAuthor = post && userData ? (post.User === userData._id) : false
     const dispatch = useDispatch()
     const allPosts = useSelector((state) => state.posts.posts)
 
     useEffect(() => {
         if (allPosts && slug) {
-            const post = allPosts.find((post) => post.postId === slug)
+            const post = allPosts.find((post) => post._id === slug)
             if (post) {
                 setPost(post)
             }
@@ -28,7 +28,7 @@ function Post() {
 
     const deletePost = async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        dispatch(deletePostFromStore(post.postId))
+        dispatch(deletePostFromStore(post._id))
         navigate('/')
     }
 
@@ -39,10 +39,10 @@ function Post() {
                 <div className="max-w-4xl mx-auto bg-slate-400 rounded-md">
                     <div className="py-8">
                         <div className="flex justify-center mb-4 relative p-2">
-                            {post.imageUrl && (
+                            {post.Image && (
                                 <img
-                                    src={post.imageUrl}
-                                    alt={post.title}
+                                    src={post.Image}
+                                    alt={post.Title}
                                     className="rounded-xl"
                                 />
                             )}
@@ -54,7 +54,7 @@ function Post() {
                                             Save
                                         </button>
                                     </Link>
-                                    <Link to={`/edit-post/${post.postId}`}>
+                                    <Link to={`/edit-post/${post._id}`}>
                                         <button className="mr-3 bg-yellow-400 px-2 py-1 text-black font-semibold rounded-lg shadow-md hover:bg-yellow-500">
                                             Edit
                                         </button>
@@ -66,10 +66,10 @@ function Post() {
                             )}
                         </div>
                         <div className="flex justify-center w-full mb-6">
-                            <h1 className="text-2xl font-bold">{post.title}</h1>
+                            <h1 className="text-2xl font-bold">{post.Title}</h1>
                         </div>
                         <div className="flex justify-center browser-css">
-                            {post.description}
+                            {post.Description}
                         </div>
                     </div>
                 </div>

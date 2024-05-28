@@ -65,61 +65,49 @@ const PostCreation = ({ post }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (post) {
-    //   // Update Post
-    //   console.log("Update Post")
-    //   const updatedPost = {
-    //     postId: post.postId,
-    //     title: title || post.title,
-    //     userName: post.userName,
-    //     description: description || post.description,
-    //     imageUrl: uploadedFile || post.imageUrl,
-    //     userId: post.userId,
-    //     createdAt: post.createdAt,
-    //     updatedAt: Date.now().toString(),
-    //     likes: post.likes,
-    //     comments: post.comments,
-    //     shares: post.shares
-    //   }
-    //   dispatch(updatePost(updatedPost))
-    //   navigate(`/post/${updatedPost.postId}`)
-    // }
-    // else {
-    //   // Create Post
-    //   console.log("Create Post")
+    if (post) {
+      // Update Post
+      console.log("Update Post")
+      const updatedPost = {
+        ...post,
+        updatedAt: getCurrentDateTime(),
+        Title: title || post.Title,
+        Image: image || post.Image,
+        Description: description || post.Description
+      }
+      dispatch(updatePost(updatedPost))
+      navigate(`/post/${updatedPost._id}`)
+    }
+    else {
+      // Create Post
+      console.log("Create Post")
 
-    //   // handleUpload();
-    //   const newPost = {
-    //     Image: 'https://res.cloudinary.com/dnjis096o/image/upload/v1716868344/sbunyrnmkh6swgfgzy9l.jpg',
-    //     Title: title,
-    //     Description: description
-    //   }
-    //   try {
-    //     console.log("userData", userData)
-    //     console.log("userData.id", userData._id)
-    //     console.log("userData.Token", userData.Token)
-    //     const response = await api.post(`post/createpost/${userData._id}`,
-    //       newPost,
-    //       {
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           'Authorization': `Bearer ${userData.Token}`,
-    //         },
-    //       }
-    //     );
+      // handleUpload();
+      const newPost = {
+        Image: "https://res.cloudinary.com/dnjis096o/image/upload/v1716868344/sbunyrnmkh6swgfgzy9l.jpg",
+        Title: title,
+        Description: description
+      }
+      try {
+        const response = await api.post(`post/createpost/${userData._id}`,
+          newPost,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${userData.Token}`,
+            },
+          }
+        );
 
-    //     alert('Post created successfully');
-    //     console.log(response);
-    //     console.log(response.data);
-    //     console.log("Navigate tk pahuch kesi rhi h");
-    //     // dispatch(addPost(newPost))
-    //     // navigate(`/post/${newPost.postId}`)
-    //   } catch (error) {
-    //     alert('Error creating post');
-    //     console.error(error.response?.data || error.message);
-    //     console.log(error);
-    //   }
-    // }
+        alert('Post created successfully');
+        console.log(response);
+        dispatch(addPost(response.data.post))
+        navigate(`/post/${response.data.post._id}`)
+      } catch (error) {
+        alert('Error creating post');
+        console.error(error);
+      }
+    }
     handleCloseModal();
   };
 
@@ -130,7 +118,7 @@ const PostCreation = ({ post }) => {
         <label className="block text-sm text-gray-400 mb-1">Title</label>
         <input
           type="text"
-          value={title || post.title}
+          value={title || post.Title}
           onChange={(e) => setTitle(e.target.value)}
           className="w-full p-2 rounded bg-gray-600 border border-gray-500"
           required
@@ -139,7 +127,7 @@ const PostCreation = ({ post }) => {
       <div className="mb-4">
         <label className="block text-sm text-gray-400 mb-1">Description</label>
         <textarea
-          value={description || post.description}
+          value={description || post.Description}
           onChange={(e) => setDescription(e.target.value)}
           className="w-full p-2 rounded bg-gray-600 border border-gray-500"
           rows="4"

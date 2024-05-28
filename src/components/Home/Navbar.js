@@ -95,9 +95,6 @@ const Navbar = () => {
               <Link to="/" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-500 md:p-0" aria-current="page">Home</Link>
             </li>
             <li>
-              <Link to="/user-posts" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Your Posts</Link>
-            </li>
-            <li>
               <Link to="/mynetwork" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">My Network</Link>
             </li>
             <li>

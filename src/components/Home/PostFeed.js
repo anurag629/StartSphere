@@ -33,7 +33,7 @@ const PostFeed = () => {
     <div>
       {posts.map((post) => (
         <PostCard 
-          key={post.postId} 
+          key={post._id} 
           post={post}
         />
       ))}

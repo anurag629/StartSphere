@@ -13,7 +13,7 @@ function EditPost() {
 
     useEffect(() => {
         if (allPosts && slug) {
-            const filterPost = allPosts.find(post => post.postId === slug)
+            const filterPost = allPosts.find(post => post._id === slug)
             if (filterPost) {
                 setPost(filterPost)
             }
