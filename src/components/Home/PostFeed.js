@@ -1,23 +1,40 @@
 // src/components/Home/PostFeed.js
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import PostCard from './Post/PostCard';
-import { useContext } from 'react';
-import { PostContext } from '../../context/PostContext';
+import { useSelector } from 'react-redux';
+
 
 const PostFeed = () => {
-  const { posts } = useContext(PostContext);
+  const allPosts = useSelector((state) => state.posts.posts)
+  const [posts, setPosts] = useState([])
+  console.log("allPosts: ", allPosts);
+
+  useMemo(() => {
+    if (allPosts) {
+      setPosts(allPosts)
+    }
+  }, [allPosts])
+
+  if (posts?.length === 0) {
+    return (
+      <div className="w-full py-8 mt-4 text-center">
+        <div className="flex flex-wrap">
+          <div className="p-2 w-full"> 
+            <h1 className="text-2xl font-bold hover:text-gray-500 text-white">
+              No Posts
+            </h1>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <PostCard 
-          key={index} 
-          title={post.title} 
-          description={post.description} 
-          image={post.image} 
-          likes={post.likes} 
-          comments={post.comments} 
-          shares={post.shares} 
+          key={post.postId} 
+          post={post}
         />
       ))}
     </div>

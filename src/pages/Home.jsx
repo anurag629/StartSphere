@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from '../components/Home/Navbar';
 import ProfileHeader from '../components/Home/ProfileHeader';
+import Footer from '../components/Home/Footer';
 import PostCreation from '../components/Home/PostCreation';
 import PostFeed from '../components/Home/PostFeed';
-import Footer from '../components/Home/Footer';
 
 const Home = () => {
   return (
