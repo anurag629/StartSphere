@@ -98,7 +98,7 @@ const PostCreation = ({ post }) => {
         console.log("userData", userData)
         console.log("userData.id", userData._id)
         console.log("userData.Token", userData.Token)
-        const response = await axios.post(`/post/createpost/${userData._id}`,
+        const response = await api.post(`post/createpost/${userData._id}`,
           newPost,
           {
             headers: {
