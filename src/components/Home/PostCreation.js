@@ -11,12 +11,11 @@ const PostCreation = ({ post }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userData = useSelector((state) => state.auth.userData)
+  const profileData = useSelector((state) => state.profile.profile)
 
   function getCurrentDateTime() {
     const now = new Date();
@@ -39,8 +38,8 @@ const PostCreation = ({ post }) => {
 
   const handleUpload = async () => {
     if (!image) {
-      setErrorMessage('No file selected or file type is not an image');
-      return;
+      console.log('No file selected or file type is not an image');
+      return null;
     }
 
     const formData = new FormData();
@@ -50,15 +49,11 @@ const PostCreation = ({ post }) => {
 
     try {
       const response = await axios.post('https://api.cloudinary.com/v1_1/dnjis096o/image/upload', formData);
-      setUploadedFile(response.data.secure_url);
-      // setImageId(response.data.public_id);
-      setErrorMessage('');
       console.log("response", response)
-      console.log("response url", response.data.secure_url)
-      // console.log("response public id", response.data.public_id)
+      return response.data.secure_url;
     } catch (error) {
       console.error('Error uploading file:', error);
-      setErrorMessage('Error uploading file');
+      return null;
     }
   };
 
@@ -82,14 +77,15 @@ const PostCreation = ({ post }) => {
       // Create Post
       console.log("Create Post")
 
-      // handleUpload();
+      const uploadedFile = await handleUpload();
       const newPost = {
-        Image: "https://res.cloudinary.com/dnjis096o/image/upload/v1716868344/sbunyrnmkh6swgfgzy9l.jpg",
+        // Image: "https://res.cloudinary.com/dnjis096o/image/upload/v1716868344/sbunyrnmkh6swgfgzy9l.jpg",
+        Image: uploadedFile,
         Title: title,
         Description: description
       }
       try {
-        const response = await api.post(`post/createpost/${userData._id}`,
+        const response = await api.post(`post/createpost/${profileData._id}`,
           newPost,
           {
             headers: {
@@ -138,7 +134,7 @@ const PostCreation = ({ post }) => {
         <label className="block text-sm text-gray-400 mb-1">Image Upload</label>
         <input
           type="file"
-          onChange={(e) => setImage(URL.createObjectURL(e.target.files[0]))}
+          onChange={(e) => setImage(e.target.files[0])}
           className="w-full p-2 rounded bg-gray-600 border border-gray-500"
         />
       </div>

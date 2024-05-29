@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../components/Home/Navbar';
 import ProfileHeader from '../components/Home/ProfileHeader';
 import Footer from '../components/Home/Footer';

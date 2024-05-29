@@ -9,8 +9,8 @@ function Post() {
     const [post, setPost] = useState(null)
     const { slug } = useParams()
     const navigate = useNavigate()
-    const userData = useSelector((state) => state.auth.userData)
-    const isAuthor = post && userData ? (post.User === userData._id) : false
+    const profileData = useSelector((state) => state.profile.profile)
+    const isAuthor = post && profileData ? (post.User._id === profileData._id) : false
     const dispatch = useDispatch()
     const allPosts = useSelector((state) => state.posts.posts)
 

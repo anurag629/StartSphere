@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux'
 import PostCard from './PostCard';
 
 function UserPosts() {
-    const userData = useSelector((state) => state.auth.userData) || null
     const allPosts = useSelector((state) => state.posts.posts) || null
+    const profileData = useSelector((state) => state.profile.profile) || null
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        if (userData && allPosts) {
-            const userPosts = allPosts.filter((post) => post.User === userData._id)
+        if (profileData && allPosts) {
+            const userPosts = allPosts.filter((post) => post.User._id === profileData._id)
             setPosts(userPosts)
         }
-    }, [userData, allPosts])
+    }, [profileData, allPosts])
 
     if (posts.length === 0) {
         return (
