@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const PostFeed = () => {
   const allPosts = useSelector((state) => state.posts.posts)
   const [posts, setPosts] = useState([])
-  console.log("allPosts: ", allPosts);
+  // console.log("allPosts: ", allPosts);
 
   useMemo(() => {
     if (allPosts) {
@@ -33,7 +33,7 @@ const PostFeed = () => {
     <div>
       {posts.map((post) => (
         <PostCard 
-          key={post.postId} 
+          key={post._id} 
           post={post}
         />
       ))}

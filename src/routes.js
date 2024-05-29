@@ -7,7 +7,6 @@ import SignupPage from './pages/SignupPage';
 import Profile from './pages/Profile';
 import ProfileUpdate from './pages/ProfileUpdate';
 import Post from './pages/Post';
-import UserPosts from './pages/UserPosts';
 import EditPost from './pages/EditPost';
 
 const RoutesConfig = () => {
@@ -43,14 +42,6 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <Post />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/user-posts"
-          element={
-            <ProtectedRoute>
-              <UserPosts />
             </ProtectedRoute>
           }
         />

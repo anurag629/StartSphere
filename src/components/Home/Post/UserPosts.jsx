@@ -1,51 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import Navbar from '../components/Home/Navbar';
-import Footer from '../components/Home/Footer';
-import PostCard from '../components/Home/Post/PostCard';
+import PostCard from './PostCard';
 
 function UserPosts() {
-    const userData = useSelector((state) => state.auth.userData) || null
     const allPosts = useSelector((state) => state.posts.posts) || null
+    const profileData = useSelector((state) => state.profile.profile) || null
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        if (userData && allPosts) {
-            const userPosts = allPosts.filter((post) => post.userId === userData._id)
+        if (profileData && allPosts) {
+            const userPosts = allPosts.filter((post) => post.User._id === profileData._id)
             setPosts(userPosts)
         }
-    }, [userData, allPosts])
+    }, [profileData, allPosts])
 
     if (posts.length === 0) {
         return (
             <div className="min-h-screen flex flex-col">
-                <Navbar />
                 <main className="flex-grow p-4 bg-gray-900">
                     <div className="max-w-4xl mx-auto">
-                        <h1 className="text-2xl font-bold text-white text-center">No Posts Found</h1>
+                        <h1 className="text-2xl font-bold text-white text-center">You have no posts</h1>
                     </div>
                 </main>
-                <Footer />
             </div>
         )
     }
 
     return (
         <div className="min-h-screen flex flex-col">
-            <Navbar />
             <main className="flex-grow p-4 bg-gray-900">
                 <div className="max-w-4xl mx-auto">
                     <div>
                         {posts.map((post) => (
                             <PostCard
-                                key={post.postId}
+                                key={post._id}
                                 post={post}
                             />
                         ))}
                     </div>
                 </div>
             </main>
-            <Footer />
         </div>
     )
 }
