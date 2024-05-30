@@ -1,45 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StartupCard from "./StartupCard";
-const companies = [
-  {
-    id: 1,
-    name: "Creative Intell",
-    location: "New York, New York, United States",
-    industry: ["Artificial Intelligence (AI)", "Education", "Information Technology"],
-    employees: 10,
-    foundingYear: 2015,
-    fundingRaised: 800000,
-    founderName: "John Doe",
-    description:
-      "Creative Intell is the artificial intelligence-powered dealmaking platform for the music industry.",
-  },
-  {
-    id: 2,
-    name: "DataWars",
-    location: "San Francisco, California, United States",
-    industry: ["Data Science", "Machine Learning", "Cybersecurity"],
-    employees: 20,
-    foundingYear: 2018,
-    fundingRaised: 4000000,
-    founderName: "Jane Doe",
-    description:
-      "DataWars is a data science platform that helps companies make better decisions.",
-  },
-  {
-    id: 3,
-    name: "AI Masters",
-    location: "London, United Kingdom",
-    industry: ["Artificial Intelligence (AI)", "Machine Learning", "Robotics"],
-    employees: 30,
-    foundingYear: 2012,
-    fundingRaised: 1000000,
-    founderName: "Bob Smith",
-    description: "AI Masters is a leading AI research and development company.",
-  },
-  // Add more companies here
-];
+import { useSelector } from "react-redux";
 
 function FilterData() {
+  const allStartups = useSelector((state) => state.startups.startups);
+
   const [companyValuation, setCompanyValuation] = useState(0);
   const [totalFundingRaise, setTotalFundingRaise] = useState(0);
   const [noOfEmployees, setNoOfEmployees] = useState(0);
@@ -47,116 +12,95 @@ function FilterData() {
   const [founderName, setFounderName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [industryTag, setIndustryTag] = useState("");
-  const [filteredCompanies, setFilteredCompanies] = useState(companies);
+  const [filteredCompanies, setFilteredCompanies] = useState([]);
+  
+  useEffect(() => {
+    setFilteredCompanies(allStartups);
+  }, [allStartups]);
 
-  const handleCompanyValuationChange = (event) => {
-    setCompanyValuation(event.target.value);
+  useEffect(() => {
     filterCompanies();
-  };
-
-  const handleTotalFundingRaiseChange = (event) => {
-    setTotalFundingRaise(event.target.value);
-    filterCompanies();
-  };
-
-  const handleNoOfEmployeesChange = (event) => {
-    setNoOfEmployees(event.target.value);
-    filterCompanies();
-  };
-
-  const handleFoundingYearChange = (event) => {
-    setFoundingYear(event.target.value);
-    filterCompanies();
-  };
-
-  const handleFounderNameChange = (event) => {
-    setFounderName(event.target.value);
-    filterCompanies();
-  };
-
-  const handleCompanyNameChange = (event) => {
-    setCompanyName(event.target.value);
-    filterCompanies();
-  };
-
-  const handleIndustryTagChange = (event) => {
-    setIndustryTag(event.target.value);
-    filterCompanies();
-  };
+  }, [
+    companyValuation,
+    totalFundingRaise,
+    noOfEmployees,
+    foundingYear,
+    founderName,
+    companyName,
+    industryTag,
+    allStartups,
+  ]);
 
   const filterCompanies = () => {
-    let filteredCompanies = companies;
+    let filtered = allStartups;
 
     if (companyValuation > 0) {
-      filteredCompanies = filteredCompanies.filter(
-        (company) => company.employees >= companyValuation
+      filtered = filtered.filter(
+        (company) => company.valuation >= companyValuation
       );
     }
 
     if (totalFundingRaise > 0) {
-      filteredCompanies = filteredCompanies.filter(
+      filtered = filtered.filter(
         (company) => company.fundingRaised >= totalFundingRaise
       );
     }
 
     if (noOfEmployees > 0) {
-      filteredCompanies = filteredCompanies.filter(
+      filtered = filtered.filter(
         (company) => company.employees >= noOfEmployees
       );
     }
 
     if (foundingYear) {
-      filteredCompanies = filteredCompanies.filter(
+      filtered = filtered.filter(
         (company) => company.foundingYear === parseInt(foundingYear)
       );
     }
 
     if (founderName) {
-      filteredCompanies = filteredCompanies.filter((company) =>
+      filtered = filtered.filter((company) =>
         company.founderName.toLowerCase().includes(founderName.toLowerCase())
       );
     }
 
     if (companyName) {
-      filteredCompanies = filteredCompanies.filter((company) =>
+      filtered = filtered.filter((company) =>
         company.name.toLowerCase().includes(companyName.toLowerCase())
       );
     }
 
     if (industryTag) {
-      filteredCompanies = filteredCompanies.filter((company) =>
+      filtered = filtered.filter((company) =>
         company.industry.includes(industryTag)
       );
     }
 
-    setFilteredCompanies(filteredCompanies);
+    setFilteredCompanies(filtered);
   };
 
   return (
     <div className="container mx-auto p-4 text-white">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="mx-auto w-[80%]">
-          <h1 className="text-2xl font-bold mb-4">filter</h1>
+          <h1 className="text-2xl font-bold mb-4">Filter</h1>
           <div className="mb-4">
             <label htmlFor="companyValuation" className="block text-white font-bold mb-2">
-              Company Valuation
+              Company Valuation: {companyValuation}
             </label>
             <input
               type="range"
               id="companyValuation"
               min="0"
-              max="100"
+              max="10000"
               value={companyValuation}
-              onChange={handleCompanyValuationChange}
-              className="w-full zinctext-zinc-600-none bg-gray-200 rounded"
+              onChange={(e) => setCompanyValuation(Number(e.target.value))}
+              className="w-full bg-gray-200 rounded"
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="totalFundingRaise"
-              className="block text-white font-bold mb-2"
-            >
-              Total Funding Raise
+            <label htmlFor="totalFundingRaise" className="block text-white font-bold mb-2">
+              Total Funding Raise: {totalFundingRaise}
             </label>
             <input
               type="range"
@@ -164,13 +108,13 @@ function FilterData() {
               min="0"
               max="10000000"
               value={totalFundingRaise}
-              onChange={handleTotalFundingRaiseChange}
-              className="w-full zinctext-zinc-600-none bg-gray-200 rounded"
+              onChange={(e) => setTotalFundingRaise(Number(e.target.value))}
+              className="w-full bg-gray-200 rounded"
             />
           </div>
           <div className="mb-4">
             <label htmlFor="noOfEmployees" className="block text-white font-bold mb-2">
-              No of Employees
+              No of Employees: {noOfEmployees}
             </label>
             <input
               type="range"
@@ -178,8 +122,8 @@ function FilterData() {
               min="0"
               max="1000"
               value={noOfEmployees}
-              onChange={handleNoOfEmployeesChange}
-              className="w-full zinctext-zinc-600-none bg-gray-200 rounded"
+              onChange={(e) => setNoOfEmployees(Number(e.target.value))}
+              className="w-full bg-gray-200 rounded"
             />
           </div>
           <div className="mb-4">
@@ -189,11 +133,10 @@ function FilterData() {
             <select
               id="foundingYear"
               value={foundingYear}
-              onChange={handleFoundingYearChange}
+              onChange={(e) => setFoundingYear(e.target.value)}
               className="w-full appearance-none bg-gray-200 p-2 text-zinc-600 border border-gray-200 rounded"
             >
               <option value="">Select Year</option>
-              {/* Generate options for each year between 1900 and 2022 */}
               {[...Array(25).keys()].map((_, i) => (
                 <option key={i} value={i + 2000}>
                   {i + 2000}
@@ -208,8 +151,9 @@ function FilterData() {
             <input
               type="text"
               id="founderName"
+              placeholder="Founder Name"
               value={founderName}
-              onChange={handleFounderNameChange}
+              onChange={(e) => setFounderName(e.target.value)}
               className="w-full appearance-none bg-gray-200 p-2 text-zinc-600 border border-gray-200 rounded"
             />
           </div>
@@ -220,8 +164,9 @@ function FilterData() {
             <input
               type="text"
               id="companyName"
+              placeholder="Company Name"
               value={companyName}
-              onChange={handleCompanyNameChange}
+              onChange={(e) => setCompanyName(e.target.value)}
               className="w-full appearance-none bg-gray-200 p-2 text-zinc-600 border border-gray-200 rounded"
             />
           </div>
@@ -231,16 +176,17 @@ function FilterData() {
             </label>
             <input
               type="text"
+              placeholder="Industry Tag"
               id="industryTag"
               value={industryTag}
-              onChange={handleIndustryTagChange}
+              onChange={(e) => setIndustryTag(e.target.value)}
               className="w-full appearance-none bg-gray-200 p-2 text-zinc-600 border border-gray-200 rounded"
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 mt-4 ">
-          {filteredCompanies.map((company) => (
-            <StartupCard key={company.id} company={company} />
+        <div className="grid grid-cols-1 gap-4 mt-4">
+          {filteredCompanies && filteredCompanies.map((startup) => (
+            <StartupCard key={startup._id} startup={startup} />
           ))}
         </div>
       </div>

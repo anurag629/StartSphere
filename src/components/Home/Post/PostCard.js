@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 function convertTimeFormat(isoString) {
   const date = new Date(isoString);
-  console.log("Date: ", date)
 
   const months = [
     "January", "February", "March", "April", "May", "June",
