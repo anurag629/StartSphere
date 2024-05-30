@@ -9,10 +9,19 @@ function Post() {
     const [post, setPost] = useState(null)
     const { slug } = useParams()
     const navigate = useNavigate()
-    const profileData = useSelector((state) => state.profile.profile)
-    const isAuthor = post && profileData ? (post.User._id === profileData._id) : false
     const dispatch = useDispatch()
     const allPosts = useSelector((state) => state.posts.posts)
+    const profileData = useSelector((state) => state.profile.profile)
+    const isAuthor = post && profileData ? (post.User._id === profileData._id) : false
+
+    // if(profileData) {
+    //     console.log("Profile: ", profileData)
+    //     console.log("Profile._id: ", profileData._id)
+    // }
+    // if(post) {
+    //     console.log("Post: ", post)
+    //     console.log("Post.User._id: ", post.User._id)
+    // }
 
     useEffect(() => {
         if (allPosts && slug) {

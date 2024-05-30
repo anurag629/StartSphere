@@ -98,7 +98,7 @@ const Navbar = () => {
               <Link to="/mynetwork" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">My Network</Link>
             </li>
             <li>
-              <Link to="/startup" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">StartUp</Link>
+              <Link to="/startups" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">StartUp</Link>
             </li>
             <li>
               <Link to="/events" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Events</Link>

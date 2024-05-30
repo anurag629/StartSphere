@@ -5,29 +5,92 @@ import { login, logout } from './feature/authSlice';
 import { addPost } from './feature/postSlice'
 import api from './api/axios';
 import { setProfile } from './feature/profileSlice'
+import { addStartup } from './feature/startupSlice'
 
-// const fetchDummyPosts = async () => {
-//   await new Promise((resolve) => setTimeout(resolve, 1000));
-//   const posts = [
-//     {
-//       User: '321',
-//       Image: 'https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png',
-//       Title: 'Post 1',
-//       Description: 'This is post 1',
-//       Likes: '10',
-//       _id: '1',
-//       Comments: [],
-//       // userName: 'Anurag Verma',
-//       createdAt: '2021-13-01',
-//       updatedAt: '2021-19-01',
-//     },
-//     { _id: '2', User: '322', Title: 'Post 2', Description: 'This is post 2', Image: 'https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png', createdAt: '2023-01-04', updatedAt: '2024-09-16', Likes: '11', Comments: [] },
-//     { _id: '3', User: '323', Title: 'Post 3', Description: 'This is post 3', Image: 'https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png', createdAt: '2021-09-08', updatedAt: '2023-09-01', Likes: '12', Comments: [] },
-//     { _id: '4', User: '324', Title: 'Post 4', Description: 'This is post 4', Image: 'https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png', createdAt: '2022-22-01', updatedAt: '2023-02-13', Likes: '13', Comments: [] },
-//     { _id: '5', User: '324', Title: 'Post 5', Description: 'This is post 5', Image: 'https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png', createdAt: '2024-19-01', updatedAt: '2024-20-11', Likes: '14', Comments: [] },
-//   ]
-//   return posts
-// }
+const fetchAllDummyStartups = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  const companies = [
+    {
+      _id: "6654531473ec8b947f3ff669",
+      User: "6656b0023574bce7a4c10d24",
+      StartUpName: "Creative Intell",
+      Logo: "CI_LOGO_001",
+      FounderName: "John Doe",
+      CompanyDes: "Creative Intell is the artificial intelligence-powered dealmaking platform for the music industry.",
+      FoundingYear: 2015,
+      Growth: [
+        {
+          Revenue: 800000,
+          Year: 2020,
+          _id: "6654531473ec8b947f3ff66a"
+        }
+      ],
+      NumberOfEmployees: 10,
+      TargetMarket: "Music Industry",
+      CurrentStage: "Growth",
+      KeyFeatures: "AI-powered dealmaking, Music Industry Focus",
+      Inverstors: "Venture Capital X",
+      Evaluation: 2345,
+      Revenue: 800000,
+      FundingRaised: [
+        {
+          CompanyName: "Venture Capital X",
+          EquityHolds: 20,
+          Amount: 800000,
+          _id: "6654531473ec8b947f3ff66b"
+        }
+      ],
+      ContactInformation: {
+        CompanyEmail: "contact@creativeintell.com",
+        Phone: "123-456-7890",
+        LinkedInProfile: "linkedin.com/company/creative-intell",
+        CompanyWebsite: "creativeintell.com",
+        OfficeAddress: "123 Music Ave, New York, NY, USA"
+      },
+      __v: 0
+    },
+    {
+      _id: "6654531473ec8b947f3ff559",
+      User: "66545304741adf02fe04140a",
+      StartUpName: "SpaceX",
+      Logo: "CI_LOGO_001",
+      FounderName: "Elon Musk",
+      CompanyDes: "Creative Intell is the artificial intelligence-powered dealmaking platform for the music industry.",
+      FoundingYear: 2010,
+      Growth: [
+        {
+          Revenue: 800000,
+          Year: 2020,
+          _id: "6654531473ec8b947f3ff66a"
+        }
+      ],
+      NumberOfEmployees: 10,
+      TargetMarket: "Music Industry",
+      CurrentStage: "Growth",
+      KeyFeatures: "AI-powered dealmaking, Music Industry Focus",
+      Inverstors: "Venture Capital X",
+      Evaluation: 2345,
+      Revenue: 800000,
+      FundingRaised: [
+        {
+          CompanyName: "Venture Capital X",
+          EquityHolds: 20,
+          Amount: 800000,
+          _id: "6654531473ec8b947f3ff66b"
+        }
+      ],
+      ContactInformation: {
+        CompanyEmail: "contact@creativeintell.com",
+        Phone: "123-456-7890",
+        LinkedInProfile: "linkedin.com/company/creative-intell",
+        CompanyWebsite: "creativeintell.com",
+        OfficeAddress: "123 Music Ave, New York, NY, USA"
+      },
+      __v: 0
+    },
+  ]
+  return companies
+}
 
 const fetchAllPosts = async (token) => {
   try {
@@ -58,6 +121,7 @@ const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth.userData)
 
+  //user
   useEffect(() => {
     const checkUserData = () => {
       try {
@@ -77,6 +141,7 @@ const App = () => {
     checkUserData();
   }, [dispatch]);
 
+  // posts
   useEffect(() => {
     const fetchPosts = async () => {
       if (!user || !user.Token) {
@@ -100,6 +165,7 @@ const App = () => {
     fetchPosts();
   }, [user, dispatch]);
 
+  // profile
   useEffect(() => {
     const getProfile = async () => {
       if (!user || !user._id || !user.Token) {
@@ -122,6 +188,31 @@ const App = () => {
     }
     getProfile()
   }, [user, dispatch])
+
+  // startups
+  useEffect(() => {
+    const fetchStartups = async () => {
+      if (!user || !user.Token) {
+        console.log("User not found");
+        return;
+      }
+
+      try {
+        console.log("Fetching startups Please wait...");
+        const startups = await fetchAllDummyStartups();
+        console.log("All Startups: ", startups)
+        if (startups.length > 0) {
+          startups.forEach(startup => dispatch(addStartup(startup)));
+        }
+      } catch (error) {
+        console.error("App.jsx/fetchStartups::", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStartups();
+  }, [user, dispatch]);
 
   return (
     <div className="App">

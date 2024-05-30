@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import ProfileUpdate from "./pages/ProfileUpdate";
 import Post from "./pages/Post";
 import EditPost from "./pages/EditPost";
+import AllStartup from "./pages/AllStartup";
 import Startup from "./pages/Startup";
 
 const RoutesConfig = () => {
@@ -55,7 +56,15 @@ const RoutesConfig = () => {
           }
         />
         <Route
-          path="/startup"
+          path="/startups"
+          element={
+            <ProtectedRoute>
+              <AllStartup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/startups/:slug"
           element={
             <ProtectedRoute>
               <Startup />

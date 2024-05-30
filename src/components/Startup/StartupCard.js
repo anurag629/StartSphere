@@ -1,42 +1,62 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
-const StartupCard = ({ company }) => {
-  const { name, location, industry, employees, foundingYear, founderName, description } =
-    company;
+const StartupCard = ({ startup }) => {
+  const {
+    StartUpName,
+    Logo,
+    FounderName,
+    CompanyDes,
+    FoundingYear,
+    NumberOfEmployees,
+    TargetMarket,
+    CurrentStage,
+    KeyFeatures,
+    Inverstors,
+    Evaluation,
+    Revenue,
+    FundingRaised,
+    ContactInformation,
+    _id
+  } = startup;
 
   return (
-    <div className="bg-white p-4 rounded shadow-md">
-      <div className="flex items-center mb-2">
-        <div className="bg-gray-200 w-10 h-10 rounded-full flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857"
-            />
-          </svg>
+    <div className="bg-slate-300 p-6 rounded-lg shadow-md max-w-md mx-auto">
+      <Link to={`/startups/${_id}`}>
+        <div className="flex items-center mb-4">
+          <img
+            src={Logo}
+            alt={`${StartUpName} logo`}
+            className="w-16 h-16 rounded-full object-cover bg-gray-200"
+          />
+          <div className="ml-4">
+            <h3 className="text-2xl font-bold text-gray-800">{StartUpName}</h3>
+            <p className="text-gray-600">{FounderName}</p>
+          </div>
         </div>
-        <h3 className="ml-4 text-xl font-bold text-zinc-600">{name}</h3>
-      </div>
-      <p className="text-gray-700 mb-2 ">{location}</p>
-      <div className="flex mb-2">
-        {industry.map((tag, index) => (
-          <span key={index} className="bg-gray-200 px-2 py-1 rounded text-gray-700 mr-2">
-            {tag}
-          </span>
-        ))}
-      </div>
-      <p className="text-gray-700 mb-2">{employees} employees</p>
-      <p className="text-gray-700 mb-2">Founded in {foundingYear}</p>
-      <p className="text-gray-700 mb-2">{founderName}</p>
-      <p className="text-gray-700 mb-2">{description}</p>
+        <p className="text-gray-700 mb-4">{CompanyDes}</p>
+        <div className="mb-4">
+          <h4 className="text-lg font-semibold text-gray-800">Details</h4>
+          <p className="text-gray-700">Founded: {FoundingYear}</p>
+          <p className="text-gray-700">Employees: {NumberOfEmployees}</p>
+          <p className="text-gray-700">Target Market: {TargetMarket}</p>
+          <p className="text-gray-700">Current Stage: {CurrentStage}</p>
+          <p className="text-gray-700">Key Features: {KeyFeatures}</p>
+          <p className="text-gray-700">Investors: {Inverstors}</p>
+          <p className="text-gray-700">Evaluation: ${Evaluation}M</p>
+          <p className="text-gray-700">Revenue: ${Revenue}M</p>
+        </div>
+        <div className="mb-4">
+          <h4 className="text-lg font-semibold text-gray-800">Funding Raised</h4>
+          {FundingRaised.map((fund, index) => (
+            <div key={index} className="text-gray-700">
+              <p>Company: {fund.CompanyName}</p>
+              <p>Equity Holds: {fund.EquityHolds}%</p>
+              <p>Amount: ${fund.Amount}M</p>
+            </div>
+          ))}
+        </div>
+      </Link>
     </div>
   );
 };
