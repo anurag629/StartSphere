@@ -10,6 +10,7 @@ import Post from "./pages/Post";
 import EditPost from "./pages/EditPost";
 import AllStartup from "./pages/AllStartup";
 import Startup from "./pages/Startup";
+import AddStartup from "./pages/AddStartup";
 
 const RoutesConfig = () => {
   return (
@@ -60,6 +61,14 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <AllStartup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-startup"
+          element={
+            <ProtectedRoute>
+              <AddStartup />
             </ProtectedRoute>
           }
         />
