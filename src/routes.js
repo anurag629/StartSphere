@@ -1,13 +1,14 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import ProtectedRoute from './components/ProtectedRoute';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import Profile from './pages/Profile';
-import ProfileUpdate from './pages/ProfileUpdate';
-import Post from './pages/Post';
-import EditPost from './pages/EditPost';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import Profile from "./pages/Profile";
+import ProfileUpdate from "./pages/ProfileUpdate";
+import Post from "./pages/Post";
+import EditPost from "./pages/EditPost";
+import Startup from "./pages/Startup";
 
 const RoutesConfig = () => {
   return (
@@ -50,6 +51,14 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <EditPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/startup"
+          element={
+            <ProtectedRoute>
+              <Startup />
             </ProtectedRoute>
           }
         />
