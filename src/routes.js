@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
@@ -10,6 +11,8 @@ import Post from './pages/Post';
 import EditPost from './pages/EditPost';
 import Resource from './components/Resource/Resource';
 import CreateArticleForm from './components/Resource/CreateArticleForm';
+import AllStartup from "./pages/AllStartup";
+import Startup from "./pages/Startup";
 
 const RoutesConfig = () => {
   return (
@@ -52,6 +55,22 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <EditPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/startups"
+          element={
+            <ProtectedRoute>
+              <AllStartup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/startups/:slug"
+          element={
+            <ProtectedRoute>
+              <Startup />
             </ProtectedRoute>
           }
         />

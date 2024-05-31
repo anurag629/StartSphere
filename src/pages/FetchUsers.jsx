@@ -9,10 +9,10 @@ const FetchUsers = () => {
         const fetchUsers = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem('user'));
-                if (user && user.token) {
+                if (user && user.Token) {
                     const response = await api.get('/user', {
                         headers: {
-                            Authorization: `Bearer ${user.token}`,
+                            Authorization: `Bearer ${user.Token}`,
                         },
                     });
                     setUsers(response.data);

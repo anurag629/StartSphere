@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import api from '../../api/axios';
-import PostCard2 from '../Home/Post/PostCard2';
-import { useSelector } from 'react-redux';
 import UserPosts from '../Home/Post/UserPosts';
 
 const ProfileCard = () => {
@@ -13,10 +11,10 @@ const ProfileCard = () => {
         const fetchProfile = async () => {
             try {
                 const storedUser = JSON.parse(localStorage.getItem('user'));
-                if (storedUser && storedUser.token) {
+                if (storedUser && storedUser.Token) {
                     const profileResponse = await api.get(`/profile/${storedUser._id}`, {
                         headers: {
-                            Authorization: `Bearer ${storedUser.token}`,
+                            Authorization: `Bearer ${storedUser.Token}`,
                         },
                     });
                     setProfile(profileResponse.data);
@@ -32,6 +30,7 @@ const ProfileCard = () => {
         fetchProfile();
     }, []);
 
+
     return (
         <section className="">
             <div className="w-full overflow-hidden dark:bg-gray-900 flex flex-col lg:flex-row">
@@ -46,7 +45,7 @@ const ProfileCard = () => {
                     {/* Profile Image and Name */}
                     <div className="sm:w-[80%] xs:w-[90%] mx-auto flex">
                         <img
-                            src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw3fHxwZW9wbGV8ZW58MHwwfHx8MTcxMTExMTM4N3ww&ixlib=rb-4.0.3&q=80&w=1080"
+                            src={profile?.Image}
                             alt="User Profile"
                             className="rounded-md lg:w-[12rem] lg:h-[12rem] md:w-[10rem] md:h-[10rem] sm:w-[8rem] sm:h-[8rem] xs:w-[7rem] xs:h-[7rem] outline outline-2 outline-offset-2 outline-blue-500 relative lg:bottom-[5rem] sm:bottom-[4rem] xs:bottom-[3rem]"
                         />
@@ -170,9 +169,13 @@ const ProfileCard = () => {
 
 
                 <div className="w-full lg:w-1/4 mt-4 lg:mt-0 lg:ml-4 bg-gray-800 p-4 rounded-lg shadow-md">
-                    {/* Button for Update Profile */}
+                    {/* Button for Add StartUp */}
+                    <button className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-md mb-4">
+                        Add StartUp
+                    </button>
+
                     <h2 className="text-xl font-semibold text-white mb-4">Your StartUps</h2>
-                    {startups.length > 0 ? (
+                    {startups?.length > 0 ? (
                         <ul className="list-disc list-inside text-white">
                             {startups.map((startup, index) => (
                                 <li key={index} className="mb-2 p-2 border border-gray-700 rounded-md">
