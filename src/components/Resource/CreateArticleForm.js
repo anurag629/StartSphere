@@ -17,7 +17,6 @@ const CreateArticleForm = ({ addNewArticle }) => {
     newBlocks[index].value = value;
     setContentBlocks(newBlocks);
   };
-
   const handleRemoveBlock = (index) => {
     const newBlocks = contentBlocks.filter((_, i) => i !== index);
     setContentBlocks(newBlocks);

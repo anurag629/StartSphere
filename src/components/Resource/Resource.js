@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 import Navbar from '../Home/Navbar';
 import CreateArticleForm from './CreateArticleForm';
 const articlesData = [
-  { id: 1, title: 'How to Start a Startup',Author:{
+  { id: 1, title: 'How to Start a Startup',author:{
     Name:"Gavnish Kumar",
     Email:"gk991789@gmail.com",
     Bio:"MERN stack developer",

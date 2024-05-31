@@ -4,7 +4,7 @@ import ArticleNavbar from './ArticleNavbar';
 const Articles = ({ article }) => {
   return (
         <div className="content">
-          <ArticleNavbar Author={article ? article.Author: null}/>
+          <ArticleNavbar Author={article ? article.author: null}/>
           {article ? (
             <div>
               <h2 className="article-title">{article.title}</h2>
