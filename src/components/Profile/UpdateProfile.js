@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import api from "../../api/axios";
-import { Link } from "react-router-dom";
 
 const UpdateProfile = () => {
   const [profileData, setProfileData] = useState({
@@ -23,7 +22,7 @@ const UpdateProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const storedUser = JSON.parse(localStorage.getItem("user"));
-      const token = storedUser?.token;
+      const token = storedUser?.Token;
       if (!token) {
         setMessage("User is not authenticated.");
         return;
@@ -75,20 +74,22 @@ const UpdateProfile = () => {
     }));
   };
 
-  // const addStartUp = () => {
-  //     setProfileData((prevData) => ({
-  //         ...prevData,
-  //         StartUpDetails: [...prevData.StartUpDetails, { name: '', revenue: '' }]
-  //     }));
-  // };
+  const addStartUp = () => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      StartUpDetails: [...prevData.StartUpDetails, { name: "", revenue: "" }],
+    }));
+  };
 
-  // const removeStartUp = (index) => {
-  //     const updatedStartUpDetails = profileData.StartUpDetails.filter((_, i) => i !== index);
-  //     setProfileData((prevData) => ({
-  //         ...prevData,
-  //         StartUpDetails: updatedStartUpDetails
-  //     }));
-  // };
+  const removeStartUp = (index) => {
+    const updatedStartUpDetails = profileData.StartUpDetails.filter(
+      (_, i) => i !== index
+    );
+    setProfileData((prevData) => ({
+      ...prevData,
+      StartUpDetails: updatedStartUpDetails,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -207,17 +208,53 @@ const UpdateProfile = () => {
             className="p-2 rounded bg-gray-700 text-white"
           />
         </div>
-
+        <div className="flex flex-col gap-2">
+          <label className="text-sm">StartUps</label>
+          {profileData.StartUpDetails.map((startup, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-2 mb-4 p-2 border border-gray-700 rounded-md"
+            >
+              <div className="flex flex-col gap-2">
+                <label className="text-sm">StartUp Name</label>
+                <input
+                  type="text"
+                  name={`startUpName${index}`}
+                  value={startup.name}
+                  onChange={(e) => handleStartUpChange(index, "name", e.target.value)}
+                  className="p-2 rounded bg-gray-700 text-white"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm">Revenue</label>
+                <input
+                  type="text"
+                  name={`revenue${index}`}
+                  value={startup.revenue}
+                  onChange={(e) => handleStartUpChange(index, "revenue", e.target.value)}
+                  className="p-2 rounded bg-gray-700 text-white"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => removeStartUp(index)}
+                className="py-1 px-2 bg-red-600 rounded hover:bg-red-500"
+              >
+                Remove StartUp
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addStartUp}
+            className="py-2 px-4 bg-blue-600 rounded hover:bg-blue-500"
+          >
+            Add StartUp
+          </button>
+        </div>
         <button type="submit" className="py-2 px-4 bg-blue-600 rounded hover:bg-blue-500">
           Update Profile
         </button>
-
-        <Link
-          to="/add-startup"
-          className="py-2 px-4 bg-rose-600 text-center rounded hover:bg-rose-500"
-        >
-          Add StartUp
-        </Link>
       </form>
     </div>
   );
