@@ -8,6 +8,8 @@ import Profile from './pages/Profile';
 import ProfileUpdate from './pages/ProfileUpdate';
 import Post from './pages/Post';
 import EditPost from './pages/EditPost';
+import Resource from './components/Resource/Resource';
+import CreateArticleForm from './components/Resource/CreateArticleForm';
 
 const RoutesConfig = () => {
   return (
@@ -55,6 +57,8 @@ const RoutesConfig = () => {
         />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/resources" element={<Resource />} />
+        <Route path="/create-article" element={<CreateArticleForm />} />
       </Routes>
     </Router>
   );

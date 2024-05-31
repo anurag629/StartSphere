@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { sendToVercelAnalytics } from './vitals';
 import { Provider } from 'react-redux';
 import store from './store/store';
-
+import '@fortawesome/fontawesome-free/css/all.min.css';
 const container = document.getElementById('root');
 const root = createRoot(container);
 
