@@ -29,7 +29,6 @@ const Articles = ({ article }) => {
               return null;
             }
           })}
->>>>>>> 8eb7a72c2d7646bed861229b08f54e5edf758110
         </div>
       ) : (
         <p>Select an article to read</p>
