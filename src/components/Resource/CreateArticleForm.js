@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FaPlus } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+
 import axios from 'axios';
 import Navbar from '../Home/Navbar';
 
@@ -126,29 +127,42 @@ const CreateArticleForm = ({ addNewArticle }) => {
                 />
               )}
               <button type="button" onClick={() => handleRemoveBlock(index)} className="ml-2 text-red-500 hover:text-red-700">
-                <FontAwesomeIcon icon={faTrash} />
+                <MdDelete/>
               </button>
             </div>
           ))}
         </div>
         <div className="mb-4">
           <button type="button" onClick={() => handleAddBlock('heading')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded">
-            <FontAwesomeIcon icon={faPlus} /> Add Heading
+          <div className='flex justify-center items-center'>
+            <FaPlus/><span>Add Heading</span>
+            </div>
           </button>
           <button type="button" onClick={() => handleAddBlock('subheading')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded">
-            <FontAwesomeIcon icon={faPlus} /> Add Subheading
+          <div className='flex justify-center items-center'>
+            <FaPlus/><span>Add SubHeading</span>
+            </div>
           </button>
           <button type="button" onClick={() => handleAddBlock('text')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded">
-            <FontAwesomeIcon icon={faPlus} /> Add Text
+          <div className='flex justify-center items-center'>
+            <FaPlus/><span>Add Text</span>
+            </div>
           </button>
           <button type="button" onClick={() => handleAddBlock('image')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded">
-            <FontAwesomeIcon icon={faPlus} /> Add Image
+          
+          <div className='flex justify-center items-center'>
+            <FaPlus/><span>Add Image</span>
+            </div>
           </button>
-          <button type="button" onClick={() => handleAddBlock('video')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded">
-            <FontAwesomeIcon icon={faPlus} /> Add Video
+          <button type="button" onClick={() => handleAddBlock('video')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded ">
+            <div className='flex justify-center items-center'>
+            <FaPlus/><span>Add Video</span>
+            </div>
           </button>
-          <button type="button" onClick={() => handleAddBlock('list')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded">
-            <FontAwesomeIcon icon={faPlus} /> Add List
+          <button type="button" onClick={() => handleAddBlock('list')} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded ">
+            <div className='flex justify-center items-center'>
+            <FaPlus/><span>Add List</span>
+            </div>
           </button>
         </div>
         <button type="submit" disabled={isDisable} className="bg-green-500 text-white py-2 px-4 rounded">

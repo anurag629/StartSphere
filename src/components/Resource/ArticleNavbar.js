@@ -1,7 +1,8 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { FaPlus } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from 'react-icons/md';
 
 const ArticleNavbar = ({Author}) => {
   const navigate= useNavigate();
@@ -21,10 +22,12 @@ const ArticleNavbar = ({Author}) => {
 :<></>}
       <div className="flex items-center space-x-4">
         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={()=>navigate('/create-article')}>
-          <FontAwesomeIcon icon={faPlus} className="mr-2" /> Create New Article
+        <div className='flex justify-center items-center'>
+            <FaPlus/><span>Create New Article</span>
+            </div>
         </button>
-        <FontAwesomeIcon icon={faEdit} className="text-white" />
-        <FontAwesomeIcon icon={faTrash} className="text-white" />
+        <FaEdit/>
+        <MdDelete/>
       </div>
     </nav>
   );
