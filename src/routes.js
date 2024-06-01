@@ -15,6 +15,7 @@ import Startup from "./pages/Startup";
 import AddStartup from "./pages/AddStartup";
 import EventPage from "./pages/EventPage";
 import EventDetaills from "./components/Event/EventDetails";
+import EditStartup from './pages/EditStartup';
 
 const RoutesConfig = () => {
   return (
@@ -81,6 +82,14 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <Startup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-startup/:slug"
+          element={
+            <ProtectedRoute>
+              <EditStartup />
             </ProtectedRoute>
           }
         />

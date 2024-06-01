@@ -2,95 +2,226 @@ import React, { useEffect, useState } from 'react';
 import RoutesConfig from './routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from './feature/authSlice';
-import { addPost } from './feature/postSlice'
 import api from './api/axios';
+import { addPost } from './feature/postSlice'
 import { setProfile } from './feature/profileSlice'
 import { addStartup } from './feature/startupSlice'
 import { addArticle } from './feature/articleSlice';
 
-const fetchAllDummyStartups = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const companies = [
-    {
-      _id: "6654531473ec8b947f3ff669",
-      User: "6656b0023574bce7a4c10d24",
-      StartUpName: "Creative Intell",
-      Logo: "CI_LOGO_001",
-      FounderName: "John Doe",
-      CompanyDes: "Creative Intell is the artificial intelligence-powered dealmaking platform for the music industry.",
-      FoundingYear: 2015,
-      Growth: [
-        {
-          Revenue: 800000,
-          Year: 2020,
-          _id: "6654531473ec8b947f3ff66a"
-        }
-      ],
-      NumberOfEmployees: 10,
-      TargetMarket: "Music Industry",
-      CurrentStage: "Growth",
-      KeyFeatures: "AI-powered dealmaking, Music Industry Focus",
-      Inverstors: "Venture Capital X",
-      Evaluation: 2345,
-      Revenue: 800000,
-      FundingRaised: [
-        {
-          CompanyName: "Venture Capital X",
-          EquityHolds: 20,
-          Amount: 800000,
-          _id: "6654531473ec8b947f3ff66b"
-        }
-      ],
-      ContactInformation: {
-        CompanyEmail: "contact@creativeintell.com",
-        Phone: "123-456-7890",
-        LinkedInProfile: "linkedin.com/company/creative-intell",
-        CompanyWebsite: "creativeintell.com",
-        OfficeAddress: "123 Music Ave, New York, NY, USA"
-      },
-      __v: 0
-    },
-    {
-      _id: "6654531473ec8b947f3ff559",
-      User: "66545304741adf02fe04140a",
-      StartUpName: "SpaceX",
-      Logo: "CI_LOGO_001",
-      FounderName: "Elon Musk",
-      CompanyDes: "Creative Intell is the artificial intelligence-powered dealmaking platform for the music industry.",
-      FoundingYear: 2010,
-      Growth: [
-        {
-          Revenue: 800000,
-          Year: 2020,
-          _id: "6654531473ec8b947f3ff66a"
-        }
-      ],
-      NumberOfEmployees: 10,
-      TargetMarket: "Music Industry",
-      CurrentStage: "Growth",
-      KeyFeatures: "AI-powered dealmaking, Music Industry Focus",
-      Inverstors: "Venture Capital X",
-      Evaluation: 2345,
-      Revenue: 800000,
-      FundingRaised: [
-        {
-          CompanyName: "Venture Capital X",
-          EquityHolds: 20,
-          Amount: 800000,
-          _id: "6654531473ec8b947f3ff66b"
-        }
-      ],
-      ContactInformation: {
-        CompanyEmail: "contact@creativeintell.com",
-        Phone: "123-456-7890",
-        LinkedInProfile: "linkedin.com/company/creative-intell",
-        CompanyWebsite: "creativeintell.com",
-        OfficeAddress: "123 Music Ave, New York, NY, USA"
-      },
-      __v: 0
-    },
-  ]
-  return companies
+// await new Promise((resolve) => setTimeout(resolve, 1000));
+// const companies = [
+  // {
+  //   _id: "6654531473ec8b947f3ff670",
+  //   User: "6656b0023574bce7a4c10d25",
+  //   StartUpName: "TechWave",
+  //   Logo: "https://optimise2.assets-servd.host/dig-upsiide/production/images/starbsloh.png?w=735&h=400&q=100&fm=jpg&fit=crop&dm=1668098882&s=3ee470c8b1123213d7f7f147bc1126e4",
+  //   FounderName: "Alice Smith",
+  //   CompanyDes: "TechWave is revolutionizing the tech industry with cutting-edge software solutions for businesses.",
+  //   FoundingYear: 2018,
+  //   Growth: [
+  //     {
+  //       Revenue: 1200000,
+  //       Year: 2021,
+  //       _id: "6654531473ec8b947f3ff671"
+  //     }
+  //   ],
+  //   NumberOfEmployees: 50,
+  //   TargetMarket: "Technology Industry",
+  //   CurrentStage: "Scaling",
+  //   KeyFeatures: "Software Solutions, Business Automation",
+  //   Investors: "Angel Investors Group",
+  //   Evaluation: 4500,
+  //   Revenue: 1200000,
+  //   FundingRaised: [
+  //     {
+  //       CompanyName: "Angel Investors Group",
+  //       EquityHolds: 15,
+  //       Amount: 1500000,
+  //       _id: "6654531473ec8b947f3ff672"
+  //     }
+  //   ],
+  //   ContactInformation: {
+  //     CompanyEmail: "info@techwave.com",
+  //     Phone: "987-654-3210",
+  //     LinkedInProfile: "linkedin.com/company/techwave",
+  //     CompanyWebsite: "techwave.com",
+  //     OfficeAddress: "456 Tech Street, San Francisco, CA, USA"
+  //   },
+  //   __v: 0
+  // },
+  // {
+  //   _id: "6654531473ec8b947f3ff673",
+  //   User: "6656b0023574bce7a4c10d26",
+  //   StartUpName: "GreenEarth",
+  //   Logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2nDTMG6nlpOk5eS3U-oVOkGDEQxGkOQ7BrA&s",
+  //   FounderName: "Bob Johnson",
+  //   CompanyDes: "GreenEarth provides innovative solutions for sustainable agriculture and environmental conservation.",
+  //   FoundingYear: 2017,
+  //   Growth: [
+  //     {
+  //       Revenue: 950000,
+  //       Year: 2021,
+  //       _id: "6654531473ec8b947f3ff674"
+  //     }
+  //   ],
+  //   NumberOfEmployees: 30,
+  //   TargetMarket: "Agriculture",
+  //   CurrentStage: "Growth",
+  //   KeyFeatures: "Sustainable Agriculture, Environmental Conservation",
+  //   Investors: "Eco Ventures",
+  //   Evaluation: 3500,
+  //   Revenue: 950000,
+  //   FundingRaised: [
+  //     {
+  //       CompanyName: "Eco Ventures",
+  //       EquityHolds: 25,
+  //       Amount: 1000000,
+  //       _id: "6654531473ec8b947f3ff675"
+  //     }
+  //   ],
+  //   ContactInformation: {
+  //     CompanyEmail: "contact@greenearth.com",
+  //     Phone: "555-123-4567",
+  //     LinkedInProfile: "linkedin.com/company/greenearth",
+  //     CompanyWebsite: "greenearth.com",
+  //     OfficeAddress: "789 Green Lane, Portland, OR, USA"
+  //   },
+  //   __v: 0
+  // },
+  // {
+  //   _id: "6654531473ec8b947f3ff676",
+  //   User: "6656b0023574bce7a4c10d27",
+  //   StartUpName: "EduTechPro",
+  //   Logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0pKLF0QSR2f8EZy5qhmmXCEJuP5Y9nLHyfg&s",
+  //   FounderName: "Carol Lee",
+  //   CompanyDes: "EduTechPro is an edtech startup that offers AI-driven learning solutions for students worldwide.",
+  //   FoundingYear: 2019,
+  //   Growth: [
+  //     {
+  //       Revenue: 1100000,
+  //       Year: 2022,
+  //       _id: "6654531473ec8b947f3ff677"
+  //     }
+  //   ],
+  //   NumberOfEmployees: 40,
+  //   TargetMarket: "Education",
+  //   CurrentStage: "Scaling",
+  //   KeyFeatures: "AI-driven Learning, Global Education Solutions",
+  //   Investors: "Edu Ventures",
+  //   Evaluation: 5000,
+  //   Revenue: 1100000,
+  //   FundingRaised: [
+  //     {
+  //       CompanyName: "Edu Ventures",
+  //       EquityHolds: 18,
+  //       Amount: 1200000,
+  //       _id: "6654531473ec8b947f3ff678"
+  //     }
+  //   ],
+  //   ContactInformation: {
+  //     CompanyEmail: "support@edutechpro.com",
+  //     Phone: "444-321-6789",
+  //     LinkedInProfile: "linkedin.com/company/edutechpro",
+  //     CompanyWebsite: "edutechpro.com",
+  //     OfficeAddress: "101 Learning Road, Boston, MA, USA"
+  //   },
+  //   __v: 0
+  // },
+  // {
+  //   _id: "6654531473ec8b947f3ff679",
+  //   User: "6656b0023574bce7a4c10d28",
+  //   StartUpName: "Healthify",
+  //   Logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzlJIo2OArwn3I768Rh0oWb_xwqiBBMp65Ig&s",
+  //   FounderName: "David Brown",
+  //   CompanyDes: "Healthify is dedicated to improving healthcare accessibility through telemedicine and digital health platforms.",
+  //   FoundingYear: 2020,
+  //   Growth: [
+  //     {
+  //       Revenue: 1300000,
+  //       Year: 2023,
+  //       _id: "6654531473ec8b947f3ff680"
+  //     }
+  //   ],
+  //   NumberOfEmployees: 60,
+  //   TargetMarket: "Healthcare",
+  //   CurrentStage: "Expansion",
+  //   KeyFeatures: "Telemedicine, Digital Health",
+  //   Investors: "Health Ventures",
+  //   Evaluation: 6000,
+  //   Revenue: 1300000,
+  //   FundingRaised: [
+  //     {
+  //       CompanyName: "Health Ventures",
+  //       EquityHolds: 22,
+  //       Amount: 1600000,
+  //       _id: "6654531473ec8b947f3ff681"
+  //     }
+  //   ],
+  //   ContactInformation: {
+  //     CompanyEmail: "hello@healthify.com",
+  //     Phone: "333-654-9870",
+  //     LinkedInProfile: "linkedin.com/company/healthify",
+  //     CompanyWebsite: "healthify.com",
+  //     OfficeAddress: "123 Wellness Blvd, Los Angeles, CA, USA"
+  //   },
+  //   __v: 0
+  // },
+  // {
+  //   _id: "6654531473ec8b947f3ff682",
+  //   User: "6656b0023574bce7a4c10d29",
+  //   StartUpName: "FinTech Innovators",
+  //   Logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4iA-VKtFd_7hQzAqj719rx52o96wBUBA5jg&s",
+  //   FounderName: "Emma Davis",
+  //   CompanyDes: "FinTech Innovators provides advanced financial technology solutions for small and medium-sized enterprises.",
+  //   FoundingYear: 2016,
+  //   Growth: [
+  //     {
+  //       Revenue: 900000,
+  //       Year: 2021,
+  //       _id: "6654531473ec8b947f3ff683"
+  //     }
+  //   ],
+  //   NumberOfEmployees: 35,
+  //   TargetMarket: "Financial Services",
+  //   CurrentStage: "Growth",
+  //   KeyFeatures: "Financial Technology, SME Solutions",
+  //   Investors: "FinTech Angels",
+  //   Evaluation: 4200,
+  //   Revenue: 900000,
+  //   FundingRaised: [
+  //     {
+  //       CompanyName: "FinTech Angels",
+  //       EquityHolds: 20,
+  //       Amount: 1100000,
+  //       _id: "6654531473ec8b947f3ff684"
+  //     }
+  //   ],
+  //   ContactInformation: {
+  //     CompanyEmail: "contact@fintechinnovators.com",
+  //     Phone: "222-987-1234",
+  //     LinkedInProfile: "linkedin.com/company/fintech-innovators",
+  //     CompanyWebsite: "fintechinnovators.com",
+  //     OfficeAddress: "456 Finance Drive, New York, NY, USA"
+  //   },
+  //   __v: 0
+  // }
+// ];
+
+const fetchAllStartups = async () => {
+  try {
+    const response = await api.get(`startup/all`);
+    if (response.status === 200 && response.data.startUps) {
+      console.log("All startups::1", response.data.startUps);
+      return response.data.startUps;
+    }
+    else {
+      console.log("No data found")
+      return [];
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 const fetchAllPosts = async (token) => {
@@ -104,7 +235,6 @@ const fetchAllPosts = async (token) => {
       }
     );
     if (response && response.data) {
-      console.log("All posts::", response.data);
       return response.data;
     }
     else {
@@ -263,8 +393,8 @@ const App = () => {
 
       try {
         console.log("Fetching startups Please wait...");
-        const startups = await fetchAllDummyStartups();
-        console.log("All Startups: ", startups)
+        const startups = await fetchAllStartups();
+        console.log("All Startups::2 ", startups)
         if (startups.length > 0) {
           startups.forEach(startup => dispatch(addStartup(startup)));
         }

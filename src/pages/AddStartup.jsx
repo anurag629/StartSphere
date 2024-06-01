@@ -3,7 +3,7 @@ import Navbar from "../components/Home/Navbar";
 import StartupForm from "../components/Startup/StartupForm";
 import Footer from "../components/Home/Footer";
 
-const AllStartup = () => {
+const AddStartup = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -17,4 +17,4 @@ const AllStartup = () => {
   );
 };
 
-export default AllStartup;
+export default AddStartup;
