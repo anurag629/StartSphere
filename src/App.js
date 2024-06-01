@@ -315,7 +315,6 @@ const App = () => {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth.userData)
-
   //user
   useEffect(() => {
     const checkUserData = () => {
