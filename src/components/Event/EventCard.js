@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const EventCard = ({
+  _id,
   title,
   subtitle,
   date,
@@ -11,17 +13,24 @@ const EventCard = ({
   qrCode,
   image,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // // Encode the title to handle special characters
+    // const encodedTitle = encodeURIComponent(title);
+    navigate(`/event/${title}`);
+  };
+
   return (
     <div className="rounded-lg shadow-md p-4 bg-white">
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
           <span className="text-sm font-medium text-gray-600">{type}</span>
-          {isClosed && (
+          {isClosed ? (
             <span className="ml-2 px-2 py-1 rounded-full bg-gray-200 text-gray-600 text-xs font-medium">
               Ended
             </span>
-          )}
-          {!isClosed && (
+          ) : (
             <span className="ml-2 px-2 py-1 rounded-full bg-green-200 text-green-600 text-xs font-medium">
               Ongoing
             </span>
@@ -72,16 +81,14 @@ const EventCard = ({
           <img src={qrCode} alt="QR Code" className="w-24 h-24" />
         </div>
       )}
-      {!isClosed && (
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          {buttonText}
-        </button>
-      )}
-      {isClosed && (
-        <button className="bg-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          {buttonText}
-        </button>
-      )}
+      <button
+        onClick={handleClick}
+        className={`font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+          isClosed ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-700 text-white"
+        }`}
+      >
+        {buttonText}
+      </button>
     </div>
   );
 };

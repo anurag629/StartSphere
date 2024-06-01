@@ -9,7 +9,7 @@ import ProfileUpdate from "./pages/ProfileUpdate";
 import Post from "./pages/Post";
 import EditPost from "./pages/EditPost";
 import Resource from "./components/Resource/Resource";
-import CreateArticleForm from "./components/Resource/CreateArticleForm";
+import CreateArticleForm from "./components/Resource/Article/CreateArticleForm";
 
 import AllStartup from "./pages/AllStartup";
 import Startup from "./pages/Startup";
@@ -90,7 +90,7 @@ const RoutesConfig = () => {
         <Route path="/resources" element={<Resource />} />
         <Route path="/create-article" element={<CreateArticleForm />} />
         <Route path="/events" element={<EventPage />} />
-        <Route path="/events/:slug" element={<EventDetails />} />
+        <Route path="/event/:title" element={<EventDetails />} />
       </Routes>
     </Router>
   );
