@@ -1,40 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import './Style/Resource.css';
-import Articles from './Articles';
-import Sidebar from './Sidebar';
+import Articles from './Article/Articles';
+import Sidebar from './Sidebar/Sidebar';
 import Navbar from '../Home/Navbar';
 import Footer from '../Home/Footer';
-import CreateArticleForm from './CreateArticleForm';
-import { useSelector } from 'react-redux';
+import api from '../../api/axios';
+import ArticleHome from './Article/ArticleHome';
+import SkeletonSidebar from './Sidebar/SkeletonSidebar';
 
 const Resource = () => {
-  const allArticles = useSelector((state) => state.articles.articles);
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setArticles(allArticles);
-  }, [allArticles]);
+    const fetchArticles = async () => {
+      try {
+        const response = await api.get('/article/articles/');
+        setArticles(response.data.articles);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
 
   const handleArticleClick = (article) => {
     setSelectedArticle(article);
   };
 
-  const addNewArticle = (newArticle) => {
-    setArticles([...articles, newArticle]);
-  };
-
-  console.log("ARRrticles:: ", articles)
-
   return (
-    <div width="100%" style={{ height: "100vh" }}>
+    <div className="flex w-full flex-col h-screen">
       <Navbar />
-      <div className='Resource'>
-        <div className='container'>
-          <Sidebar articles={articles} onArticleClick={handleArticleClick} />
-          <Articles article={selectedArticle} />
+      <div className='flex flex-1 w-full'>
+        {loading ? (<SkeletonSidebar/>):(
+        <Sidebar className="w-1/4 h-full overflow-hidden" articles={articles} onArticleClick={handleArticleClick} />)}
+        <div className="w-full h-full overflow-y-auto">
+          {selectedArticle ? <Articles article={selectedArticle} setArticle={setSelectedArticle} allArticles={articles} setAllArticles={setArticles}/> : <ArticleHome className="w-1/1"/>}
+        
         </div>
+
       </div>
+      <Footer />
     </div>
   );
 };

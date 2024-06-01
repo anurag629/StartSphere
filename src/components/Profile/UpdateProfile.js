@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import api from "../../api/axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProfile = () => {
+  const navigate= useNavigate();
+  const userData = useSelector((state) => state.auth.userData);
+  const [isdisable,setIsDisable] = useState(false);
   const [profileData, setProfileData] = useState({
     ContactInformation: {
       CompanyEmail: "",
@@ -12,41 +17,53 @@ const UpdateProfile = () => {
       OfficeAddress: "",
     },
     Bio: "",
+    Name:"",
     Image: "",
     Role: "",
     Experience: "",
-    StartUpDetails: [],
   });
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      const token = storedUser?.Token;
-      if (!token) {
-        setMessage("User is not authenticated.");
-        return;
+    useEffect(()=>{
+      const fetchUserProfile=async()=>{
+        try {
+          const response= await api.get(`profile/${userData._id}`,{
+                    headers: {
+                      Authorization: `Bearer ${userData.Token}`,
+                    },
+                  })
+                  setProfileData(response.data)
+        } catch (error) {
+          
+        }
       }
-
+      fetchUserProfile();
+    },[])
+    const handleFileUpload = async (file) => {
+      setIsDisable(true);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'auenhckk');
+      formData.append('cloud_name', 'dnjis096o');
+  
       try {
-        const userId = storedUser?._id;
-        // use api.get(`/profile/${userId}`) instead of axios.get
-        const response = await api.get(`/profile/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProfileData(response.data);
-        console.log("Profile fetched successfully.");
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/dnjis096o/upload`,
+          formData
+        );
+        console.log(response.data.url)
+        setProfileData((prevData) => ({
+          ...prevData,
+          ["Image"]: response.data.url,
+        }));
       } catch (error) {
-        setMessage("Failed to fetch profile details.");
+        console.error('Error uploading file:', error);
+      } finally{
+        setIsDisable(false);
       }
     };
-
-    fetchProfile();
-  }, []);
-
-  const handleChange = (e) => {
+  const handleChange = async(e) => {
+    e.preventDefault()
     const { name, value } = e.target;
     setProfileData((prevData) => ({
       ...prevData,
@@ -55,6 +72,7 @@ const UpdateProfile = () => {
   };
 
   const handleContactInfoChange = (e) => {
+    e.preventDefault();
     const { name, value } = e.target;
     setProfileData((prevData) => ({
       ...prevData,
@@ -74,42 +92,20 @@ const UpdateProfile = () => {
     }));
   };
 
-  const addStartUp = () => {
-    setProfileData((prevData) => ({
-      ...prevData,
-      StartUpDetails: [...prevData.StartUpDetails, { name: "", revenue: "" }],
-    }));
-  };
-
-  const removeStartUp = (index) => {
-    const updatedStartUpDetails = profileData.StartUpDetails.filter(
-      (_, i) => i !== index
-    );
-    setProfileData((prevData) => ({
-      ...prevData,
-      StartUpDetails: updatedStartUpDetails,
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const token = storedUser?.token;
-    const userId = storedUser?._id;
-    if (!token) {
-      setMessage("User is not authenticated.");
-      return;
-    }
-
+    console.log("updated:",profileData)
     try {
-      await api.put(`/profile/update/${userId}`, profileData, {
+      await api.put(`/profile/update/${userData._id}`, profileData, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${userData.Token}`,
           "Content-Type": "application/json",
         },
       });
       setMessage("Profile updated successfully.");
       console.log("Profile updated successfully.");
+      navigate('/profile')
     } catch (error) {
       setMessage("Failed to update profile.");
     }
@@ -121,11 +117,21 @@ const UpdateProfile = () => {
       {message && <p className="mb-4">{message}</p>}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
+          <label className="text-sm">Name </label>
+          <input
+            type="text"
+            name="Name"
+            value={profileData.Name}
+            onChange={handleChange}
+            className="p-2 rounded bg-gray-700 text-white"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
           <label className="text-sm">Upload Image </label>
           <input
             type="file"
             name="Image"
-            onChange={handleChange}
+            onChange={(e)=> handleFileUpload(e.target.files[0])}
             className="p-2 rounded bg-gray-700 text-white"
           />
         </div>
@@ -208,9 +214,9 @@ const UpdateProfile = () => {
             className="p-2 rounded bg-gray-700 text-white"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-sm">StartUps</label>
-          {profileData.StartUpDetails.map((startup, index) => (
+        {/* <div className="flex flex-col gap-2">
+          <label className="text-sm">StartUps</label> */}
+          {/* {profileData.StartUpDetails.map((startup, index) => (
             <div
               key={index}
               className="flex flex-col gap-2 mb-4 p-2 border border-gray-700 rounded-md"
@@ -224,8 +230,8 @@ const UpdateProfile = () => {
                   onChange={(e) => handleStartUpChange(index, "name", e.target.value)}
                   className="p-2 rounded bg-gray-700 text-white"
                 />
-              </div>
-              <div className="flex flex-col gap-2">
+              </div> */}
+              {/* <div className="flex flex-col gap-2">
                 <label className="text-sm">Revenue</label>
                 <input
                   type="text"
@@ -234,8 +240,8 @@ const UpdateProfile = () => {
                   onChange={(e) => handleStartUpChange(index, "revenue", e.target.value)}
                   className="p-2 rounded bg-gray-700 text-white"
                 />
-              </div>
-              <button
+              </div> */}
+              {/* <button
                 type="button"
                 onClick={() => removeStartUp(index)}
                 className="py-1 px-2 bg-red-600 rounded hover:bg-red-500"
@@ -243,16 +249,16 @@ const UpdateProfile = () => {
                 Remove StartUp
               </button>
             </div>
-          ))}
-          <button
+          ))} */}
+          {/* <button
             type="button"
             onClick={addStartUp}
             className="py-2 px-4 bg-blue-600 rounded hover:bg-blue-500"
           >
             Add StartUp
           </button>
-        </div>
-        <button type="submit" className="py-2 px-4 bg-blue-600 rounded hover:bg-blue-500">
+        </div> */}
+        <button type="submit" disabled={isdisable} className="py-2 px-4 bg-blue-600 rounded hover:bg-blue-500">
           Update Profile
         </button>
       </form>
