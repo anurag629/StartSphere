@@ -9,7 +9,7 @@ import ProfileUpdate from "./pages/ProfileUpdate";
 import Post from "./pages/Post";
 import EditPost from "./pages/EditPost";
 import Resource from "./components/Resource/Resource";
-import CreateArticleForm from "./components/Resource/Article/CreateArticleForm";
+import CreateArticleForm from "./components/Resource/CreateArticleForm";
 
 import AllStartup from "./pages/AllStartup";
 import Startup from "./pages/Startup";
