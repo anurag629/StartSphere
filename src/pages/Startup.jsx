@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteStartup as deleteStartupFromStore } from '../feature/startupSlice';
 import Navbar from '../components/Home/Navbar';
 import Footer from '../components/Home/Footer';
+import api from '../api/axios'
 
 function Startup() {
     const [startup, setStartup] = useState(null);
@@ -14,32 +15,42 @@ function Startup() {
     const userData = useSelector((state) => state.auth.userData);
     const isFounder = startup && userData ? (userData._id === startup.User) : false;
 
-    // console.log("isfounder: ", isFounder)
-    // console.log("userdData: ", userData);
-    // console.log("startup: ", startup);
-
     useEffect(() => {
         if (allStartups && slug) {
             const startup = allStartups.find((startup) => startup._id === slug);
             if (startup) {
                 setStartup(startup);
-            } else {
-                navigate('/');
             }
         }
     }, [allStartups, slug, navigate]);
 
     const deleteStartup = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        dispatch(deleteStartupFromStore(startup._id));
-        navigate('/');
+        console.log("Delete startup me ::", startup._id, userData.Token)
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        console.log("Delete startup");
+        try {
+            const response = await api.delete(`startup/delete/${startup._id}`, {
+                headers: {
+                    'Authorization': `Bearer ${userData?.Token}`,
+                },
+            });
+            console.log(response);
+            dispatch(deleteStartupFromStore(startup._id));
+            alert('Startup deleted successfully!')
+            navigate('/startups');
+        } catch (error) {
+            console.error("Error updating startup:", error);
+            if (error.response && error.response.data) {
+                alert(`Error: ${error.response.data.message}`);
+            }
+        }
     };
 
     return startup ? (
         <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-grow p-4 bg-gray-900">
-                <div className="max-w-4xl mx-auto bg-slate-200 rounded-md shadow-lg">
+            <main className="flex-grow p-4 bg-slate-800">
+                <div className="max-w-4xl mx-auto bg-slate-700 text-white rounded-md shadow-lg">
                     <div className="py-8 px-6">
                         <div className="flex justify-center mb-4 relative p-2">
                             {startup.Logo && (
@@ -51,7 +62,7 @@ function Startup() {
                             )}
                             {isFounder && (
                                 <div className="absolute right-6 top-6">
-                                    <Link to={`/`}>
+                                    <Link to={`/startups`}>
                                         <button className="mr-3 bg-green-400 px-2 py-1 text-black font-semibold rounded-lg shadow-md hover:bg-green-500">
                                             Save
                                         </button>
@@ -69,9 +80,9 @@ function Startup() {
                         </div>
                         <div className="text-center mb-6">
                             <h1 className="text-4xl font-bold">{startup.StartUpName}</h1>
-                            <p className="text-lg text-gray-700 mt-2">Founded by {startup.FounderName} in {startup.FoundingYear}</p>
+                            <p className="text-lg text-white mt-2">Founded by {startup.FounderName} in {startup.FoundingYear}</p>
                         </div>
-                        <div className="space-y-4 text-gray-800">
+                        <div className="space-y-4 text-white justify-center">
                             <p className="text-center text-xl font-medium">{startup.CompanyDes}</p>
                             <div>
                                 <h2 className="text-2xl font-semibold mb-2">Growth</h2>

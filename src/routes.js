@@ -14,6 +14,7 @@ import CreateArticleForm from './components/Resource/CreateArticleForm';
 import AllStartup from "./pages/AllStartup";
 import Startup from "./pages/Startup";
 import AddStartup from "./pages/AddStartup";
+import EditStartup from './pages/EditStartup';
 
 const RoutesConfig = () => {
   return (
@@ -80,6 +81,14 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <Startup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-startup/:slug"
+          element={
+            <ProtectedRoute>
+              <EditStartup />
             </ProtectedRoute>
           }
         />

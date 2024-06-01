@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
+import api from '../../api/axios';
+import { addStartup, updateStartup as updateStartupInStore } from '../../feature/startupSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const StartupForm = () => {
+const StartupForm = ({ startup }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state.auth.userData);
+  const id = JSON.parse(localStorage.getItem('user'))._id;
+
   const [startupData, setStartupData] = useState({
+    User: "",
     StartUpName: "",
     Logo: "",
     FounderName: "",
@@ -14,13 +24,11 @@ const StartupForm = () => {
     Investors: "",
     Evaluation: "",
     Revenue: "",
-    FundingRaised: [
-      {
-        CompanyName: "",
-        EquityHolds: "",
-        Amount: "",
-      },
-    ],
+    FundingRaised: {
+      CompanyName: "",
+      EquityHolds: "",
+      Amount: "",
+    },
     ContactInformation: {
       CompanyEmail: "",
       Phone: "",
@@ -31,12 +39,16 @@ const StartupForm = () => {
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top when the component mounts
-  }, []);
+    if (startup) {
+      setStartupData(startup);
+    }
+    window.scrollTo(0, 0);
+  }, [startup]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     const nameParts = name.split(".");
+
     if (nameParts.length === 2) {
       setStartupData({
         ...startupData,
@@ -45,29 +57,76 @@ const StartupForm = () => {
           [nameParts[1]]: value,
         },
       });
-    } else if (nameParts.length === 3) {
+    } else if (nameParts.length === 3 && Array.isArray(startupData[nameParts[0]])) {
+      const updatedArray = [...startupData[nameParts[0]]];
+      updatedArray[0] = {
+        ...updatedArray[0],
+        [nameParts[2]]: value,
+      };
       setStartupData({
         ...startupData,
-        [nameParts[0]]: [
-          {
-            ...startupData[nameParts[0]][0],
-            [nameParts[2]]: value,
-          },
-        ],
+        [nameParts[0]]: updatedArray,
       });
     } else {
       setStartupData({ ...startupData, [name]: value });
     }
   };
 
+  const createStartup = async () => {
+    console.log("Create startup");
+    try {
+      const response = await api.post('/startup/create', startupData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userData.Token}`,
+        },
+      });
+      console.log("Create startup response::", response);
+      alert('Startup created successfully');
+      dispatch(addStartup(response.data.startUp));
+      navigate(`/startups/${response.data.startUp._id}`);
+    } catch (error) {
+      console.error("Error creating startup:", error);
+      if (error.response && error.response.data) {
+        alert(`Error: ${error.response.data.message}`);
+      }
+    }
+  };
+
+  const updateStartup = async (id) => {
+    console.log("Update startup");
+    try {
+      const response = await api.put(`/startup/update/${id}`, startupData, {
+        headers: {
+          'Authorization': `Bearer ${userData?.Token}`,
+        },
+      });
+      console.log(response.data);
+      alert('Startup updated successfully');
+      dispatch(updateStartupInStore(response.data.startUp));
+      navigate(`/startups/${response.data.startUp._id}`);
+    } catch (error) {
+      console.error("Error updating startup:", error);
+      if (error.response && error.response.data) {
+        alert(`Error: ${error.response.data.message}`);
+      }
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(startupData);
+    if (startup) {
+      updateStartup(startup._id);
+    } else {
+      createStartup();
+    }
   };
 
   return (
-    <div className="max-w-xl mx-auto my-8 p-4   bg-gray-800 rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center text-white mb-6">Startup Form</h1>
+    <div className="max-w-xl mx-auto my-8 p-4 bg-gray-800 rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold text-center text-white mb-6">
+        {startup ? "Edit Startup" : "Add Startup"}
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {[
           {
@@ -183,7 +242,7 @@ const StartupForm = () => {
               <input
                 type={type}
                 name={name}
-                value={startupData.FundingRaised[0][name.split(".")[2]]}
+                value={startupData.FundingRaised[name.split(".")[1]]}
                 onChange={handleChange}
                 placeholder={placeholder}
                 className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
