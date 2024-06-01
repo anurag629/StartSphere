@@ -5,10 +5,12 @@ import Navbar from '../Home/Navbar';
 import Footer from '../Home/Footer';
 import api from '../../api/axios';
 import ArticleHome from './Article/ArticleHome';
+import SkeletonSidebar from './Sidebar/SkeletonSidebar';
 
 const Resource = () => {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -17,6 +19,8 @@ const Resource = () => {
         setArticles(response.data.articles);
       } catch (error) {
         console.error("Error fetching articles:", error);
+      }finally {
+        setLoading(false);
       }
     };
     fetchArticles();
@@ -30,10 +34,13 @@ const Resource = () => {
     <div className="flex w-full flex-col h-screen">
       <Navbar />
       <div className='flex flex-1 w-full'>
-        <Sidebar className="w-1/4 h-full overflow-hidden" articles={articles} onArticleClick={handleArticleClick} />
+        {loading ? (<SkeletonSidebar/>):(
+        <Sidebar className="w-1/4 h-full overflow-hidden" articles={articles} onArticleClick={handleArticleClick} />)}
         <div className="w-full h-full overflow-y-auto">
           {selectedArticle ? <Articles article={selectedArticle} setArticle={setSelectedArticle} allArticles={articles} setAllArticles={setArticles}/> : <ArticleHome className="w-1/1"/>}
+        
         </div>
+
       </div>
       <Footer />
     </div>
