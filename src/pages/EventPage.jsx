@@ -4,6 +4,7 @@ import Navbar from "../components/Home/Navbar";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api/axios";
 
 const EventPage = () => {
   const [events, setEvents] = useState([]);
