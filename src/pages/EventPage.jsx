@@ -18,7 +18,6 @@ const EventPage = () => {
         console.error("Error fetching events:", error);
       }
     };
-
     fetchEvents();
   }, []);
 
