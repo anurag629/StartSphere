@@ -64,7 +64,7 @@ const CreateArticleForm = () => {
     };
     try {
       console.log(newArticle)
-      const ArticleResponse= await api.post(`/article/articles/${profileData._id}`,newArticle,
+      const ArticleResponse= await api.post(`/article/create/${profileData._id}`,newArticle,
       {
         headers: {
           'Authorization': `Bearer ${userData.Token}`,
