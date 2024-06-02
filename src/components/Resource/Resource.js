@@ -35,12 +35,10 @@ const Resource = () => {
       <Navbar />
       <div className='flex flex-1 w-full '>
         {loading ? (<SkeletonSidebar/>):(
-        <Sidebar className="w-1/4 h-full overflow-hidden" articles={articles} onArticleClick={handleArticleClick} />)}
-        <div className="w-full h-full overflow-y-auto bg-rounded-md">
+        <Sidebar className="w-1/4 overflow-hidden" articles={articles} onArticleClick={handleArticleClick} />)}
+        <div className="w-full overflow-y-auto bg-rounded-md">
           {selectedArticle ? <Articles article={selectedArticle} setArticle={setSelectedArticle} allArticles={articles} setAllArticles={setArticles}/> : <ArticleHome className="w-1/1"/>}
-        
         </div>
-
       </div>
       <Footer />
     </div>

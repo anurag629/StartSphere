@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 const ArticleNavbar = ({ Author, handleDeleteArticle }) => {
   const navigate = useNavigate();
   return (
-    <nav className="bg-slate-700 rounded-md p-1 flex justify-between items-center text-white">
+    <nav className="rounded-md p-1 flex justify-between items-center text-white">
       {Author ? (
-        <div className="max-w-xs profile pr-2 bg-white shadow-md rounded flex items-center">
+        <div className="max-w-xs profile pr-2 text-white shadow-md rounded flex items-center">
           <Avatar src={Author.Image} alt={Author.Name} className="w-24 h-24 rounded-full mr-2" />
-          <div className="max-w-xs">
-            <h2 className="text-medium font-bold text-black">{Author.Name}</h2>
-            <p className="text-gray-600 text-sm mb-1 break-all overflow-hidden whitespace-pre-wrap">
+          <div className="max-w-xs text-white">
+            <h2 className="text-medium font-bold text-white">{Author.Name}</h2>
+            <p className="text-white text-sm mb-1 break-all overflow-hidden whitespace-pre-wrap">
               {Author.Bio}
             </p>
             <p className="text-blue-500">{Author.Email}</p>
@@ -27,7 +27,7 @@ const ArticleNavbar = ({ Author, handleDeleteArticle }) => {
         />
         <MdDelete 
           onClick={handleDeleteArticle} 
-          className="m-2 h-8 w-8 text-white-600 hover:text-red-500 cursor-pointer transition-colors duration-200 ease-in-out" 
+          className="m-2 h-8 w-8 text-white-600 hover:text-red-500 cursor-pointer transition-colors duration-200 ease-in-out"
         />
       </div>
     </nav>

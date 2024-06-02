@@ -2,7 +2,7 @@ import React from 'react';
 
 const SkeletonSidebar = () => {
   return (
-    <aside className="w-1/4 h-screen bg-slate-800 p-5 shadow-lg overflow-y-auto no-scrollbar dark:bg-slate-900 animate-pulse">
+    <aside className="w-1/4  bg-slate-800 p-5 shadow-lg overflow-y-auto no-scrollbar dark:bg-slate-900 animate-pulse">
       <div className="flex items-center space-x-4 pb-4">
         <div className="w-full bg-slate-700 h-12 rounded flex items-center justify-center">
           <div className="w-6 h-6 bg-slate-700 rounded-full"></div>
