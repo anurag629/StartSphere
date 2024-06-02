@@ -38,16 +38,16 @@ const PostCard = ({ post }) => {
   const { _id, User, Title, Image, Description, createdAt, updatedAt, Likes, Comments } = post;
 
   return (
-    <div className="bg-gray-700 rounded-lg p-4 mb-4 text-white">
+    <div className="bg-slate-700 rounded-lg p-4 mb-10 text-white">
       <Link to={`/post/${_id}`}>
         <div>
-          <div className="flex w-full justify-between bg-gray-700 p-4 rounded-lg text-white mb-2">
+          <div className="flex w-full justify-between bg-slate-700 p-4 rounded-lg text-white mb-2">
             <div className="flex space-x-4">
-              {/* {User.Image && <img src={User.Image} alt="Profile" className="w-16 h-16 rounded-full" />} */}
-              <img src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj" alt="Profile" className="w-16 h-16 rounded-full" />
+              {User.Image && <img src={User.Image} alt="Profile" className="w-16 h-16 rounded-full" />}
+              {/* <img src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj" alt="Profile" className="w-16 h-16 rounded-full" /> */}
               <div>
-                <h2 className="text-xl font-bold">{User.Name}</h2>
-                <p className="text-sm">Bio: {User.Bio}</p>
+                <h2 className="text-xl font-serif font-bold">{User.Name}</h2>
+                <p className="text-sm font-serif">{User.Bio}</p>
                 <p className="text-sm">Last updated on {convertTimeFormat(updatedAt)}</p>
               </div>
             </div>
@@ -65,7 +65,7 @@ const PostCard = ({ post }) => {
             <svg className="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
-            {Likes}
+            {'8'}
           </span>
           <span className="flex items-center">
             <svg className="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 24 24">

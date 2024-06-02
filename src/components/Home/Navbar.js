@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState('Guest')
   const [email, setEmail] = useState('guest@gmail.com')
+  const [profileImage, setProfileImage] = useState(null)
+  const profileData = useSelector((state) => state.profile.profile) || {};
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -28,6 +31,12 @@ const Navbar = () => {
       setEmail(user.Email)
     }
   }, [])
+
+  useEffect(() => {
+    if (!profileImage && profileData && profileData.Image) {
+      setProfileImage(profileData.Image)
+    }
+  }, [profileData])
 
   return (
     <nav className="bg-gray-800 border-gray-700">
@@ -55,7 +64,7 @@ const Navbar = () => {
                 aria-expanded="false"
               >
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user profile" />
+                <img className="w-8 h-8 rounded-full" src={profileImage} alt="user profile" />
               </button>
             }
             arrowIcon={false}
@@ -94,9 +103,6 @@ const Navbar = () => {
             <li>
               <Link to="/" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-500 md:p-0" aria-current="page">Home</Link>
             </li>
-            {/* <li>
-              <Link to="/mynetwork" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">My Network</Link>
-            </li> */}
             <li>
               <Link to="/startups" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">StartUp</Link>
             </li>

@@ -5,6 +5,8 @@ import { addPost, updatePost } from '../../feature/postSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import api from '../../api/axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PostCreation = ({ post }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,13 +27,6 @@ const PostCreation = ({ post }) => {
       setImage(post.Image);
     }
   }, [post]);
-
-  function getCurrentDateTime() {
-    const now = new Date();
-    const date = now.toLocaleDateString();  // Format: MM/DD/YYYY
-    const time = now.toLocaleTimeString();  // Format: HH:MM:SS AM/PM
-    return `${date} ${time}`;
-  }
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -66,6 +61,8 @@ const PostCreation = ({ post }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const id = toast.loading("Please wait...")
     const uploadedFile = await handleUpload();
 
     if (post) {
@@ -86,11 +83,11 @@ const PostCreation = ({ post }) => {
           }
         );
 
-        alert('Post updated successfully');
+        toast.update(id, { render: "Post updated successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
         dispatch(updatePost(response.data.post));
         navigate(`/post/${response.data.post._id}`);
       } catch (error) {
-        alert('Error updating post');
+        toast.update(id, { render: "Error updating post!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
         console.error(error);
       }
     } else {
@@ -111,12 +108,12 @@ const PostCreation = ({ post }) => {
             },
           }
         );
-
-        alert('Post created successfully');
+        toast.update(id, { render: "Post created sucessfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
         dispatch(addPost(response.data.post));
+        console.log(response);
         navigate(`/post/${response.data.post._id}`);
       } catch (error) {
-        alert('Error creating post');
+        toast.update(id, { render: "Error creating post!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
         console.error(error);
       }
     }
@@ -184,29 +181,29 @@ const PostCreation = ({ post }) => {
 
       <PostCreateModel isOpen={isModalOpen} onClose={handleCloseModal}>
         <form onSubmit={handleSubmit}>
-          <h2 className="text-2xl text-white mb-4">{post ? 'Edit Post' : 'Create a Post'}</h2>
+          <h2 className=" flex justify-center text-2xl text-white mb-4">{post ? 'Edit Post' : 'Create a Post'}</h2>
           <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-1">Title</label>
+            <label className="block text-sm text-white mb-1">Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 rounded bg-gray-600 border border-gray-500"
+              className="w-full p-2 rounded bg-gray-700 text-white"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-1">Description</label>
+            <label className="block text-sm text-white mb-1">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 rounded bg-gray-600 border border-gray-500"
+              className="w-full p-2 rounded bg-gray-700 text-white"
               rows="4"
               required
             ></textarea>
           </div>
           <div className="mb-4">
-            <label className="block text-sm text-gray-400 mb-1">Image Upload</label>
+            <label className="block text-sm text-white mb-1">Image Upload</label>
             <input
               type="file"
               accept='image/*'
@@ -214,12 +211,12 @@ const PostCreation = ({ post }) => {
                 setImage(e.target.files[0]);
                 setImageChanged(true);
               }}
-              className="w-full p-2 rounded bg-gray-600 border border-gray-500"
+              className="w-full p-2 rounded bg-gray-700 text-white"
             />
           </div>
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg"
+            className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white"
           >
             {post ? 'Update Post' : 'Create Post'}
           </button>

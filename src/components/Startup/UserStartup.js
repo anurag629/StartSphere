@@ -17,9 +17,9 @@ function UserStartup() {
     if (startups.length === 0) {
         return (
             <div className="min-h-screen flex flex-col">
-                <main className="flex-grow p-4 bg-gray-900">
+                <main className="flex-grow p-4 bg-gray-900 rounded-md">
                     <div className="max-w-4xl mx-auto">
-                        <h1 className="text-2xl font-bold text-white text-center">You have no startups</h1>
+                        <h1 className="flex justify-center text-lg text-white">No startups</h1>
                     </div>
                 </main>
             </div>
@@ -29,7 +29,7 @@ function UserStartup() {
     return (
         <div className="flex flex-col">
             {startups.map((startup) => (
-                <Link to={`/startups/${startup._id}`} key={startup._id} className="bg-slate-200 rounded-md shadow-lg mb-4 p-4 hover:bg-slate-300 transition duration-300">
+                <Link to={`/startups/${startup._id}`} key={startup._id} className="bg-slate-900 rounded-md shadow-lg mb-4 p-4 text-white hover:bg-slate-800 transition duration-300">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center">
                             {startup.Logo && (
@@ -41,13 +41,13 @@ function UserStartup() {
                             )}
                             <div>
                                 <h2 className="text-xl font-bold">{startup.StartUpName}</h2>
-                                <p className="text-sm text-gray-700 mt-1">
+                                <p className="text-sm mt-1">
                                     Founded by {startup.FounderName} in {startup.FoundingYear}
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div className="mt-2 text-gray-800">
+                    <div className="mt-2">
                         <p className="text-sm line-clamp-2">{startup.CompanyDes}</p>
                     </div>
                 </Link>
