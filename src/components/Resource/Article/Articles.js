@@ -20,7 +20,7 @@ const Articles = ({ article,setArticle,allArticles,setAllArticles}) => {
     }
   }
   return (
-    <div className="flex-grow h-screen p-10 overflow-y-auto no-scrollbar">
+    <div className=" flex-grow h-screen p-10 bg-slate-900 text-white overflow-y-auto no-scrollbar">
       <ArticleNavbar Author={article ? article.author : null} handleDeleteArticle={handleDeleteArticle}/>
       {article ? (
         <div className="content ">

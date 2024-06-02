@@ -17,9 +17,9 @@ const Sidebar = ({ articles, onArticleClick }) => {
   const handleCreateArticle = () => {
     navigate('/create-article');
   };
-
+  console.log("my article:",articles)
   return (
-    <aside className="w-1/4 h-screen bg-gray-200 p-5 shadow-lg overflow-y-auto no-scrollbar dark:bg-gray-900">
+    <aside className="w-1/4 h-screen bg-slate-800 p-5 shadow-lg overflow-y-auto no-scrollbar dark:bg-gray-900">
       <div className="flex items-center space-x-4 pb-4">
         <button
           className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
@@ -41,11 +41,11 @@ const Sidebar = ({ articles, onArticleClick }) => {
         <ul className="list-none p-0">
           {filteredArticles.map(article => (
             <li
-              key={article.id}
+              key={article._id}
               onClick={() => onArticleClick(article)}
-              className="p-2 mb-2 bg-white border border-gray-300 rounded cursor-pointer hover:bg-gray-200"
+              className="p-2 mb-2 bg-slate-700 text-white border border-gray-300 rounded cursor-pointer hover:bg-gray-200 "
             >
-              {article.title}
+              {article.title.substring(0,30)}...
             </li>
           ))}
         </ul>

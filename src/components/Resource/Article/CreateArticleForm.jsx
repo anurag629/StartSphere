@@ -85,9 +85,9 @@ const CreateArticleForm = () => {
   };
 
   return (
-    <div>
+    <div className='bg-slate-800 h-screen overflow-x-scroll'>
       <Navbar />
-      <div className="create-article-form bg-white p-4 shadow-md rounded mt-4 h-100 w-4/5 m-auto">
+      <div className="create-article-form bg-slate-700 text-white p-4 shadow-md rounded mt-4 h-100 w-4/5 m-auto ">
         <h2 className="text-2xl font-bold mb-4">Create New Article</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -96,7 +96,7 @@ const CreateArticleForm = () => {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
+              className="w-full text-black p-2 border border-gray-300 rounded mt-1"
             />
           </div>
           <div className="mb-4">
