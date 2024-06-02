@@ -9,7 +9,7 @@ function EditStartup() {
     const navigate = useNavigate()
     const { slug } = useParams()
     const [startup, setStartup] = useState(null)
-    const allStartups = useSelector((state) => state.startups.startups)
+    const allStartups = useSelector((state) => state.startups.startups) || []
 
     useEffect(() => {
         if (allStartups && slug) {
