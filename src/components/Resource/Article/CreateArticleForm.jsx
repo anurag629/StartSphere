@@ -87,20 +87,21 @@ const CreateArticleForm = () => {
   return (
     <div className='bg-slate-800 h-screen overflow-x-scroll'>
       <Navbar />
-      <div className="create-article-form bg-slate-700 text-white p-4 shadow-md rounded mt-4 h-100 w-4/5 m-auto ">
-        <h2 className="text-2xl font-bold mb-4">Create New Article</h2>
+      <div className="create-article-form bg-slate-700  p-4 shadow-md rounded mt-4 h-100 w-4/5 m-auto ">
+        <h2 className="text-2xl font-bold mb-4 text-white">Create New Article</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700">Title</label>
+            <label className="block text-white">Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full text-black p-2 border border-gray-300 rounded mt-1"
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+              placeholder='Enter title...'
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Content</label>
+            <label className="block text-white">Content</label>
             {contentBlocks.map((block, index) => (
               <div key={index} className="flex items-center mb-2">
                 {block.type === 'text' && ( 
