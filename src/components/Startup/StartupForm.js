@@ -11,7 +11,7 @@ const StartupForm = ({ startup }) => {
   const id = JSON.parse(localStorage.getItem('user'))._id;
 
   const [startupData, setStartupData] = useState({
-    User: "",
+    User: id,
     StartUpName: "",
     Logo: "",
     FounderName: "",
@@ -24,11 +24,11 @@ const StartupForm = ({ startup }) => {
     Investors: "",
     Evaluation: "",
     Revenue: "",
-    FundingRaised: {
+    FundingRaised: [{
       CompanyName: "",
       EquityHolds: "",
       Amount: "",
-    },
+    }],
     ContactInformation: {
       CompanyEmail: "",
       Phone: "",
@@ -59,8 +59,8 @@ const StartupForm = ({ startup }) => {
       });
     } else if (nameParts.length === 3 && Array.isArray(startupData[nameParts[0]])) {
       const updatedArray = [...startupData[nameParts[0]]];
-      updatedArray[0] = {
-        ...updatedArray[0],
+      updatedArray[parseInt(nameParts[1])] = {
+        ...updatedArray[parseInt(nameParts[1])],
         [nameParts[2]]: value,
       };
       setStartupData({
@@ -74,11 +74,12 @@ const StartupForm = ({ startup }) => {
 
   const createStartup = async () => {
     console.log("Create startup");
+    console.log("startup token", userData?.Token);
     try {
       const response = await api.post('/startup/create', startupData, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userData.Token}`,
+          'Authorization': `Bearer ${userData?.Token}`,
         },
       });
       console.log("Create startup response::", response);
@@ -120,6 +121,21 @@ const StartupForm = ({ startup }) => {
     } else {
       createStartup();
     }
+  };
+
+  const addFundingEntry = () => {
+    setStartupData({
+      ...startupData,
+      FundingRaised: [
+        ...startupData.FundingRaised,
+        { CompanyName: "", EquityHolds: "", Amount: "" },
+      ],
+    });
+  };
+
+  const removeFundingEntry = (index) => {
+    const updatedFundingRaised = startupData.FundingRaised.filter((_, i) => i !== index);
+    setStartupData({ ...startupData, FundingRaised: updatedFundingRaised });
   };
 
   return (
@@ -216,40 +232,57 @@ const StartupForm = ({ startup }) => {
           </div>
         ))}
         <h2 className="text-lg font-semibold mt-4 text-white">Funding Raised</h2>
-        <div className="space-y-4">
-          {[
-            {
-              label: "Funding Company Name",
-              name: "FundingRaised.CompanyName",
-              type: "text",
-              placeholder: "Funding Company Name",
-            },
-            {
-              label: "Equity Holds",
-              name: "FundingRaised.EquityHolds",
-              type: "number",
-              placeholder: "Equity Holds",
-            },
-            {
-              label: "Funding Amount",
-              name: "FundingRaised.Amount",
-              type: "number",
-              placeholder: "Funding Amount",
-            },
-          ].map(({ label, name, type, placeholder }) => (
-            <div key={name}>
-              <label className="block text-white font-semibold mb-1">{label}</label>
+        {startupData.FundingRaised.map((funding, index) => (
+          <div key={index} className="space-y-4">
+            <div>
+              <label className="block text-white font-semibold mb-1">Funding Company Name</label>
               <input
-                type={type}
-                name={name}
-                value={startupData.FundingRaised[name.split(".")[1]]}
+                type="text"
+                name={`FundingRaised.${index}.CompanyName`}
+                value={funding.CompanyName}
                 onChange={handleChange}
-                placeholder={placeholder}
+                placeholder="Funding Company Name"
                 className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
-          ))}
-        </div>
+            <div>
+              <label className="block text-white font-semibold mb-1">Equity Holds</label>
+              <input
+                type="number"
+                name={`FundingRaised.${index}.EquityHolds`}
+                value={funding.EquityHolds}
+                onChange={handleChange}
+                placeholder="Equity Holds"
+                className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-white font-semibold mb-1">Funding Amount</label>
+              <input
+                type="number"
+                name={`FundingRaised.${index}.Amount`}
+                value={funding.Amount}
+                onChange={handleChange}
+                placeholder="Funding Amount"
+                className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => removeFundingEntry(index)}
+              className="bg-red-600 text-white px-2 py-1 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addFundingEntry}
+          className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75"
+        >
+          Add Funding Entry
+        </button>
         <h2 className="text-lg font-semibold mt-4 text-white">Contact Information</h2>
         <div className="space-y-4">
           {[
