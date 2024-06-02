@@ -99,11 +99,12 @@ function FilterData() {
           className="fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded font-bold"
           onClick={handleToggleSidebar}
         >
-          {isSidebarOpen ? 'Close' : 'Open'} Filter
+          {isSidebarOpen ? "Close" : "Open"} Filter
         </button>
         <div
-          className={`fixed top-0 left-0 h-full bg-slate-800 text-white p-4 transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-            } w-full max-w-xs`}
+          className={`fixed top-0 left-0 h-full bg-slate-800 text-white p-4 transition-transform duration-300 ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } w-full max-w-xs`}
         >
           <div className="mb-4 mt-16">
             <label htmlFor="companyValuation" className="block font-bold mb-2">
@@ -193,12 +194,12 @@ function FilterData() {
           </div>
           <div className="mb-4">
             <label htmlFor="industryTag" className="block font-bold mb-2">
-              Industry Tag
+              Target market
             </label>
             <input
               type="text"
               id="industryTag"
-              placeholder="Industry Tag"
+              placeholder="Target market"
               value={industryTag}
               onChange={(e) => setIndustryTag(e.target.value)}
               className="w-full bg-gray-200 p-2 text-zinc-600 border border-gray-200 rounded"
@@ -206,8 +207,9 @@ function FilterData() {
           </div>
         </div>
         <div
-          className={`transition-all duration-300 ${isSidebarOpen ? 'ml-80' : 'ml-0'
-            } flex-1 p-4`}
+          className={`transition-all duration-300 ${
+            isSidebarOpen ? "ml-80" : "ml-0"
+          } flex-1 p-4`}
         >
           <div className="flex justify-center">
             <h1 className="text-4xl font-bold mb-4 text-white">Search Startups</h1>
