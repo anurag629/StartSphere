@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../Images/logo2.jpg'
+import { useSelector } from 'react-redux';
+
 const Navbar = () => {
   const navigate = useNavigate()
   const [username, setUsername] = useState('Guest')
   const [email, setEmail] = useState('guest@gmail.com')
+  const [profileImage, setProfileImage] = useState(null)
+  const profileData = useSelector((state) => state.profile.profile) || {};
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
@@ -24,6 +29,13 @@ const Navbar = () => {
       setEmail(user.Email)
     }
   }, [])
+
+  useEffect(() => {
+    if (!profileImage && profileData && profileData.Image) {
+      setProfileImage(profileData.Image)
+    }
+  }, [profileData])
+
   return (
     <nav className="bg-gray-800 border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
@@ -49,7 +61,7 @@ const Navbar = () => {
                 aria-expanded="false"
               >
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user profile" />
+                <img className="w-8 h-8 rounded-full" src={profileImage} alt="user profile" />
               </button>
             }
             arrowIcon={false}

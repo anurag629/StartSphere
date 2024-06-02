@@ -5,6 +5,39 @@ import { deletePost as deletePostFromStore } from '../feature/postSlice'
 import Navbar from '../components/Home/Navbar';
 import Footer from '../components/Home/Footer';
 
+function convertTimeFormat(isoString) {
+    const date = new Date(isoString);
+
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+
+    const daySuffix = getDaySuffix(day);
+
+    return `${month} ${day}${daySuffix}, ${year} at ${hours}:${minutes} ${ampm}`;
+}
+
+function getDaySuffix(day) {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+        case 1: return "st";
+        case 2: return "nd";
+        case 3: return "rd";
+        default: return "th";
+    }
+}
+
 function Post() {
     const [post, setPost] = useState(null)
     const { slug } = useParams()
@@ -14,11 +47,11 @@ function Post() {
     const profileData = useSelector((state) => state.profile.profile)
     const isAuthor = post && profileData ? (post.User._id === profileData._id) : false
 
-    // if(profileData) {
+    // if (profileData) {
     //     console.log("Profile: ", profileData)
     //     console.log("Profile._id: ", profileData._id)
     // }
-    // if(post) {
+    // if (post) {
     //     console.log("Post: ", post)
     //     console.log("Post.User._id: ", post.User._id)
     // }
@@ -44,15 +77,29 @@ function Post() {
     return post ? (
         <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-grow p-4 bg-gray-900">
-                <div className="max-w-4xl mx-auto bg-slate-400 rounded-md">
+            <main className="flex-grow p-4 bg-gray-800">
+                <div className="max-w-6xl mx-auto bg-gray-900 rounded-md text-white mb-10">
+                    <div className="flex w-full justify-between p-4 rounded-lg text-white mb-2">
+                        <div className="flex space-x-4 mt-4 mx-2">
+                            {post?.User?.Image && <img src={post?.User?.Image} alt="Profile" className="w-16 h-16 rounded-full" />}
+                            <div className='pt-2'>
+                                {post?.User?.Name && <h2 className="text-xl font-serif font-bold">{post?.User?.Name}</h2>}
+                                {post?.User?.Bio && <p className="text-sm font-serif">{post?.User?.Bio}</p>}
+                            </div>
+                        </div>
+                        <div className='pt-5 mx-4'>
+                            {post?.createdAt && <p className="text-md">Created on {convertTimeFormat(post?.createdAt)}</p>}
+                            {post?.updatedAt && <p className="text-md">Last updated on {convertTimeFormat(post?.updatedAt)}</p>}
+                        </div>
+                    </div>
+                    <hr class="border-t-2 border-gray-800 my-4"></hr>
                     <div className="py-8">
                         <div className="flex justify-center mb-4 relative p-2">
                             {post.Image && (
                                 <img
                                     src={post.Image}
                                     alt={post.Title}
-                                    className="rounded-xl"
+                                    className="rounded-xl w-fit-content h-96 object-cover shadow-lg "
                                 />
                             )}
 
@@ -77,7 +124,7 @@ function Post() {
                         <div className="flex justify-center w-full mb-6">
                             <h1 className="text-2xl font-bold">{post.Title}</h1>
                         </div>
-                        <div className="flex justify-center browser-css">
+                        <div className="flex justify-center browser-css px-9 text-white">
                             {post.Description}
                         </div>
                     </div>

@@ -3,6 +3,8 @@ import api from '../../api/axios';
 import { addStartup, updateStartup as updateStartupInStore } from '../../feature/startupSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StartupForm = ({ startup }) => {
   const dispatch = useDispatch();
@@ -73,6 +75,7 @@ const StartupForm = ({ startup }) => {
   };
 
   const createStartup = async () => {
+    const id = toast.loading("Please wait...")
     console.log("Create startup");
     console.log("startup token", userData?.Token);
     try {
@@ -83,18 +86,16 @@ const StartupForm = ({ startup }) => {
         },
       });
       console.log("Create startup response::", response);
-      alert('Startup created successfully');
+      toast.update(id, { render: "Startup created succesfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
       dispatch(addStartup(response.data.startUp));
       navigate(`/startups/${response.data.startUp._id}`);
     } catch (error) {
-      console.error("Error creating startup:", error);
-      if (error.response && error.response.data) {
-        alert(`Error: ${error.response.data.message}`);
-      }
+      toast.update(id, { render: "Error creating startup!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     }
   };
 
   const updateStartup = async (id) => {
+    const toastId = toast.loading("Please wait...")
     console.log("Update startup");
     try {
       const response = await api.put(`/startup/update/${id}`, startupData, {
@@ -103,14 +104,12 @@ const StartupForm = ({ startup }) => {
         },
       });
       console.log(response.data);
-      alert('Startup updated successfully');
+      toast.update(toastId, { render: "Startup updated succesfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
       dispatch(updateStartupInStore(response.data.startUp));
       navigate(`/startups/${response.data.startUp._id}`);
     } catch (error) {
       console.error("Error updating startup:", error);
-      if (error.response && error.response.data) {
-        alert(`Error: ${error.response.data.message}`);
-      }
+      toast.update(toastId, { render: "Error updating startup!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     }
   };
 
@@ -139,152 +138,170 @@ const StartupForm = ({ startup }) => {
   };
 
   return (
-    <div className="max-w-xl mx-auto my-8 p-4 bg-gray-800 rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center text-white mb-6">
+    <div className="mx-auto my-8 p-4 bg-gray-800 text-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold text-center text-white mb-6">
         {startup ? "Edit Startup" : "Add Startup"}
       </h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {[
-          {
-            label: "Startup Name",
-            name: "StartUpName",
-            type: "text",
-            placeholder: "Startup Name",
-          },
-          { label: "Logo", name: "Logo", type: "text", placeholder: "Logo" },
-          {
-            label: "Founder Name",
-            name: "FounderName",
-            type: "text",
-            placeholder: "Founder Name",
-          },
-          {
-            label: "Company Description",
-            name: "CompanyDes",
-            type: "textarea",
-            placeholder: "Company Description",
-          },
-          {
-            label: "Founding Year",
-            name: "FoundingYear",
-            type: "number",
-            placeholder: "Founding Year",
-          },
-          {
-            label: "Number of Employees",
-            name: "NumberOfEmployees",
-            type: "number",
-            placeholder: "Number of Employees",
-          },
-          {
-            label: "Target Market",
-            name: "TargetMarket",
-            type: "text",
-            placeholder: "Target Market",
-          },
-          {
-            label: "Current Stage",
-            name: "CurrentStage",
-            type: "text",
-            placeholder: "Current Stage",
-          },
-          {
-            label: "Key Features",
-            name: "KeyFeatures",
-            type: "text",
-            placeholder: "Key Features",
-          },
-          {
-            label: "Investors",
-            name: "Investors",
-            type: "text",
-            placeholder: "Investors",
-          },
-          {
-            label: "Evaluation",
-            name: "Evaluation",
-            type: "number",
-            placeholder: "Evaluation",
-          },
-          { label: "Revenue", name: "Revenue", type: "number", placeholder: "Revenue" },
-        ].map(({ label, name, type, placeholder }) => (
-          <div key={name}>
-            <label className="block text-white font-semibold mb-1">{label}</label>
-            {type === "textarea" ? (
-              <textarea
-                name={name}
-                type={type}
-                value={startupData[name]}
-                onChange={handleChange}
-                placeholder={placeholder}
-                className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
-              />
-            ) : (
-              <input
-                type={type}
-                name={name}
-                value={startupData[name]}
-                onChange={handleChange}
-                placeholder={placeholder}
-                className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              />
-            )}
-          </div>
-        ))}
-        <h2 className="text-lg font-semibold mt-4 text-white">Funding Raised</h2>
-        {startupData.FundingRaised.map((funding, index) => (
-          <div key={index} className="space-y-4">
-            <div>
-              <label className="block text-white font-semibold mb-1">Funding Company Name</label>
-              <input
-                type="text"
-                name={`FundingRaised.${index}.CompanyName`}
-                value={funding.CompanyName}
-                onChange={handleChange}
-                placeholder="Funding Company Name"
-                className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              />
+      <form onSubmit={handleSubmit}>
+        {/* General Details */}
+        <div className="grid grid-cols-3 grid-rows-3 gap-4">
+          {[
+            {
+              label: "Startup Name",
+              name: "StartUpName",
+              type: "text",
+              placeholder: "Startup Name",
+            },
+            { label: "Logo", name: "Logo", type: "text", placeholder: "Logo" },
+            {
+              label: "Founder Name",
+              name: "FounderName",
+              type: "text",
+              placeholder: "Founder Name",
+            },
+            {
+              label: "Founding Year",
+              name: "FoundingYear",
+              type: "number",
+              placeholder: "Founding Year",
+            },
+            {
+              label: "Number of Employees",
+              name: "NumberOfEmployees",
+              type: "number",
+              placeholder: "Number of Employees",
+            },
+            {
+              label: "Target Market",
+              name: "TargetMarket",
+              type: "text",
+              placeholder: "Target Market",
+            },
+            {
+              label: "Current Stage",
+              name: "CurrentStage",
+              type: "text",
+              placeholder: "Current Stage",
+            },
+            {
+              label: "Key Features",
+              name: "KeyFeatures",
+              type: "text",
+              placeholder: "Key Features",
+            },
+            {
+              label: "Investors",
+              name: "Investors",
+              type: "text",
+              placeholder: "Investors",
+            },
+            {
+              label: "Evaluation",
+              name: "Evaluation",
+              type: "number",
+              placeholder: "Evaluation",
+            },
+            {
+              label: "Revenue",
+              name: "Revenue",
+              type: "number",
+              placeholder: "Revenue"
+            },
+            {
+              label: "Company Description",
+              name: "CompanyDes",
+              type: "textarea",
+              placeholder: "Company Description",
+            },
+          ].map(({ label, name, type, placeholder }) => (
+            <div key={name}>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm mb-1">{label}</label>
+                {type === "textarea" ? (
+                  <textarea
+                    name={name}
+                    type={type}
+                    value={startupData[name]}
+                    onChange={handleChange}
+                    placeholder={placeholder}
+                    className="p-2 rounded bg-gray-700 text-white"
+                  />
+                ) : (
+                  <input
+                    type={type}
+                    name={name}
+                    value={startupData[name]}
+                    onChange={handleChange}
+                    placeholder={placeholder}
+                    className="p-2 rounded bg-gray-700 text-white"
+                  />
+                )}
+              </div>
             </div>
-            <div>
-              <label className="block text-white font-semibold mb-1">Equity Holds</label>
-              <input
-                type="number"
-                name={`FundingRaised.${index}.EquityHolds`}
-                value={funding.EquityHolds}
-                onChange={handleChange}
-                placeholder="Equity Holds"
-                className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              />
+          ))}
+        </div>
+        {/* Funding Raised */}
+        <div className='flex'>
+          <h2 className="text-lg font-semibold mt-10 mb-4 text-white">Funding Raised </h2>
+        </div>
+        <div className="grid grid-cols-4 grid-rows-1 gap-4">
+          {startupData.FundingRaised.map((funding, index) => (
+            <div key={index} className="space-y-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm">Funding Company Name</label>
+                <input
+                  type="text"
+                  name={`FundingRaised.${index}.CompanyName`}
+                  value={funding.CompanyName}
+                  onChange={handleChange}
+                  placeholder="Funding Company Name"
+                  className="p-2 rounded bg-gray-700 text-white"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm">Equity Holds</label>
+                <input
+                  type="number"
+                  name={`FundingRaised.${index}.EquityHolds`}
+                  value={funding.EquityHolds}
+                  onChange={handleChange}
+                  placeholder="Equity Holds"
+                  className="p-2 rounded bg-gray-700 text-white"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm">Funding Amount</label>
+                <input
+                  type="number"
+                  name={`FundingRaised.${index}.Amount`}
+                  value={funding.Amount}
+                  onChange={handleChange}
+                  placeholder="Funding Amount"
+                  className="p-2 rounded bg-gray-700 text-white"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => removeFundingEntry(index)}
+                className="bg-red-600 text-white px-2 py-1 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75"
+              >
+                Remove
+              </button>
             </div>
-            <div>
-              <label className="block text-white font-semibold mb-1">Funding Amount</label>
-              <input
-                type="number"
-                name={`FundingRaised.${index}.Amount`}
-                value={funding.Amount}
-                onChange={handleChange}
-                placeholder="Funding Amount"
-                className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              />
-            </div>
-            <button
-              type="button"
-              onClick={() => removeFundingEntry(index)}
-              className="bg-red-600 text-white px-2 py-1 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={addFundingEntry}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75"
-        >
-          Add Funding Entry
-        </button>
-        <h2 className="text-lg font-semibold mt-4 text-white">Contact Information</h2>
-        <div className="space-y-4">
+          ))}
+        </div>
+        <div className='mt-4'>
+          <button
+            type="button"
+            onClick={addFundingEntry}
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75"
+          >
+            Add Funding Entry
+          </button>
+        </div>
+        {/* Contact Information */}
+        <h2 className="text-lg font-semibold mt-10 mb-4 text-white">Contact Information</h2>
+        <div className="grid grid-cols-3 grid-rows-2 gap-4">
           {[
             {
               label: "Company Email",
@@ -318,34 +335,40 @@ const StartupForm = ({ startup }) => {
             },
           ].map(({ label, name, type, placeholder }) => (
             <div key={name}>
-              <label className="block text-white font-semibold mb-1">{label}</label>
-              {type === "textarea" ? (
-                <textarea
-                  name={name}
-                  value={startupData.ContactInformation[name.split(".")[1]]}
-                  onChange={handleChange}
-                  placeholder={placeholder}
-                  className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
-                />
-              ) : (
-                <input
-                  type={type}
-                  name={name}
-                  value={startupData.ContactInformation[name.split(".")[1]]}
-                  onChange={handleChange}
-                  placeholder={placeholder}
-                  className="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-              )}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm">{label}</label>
+                {type === "textarea" ? (
+                  <textarea
+                    name={name}
+                    value={startupData.ContactInformation[name.split(".")[1]]}
+                    onChange={handleChange}
+                    placeholder={placeholder}
+                    className="p-2 rounded bg-gray-700 text-white"
+                  />
+                ) : (
+                  <input
+                    type={type}
+                    name={name}
+                    value={startupData.ContactInformation[name.split(".")[1]]}
+                    onChange={handleChange}
+                    placeholder={placeholder}
+                    className="p-2 rounded bg-gray-700 text-white"
+                  />
+                )}
+              </div>
             </div>
           ))}
         </div>
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75"
-        >
-          Submit
-        </button>
+        <div>
+          <div className='flex justify-end'>
+            <button
+              type="submit"
+              className="py-2 px-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75"
+            >
+              {startup ? "Update Startup" : "Create Startup"}
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );

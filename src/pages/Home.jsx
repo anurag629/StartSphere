@@ -7,7 +7,7 @@ import PostFeed from '../components/Home/PostFeed';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../api/axios';
 import { login, logout } from '../feature/authSlice';
-import { addPost } from '../feature/postSlice';
+import { addPost } from '../feature/postSlice'; 
 import { setProfile } from '../feature/profileSlice';
 import { addArticle } from '../feature/articleSlice';
 
@@ -126,7 +126,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow p-4 bg-gray-900">
+      <main className="flex-grow p-4 bg-gray-800">
         <div className="max-w-4xl mx-auto">
           <ProfileHeader />
           <PostCreation />

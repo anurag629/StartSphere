@@ -1,8 +1,6 @@
 import React from 'react';
-// import api from '../../api/axios';
 
 const ProfileHeader = () => {
-
   const userDetails = localStorage.getItem('user');
 
   return (
