@@ -20,21 +20,22 @@ const Articles = ({ article,setArticle,allArticles,setAllArticles}) => {
     }
   }
   return (
-    <div className="flex-grow h-screen p-10 overflow-y-auto no-scrollbar">
+    <div className=" flex-grow p-10 bg-slate-900 text-white overflow-y-auto no-scrollbar">
       <ArticleNavbar Author={article ? article.author : null} handleDeleteArticle={handleDeleteArticle}/>
+      <hr/>
       {article ? (
         <div className="content ">
-          <h2 className="font-semibold text-2xl mb-4">{article.title}</h2>
+          <h2 className="font-semibold text-2xl mb-4 mt-5">{article.title}</h2>
           {article.content.map((block, index) => {
             if (block.type === 'text') {
               return <p key={index} className="mb-4">{block.value}</p>;
             } else if (block.type === 'image') {
-              return <img key={index} className="h-auto w-full mb-6" src={block.value} alt="" />;
+              return <img key={index} className="h-auto w-1/2 mb-6 m-auto" src={block.value} alt="" />;
             } else if (block.type === 'video') {
-              return <video key={index} className="h-72 w-full mb-6" src={block.value} controls />;
+              return <video key={index} className="h-auto w-1/2 mb-6 m-auto" src={block.value} controls />;
             } else if (block.type === 'heading' || block.type === 'subheading') {
               return <h4 key={index} className="font-semibold mb-4">{block.value}</h4>;
-            } else if (block.type === 'list') {
+            } else if (block.type === 'list'){
               return <ul key={index} className="list-disc list-inside mb-4">{block.value.split(',').map((item, i) => <li key={i}>{item}</li>)}</ul>;
             } else {
               return null;

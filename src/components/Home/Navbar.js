@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../Images/logo2.jpg'
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
@@ -13,17 +14,14 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    navigate('/login')
+    navigate('/login');
   };
-
   const handleProfileClick = () => {
     navigate('/profile');
   };
-
   const handleProfileUpdateClick = () => {
     navigate('/profile/update');
   }
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user.Name && user.Email) {
@@ -40,11 +38,11 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-800 border-gray-700">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src={logo} className='w-20 h-20 rounded-full'/>
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">StartSphere</span>
         </Link>
-
         <div className="relative w-full max-w-md focus-within:text-gray-600">
           <span className="absolute inset-y-0 flex items-center pl-3">
             <svg className="w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -53,7 +51,6 @@ const Navbar = () => {
           </span>
           <input type="text" className="block w-full py-2 pl-10 pr-3 text-base text-white placeholder-gray-400 bg-gray-700 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Search" />
         </div>
-
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <Dropdown
             label={
