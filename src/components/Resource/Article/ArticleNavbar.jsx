@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router-dom';
 
 const ArticleNavbar = ({ Author, handleDeleteArticle }) => {
   const navigate = useNavigate();
+  console.log("author:",Author)
   return (
     <nav className="rounded-md p-1 flex justify-between items-center text-white">
       {Author ? (
         <div className="max-w-xs profile pr-2 text-white shadow-md rounded flex items-center">
-          <Avatar src={Author.Image} alt={Author.Name} className="w-24 h-24 rounded-full mr-2" />
+          <img src={Author.Image} alt={Author.Name} className="w-20 h-20 rounded-full mr-2" />
           <div className="max-w-xs text-white">
             <h2 className="text-medium font-bold text-white">{Author.Name}</h2>
             <p className="text-white text-sm mb-1 break-all overflow-hidden whitespace-pre-wrap">
