@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../Images/logo2.jpg'
@@ -40,7 +41,7 @@ const Navbar = () => {
     <nav className="bg-gray-800 border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src={logo} className='w-20 h-20 rounded-full'/>
+          <img src={logo} className='w-20 h-20 rounded-full' />
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">StartSphere</span>
         </Link>
         <div className="relative w-full max-w-md focus-within:text-gray-600">
@@ -98,16 +99,45 @@ const Navbar = () => {
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-700 rounded-lg bg-gray-800 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-gray-800">
             <li>
-              <Link to="/" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-500 md:p-0" aria-current="page">Home</Link>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0"
+                }
+                aria-current="page"
+              >
+                Home
+              </NavLink>
             </li>
             <li>
-              <Link to="/startups" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">StartUp</Link>
+              <NavLink
+                to="/startups"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0"
+                }
+              >
+                StartUps
+              </NavLink>
             </li>
             <li>
-              <Link to="/events" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Events</Link>
+              <NavLink
+                to="/events"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0"
+                }
+              >
+                Events
+              </NavLink>
             </li>
             <li>
-              <Link to="/resources" className="block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0">Resources</Link>
+              <NavLink
+                to="/resources"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0"
+                }
+              >
+                Resources
+              </NavLink>
             </li>
           </ul>
         </div>

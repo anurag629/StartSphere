@@ -8,6 +8,9 @@ import { addArticle } from '../../../feature/articleSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import api from '../../../api/axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const CreateArticleForm = () => {
   const [title, setTitle] = useState('');
   const [contentBlocks, setContentBlocks] = useState([]);
@@ -57,25 +60,28 @@ const CreateArticleForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     console.log(profileData)
+    const toastId = toast.loading("Please wait...")
     const newArticle = {
-      "title":title,
+      "title": title,
       "content": contentBlocks
     };
+
     try {
       console.log(newArticle)
-      const ArticleResponse= await api.post(`/article/create/${profileData._id}`,newArticle,
-      {
-        headers: {
-          'Authorization': `Bearer ${userData.Token}`,
-        },
-      })
+      const ArticleResponse = await api.post(`/article/create/${profileData._id}`, newArticle,
+        {
+          headers: {
+            'Authorization': `Bearer ${userData.Token}`,
+          },
+        })
 
-      alert('Articles created successfully');
+      toast.update(toastId, { render: "Article created succesfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
       dispatch(addArticle(ArticleResponse));
       navigate('/resources');
     } catch (error) {
-      alert('Error creating article');
+      toast.update(toastId, { render: "Error creating article!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
       console.error(error);
     }
 
@@ -104,7 +110,7 @@ const CreateArticleForm = () => {
             <label className="block text-white">Content</label>
             {contentBlocks.map((block, index) => (
               <div key={index} className="flex items-center mb-2">
-                {block.type === 'text' && ( 
+                {block.type === 'text' && (
                   <textarea
                     value={block.value}
                     onChange={(e) => handleContentChange(index, e.target.value)}
@@ -114,30 +120,30 @@ const CreateArticleForm = () => {
                 )}
                 {block.type === 'image' && (
                   <>
-                  {!block.value ?
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleFileUpload(e.target.files[0], index)}
-                      className="w-full p-2 border border-gray-300 rounded"
-                    />
-                     :(
-                      <img src={block.value} alt="uploaded" className="w-full mt-2" />
-                    )}
+                    {!block.value ?
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileUpload(e.target.files[0], index)}
+                        className="w-full p-2 border border-gray-300 rounded"
+                      />
+                      : (
+                        <img src={block.value} alt="uploaded" className="w-full mt-2" />
+                      )}
                   </>
                 )}
                 {block.type === 'video' && (
                   <>
-                   {!block.value ?
-                    <input
-                      type="file"
-                      accept="video/*"
-                      onChange={(e) => handleFileUpload(e.target.files[0], index)}
-                      className="w-full p-2 border border-gray-300 rounded"
-                    />
-                    :(
-                      <video src={block.value} controls className="w-full mt-2" />
-                    )}
+                    {!block.value ?
+                      <input
+                        type="file"
+                        accept="video/*"
+                        onChange={(e) => handleFileUpload(e.target.files[0], index)}
+                        className="w-full p-2 border border-gray-300 rounded"
+                      />
+                      : (
+                        <video src={block.value} controls className="w-full mt-2" />
+                      )}
                   </>
                 )}
                 {block.type === 'heading' && (
