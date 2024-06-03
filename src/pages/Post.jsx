@@ -4,6 +4,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { deletePost as deletePostFromStore } from '../feature/postSlice'
 import Navbar from '../components/Home/Navbar';
 import Footer from '../components/Home/Footer';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import api from '../api/axios'
 
 function convertTimeFormat(isoString) {
     const date = new Date(isoString);
@@ -46,6 +49,7 @@ function Post() {
     const allPosts = useSelector((state) => state.posts.posts)
     const profileData = useSelector((state) => state.profile.profile)
     const isAuthor = post && profileData ? (post.User._id === profileData._id) : false
+    const userData = useSelector((state) => state.auth.userData);
 
     // if (profileData) {
     //     console.log("Profile: ", profileData)
@@ -69,9 +73,23 @@ function Post() {
     }, [allPosts, slug, navigate])
 
     const deletePost = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        dispatch(deletePostFromStore(post._id))
-        navigate('/')
+        const toastId = toast.loading("Please wait...")
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        try {
+            await api.delete(`post/deletepost/${post._id}`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${userData.Token}`,
+                    },
+                }
+            );
+            toast.update(toastId, { render: "Delete post Successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+            dispatch(deletePostFromStore(post._id))
+            navigate('/')
+        } catch (error) {
+            console.error(error)
+            toast.update(toastId, { render: "Error in deleting post!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+        }
     }
 
     return post ? (
