@@ -83,17 +83,20 @@ function Post() {
                         <div className="flex space-x-4 mt-4 mx-2">
                             {post?.User?.Image && <img src={post?.User?.Image} alt="Profile" className="w-16 h-16 rounded-full" />}
                             <div className='pt-2'>
-                                {post?.User?.Name && <h2 className="text-xl font-serif font-bold">{post?.User?.Name}</h2>}
-                                {post?.User?.Bio && <p className="text-sm font-serif">{post?.User?.Bio}</p>}
+                                {post?.User?.Name && <h2 className="text-xl font-bold">{post?.User?.Name}</h2>}
+                                {post?.User?.Bio && <p className="text-sm text-slate-400">{post?.User?.Bio}</p>}
                             </div>
                         </div>
                         <div className='pt-5 mx-4'>
-                            {post?.createdAt && <p className="text-md">Created on {convertTimeFormat(post?.createdAt)}</p>}
-                            {post?.updatedAt && <p className="text-md">Last updated on {convertTimeFormat(post?.updatedAt)}</p>}
+                            {post?.createdAt && <p className="text-sm text-slate-400">Created on {convertTimeFormat(post?.createdAt)}</p>}
+                            {post?.updatedAt && <p className="text-sm text-slate-400">Uupdated on {convertTimeFormat(post?.updatedAt)}</p>}
                         </div>
                     </div>
                     <hr class="border-t-2 border-gray-800 my-4"></hr>
                     <div className="py-8">
+                        <div className="flex justify-center w-full mb-6">
+                            <h1 className="text-2xl font-bold">{post.Title}</h1>
+                        </div>
                         <div className="flex justify-center mb-4 relative p-2">
                             {post.Image && (
                                 <img
@@ -120,9 +123,6 @@ function Post() {
                                     </button>
                                 </div>
                             )}
-                        </div>
-                        <div className="flex justify-center w-full mb-6">
-                            <h1 className="text-2xl font-bold">{post.Title}</h1>
                         </div>
                         <div className="flex justify-center browser-css px-9 text-white">
                             {post.Description}
