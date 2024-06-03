@@ -33,7 +33,10 @@ const Articles = ({ article,setArticle,allArticles,setAllArticles}) => {
               return <img key={index} className="h-auto w-1/2 mb-6 m-auto" src={block.value} alt="" />;
             } else if (block.type === 'video') {
               return <video key={index} className="h-auto w-1/2 mb-6 m-auto" src={block.value} controls />;
-            } else if (block.type === 'heading' || block.type === 'subheading') {
+            }
+            else if(block.type === 'heading'){
+              return <h2 key={index} className="text-xl font-bold mb-4">{block.value}</h2>;
+            }else if ( block.type === 'subheading') {
               return <h4 key={index} className="font-semibold mb-4">{block.value}</h4>;
             } else if (block.type === 'list'){
               return <ul key={index} className="list-disc list-inside mb-4">{block.value.split(',').map((item, i) => <li key={i}>{item}</li>)}</ul>;

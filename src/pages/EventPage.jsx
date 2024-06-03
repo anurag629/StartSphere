@@ -25,7 +25,7 @@ const EventPage = () => {
     <div className="flex flex-col min-h-screen bg-slate-800">
       <Navbar />
       <div className="flex-grow container mx-auto p-4">
-        <h1 className="text-5xl font-bold m-8 text-center text-white">Events</h1>
+        <h1 className="text-5xl font-bold m-8 text-center text-white">Uncomming Events</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {events.map((event) => (
             <EventCard
@@ -48,5 +48,4 @@ const EventPage = () => {
     </div>
   );
 };
-
 export default EventPage;
