@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { NavLink } from "react-router-dom";
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../Images/logo2.jpg'
+import logo from '../../Images/logo2.png'
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
