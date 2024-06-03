@@ -17,7 +17,8 @@ const EventCard = ({
 
   const handleClick = () => {
     // 
-    navigate(`/event/${title}`);
+    const encodedTitle = encodeURIComponent(title);
+    navigate(`/events/${encodedTitle}`);
   };
 
   return (
