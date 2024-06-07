@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import axios from 'axios';
 import Navbar from '../../Home/Navbar';
 import { useDispatch } from 'react-redux';
 import { addArticle } from '../../../feature/articleSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import api from '../../../api/axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const CreateArticleForm = () => {
+const EditArticle = () => {
+    const { slug } = useParams();
   const [title, setTitle] = useState('');
   const [contentBlocks, setContentBlocks] = useState([]);
   const [isDisable, setIsDisable] = useState(false);
@@ -20,6 +20,20 @@ const CreateArticleForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchArticle=async()=>{
+        const Article=await api.get(`/article/articles/${slug}`,{
+            headers: {
+              'Authorization': `Bearer ${userData.Token}`,
+            },
+          })
+        setTitle(Article.data.article.title)
+        setContentBlocks(Article.data.article.content)
+    }
+  fetchArticle();
+  }, [])
+  
 
   const handleAddBlock = (type) => {
     setContentBlocks([...contentBlocks, { type, value: '' }]);
@@ -69,18 +83,18 @@ const CreateArticleForm = () => {
 
     try {
       console.log(newArticle)
-      const ArticleResponse = await api.post(`/article/create/${profileData._id}`, newArticle,
+      const ArticleResponse = await api.put(`/article/articles/${slug}`, newArticle,
         {
           headers: {
             'Authorization': `Bearer ${userData.Token}`,
           },
         })
 
-      toast.update(toastId, { render: "Article created succesfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
-      dispatch(addArticle(ArticleResponse));
+      toast.update(toastId, { render: "Article Edited succesfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+    //   dispatch(addArticle(ArticleResponse));
       navigate('/resources');
     } catch (error) {
-      toast.update(toastId, { render: "Error creating article!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+      toast.update(toastId, { render: "Error editing article!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
       console.error(error);
     }
 
@@ -93,7 +107,7 @@ const CreateArticleForm = () => {
     <div className='bg-slate-800 h-screen overflow-x-scroll'>
       <Navbar />
       <div className="create-article-form bg-slate-700  p-4 shadow-md rounded mt-4 h-100 w-4/5 m-auto ">
-        <h2 className="text-2xl font-bold mb-4 text-white">Create New Article</h2>
+        <h2 className="text-2xl font-bold mb-4 text-white">Edit Article "{title}"</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-white">Title</label>
@@ -107,7 +121,7 @@ const CreateArticleForm = () => {
           </div>
           <div className="mb-4">
             <label className="block text-white">Content</label>
-            {contentBlocks.map((block, index) => (
+            {contentBlocks && contentBlocks.map((block, index) => (
               <div key={index} className="flex items-center mb-2">
                 {block.type === 'text' && (
                   <textarea
@@ -210,7 +224,7 @@ const CreateArticleForm = () => {
             </button>
           </div>
           <button type="submit" disabled={isDisable} className="bg-green-500 text-white py-2 px-4 rounded">
-            Create Article
+            Save changes
           </button>
         </form>
       </div>
@@ -218,4 +232,4 @@ const CreateArticleForm = () => {
   );
 };
 
-export default CreateArticleForm;
+export default EditArticle;

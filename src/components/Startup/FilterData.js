@@ -96,7 +96,7 @@ function FilterData() {
     <div className="bg-red-700">
       <div className="flex bg-slate-800 mt-20">
         <button
-          className="fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded font-bold"
+          className="fixed top-20 left-4 z-50 p-2 bg-blue-600 text-white rounded font-bold"
           onClick={handleToggleSidebar}
         >
           {isSidebarOpen ? "Close" : "Open"} Filter

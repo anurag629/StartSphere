@@ -16,6 +16,7 @@ import AddStartup from "./pages/AddStartup";
 import EventPage from "./pages/EventPage";
 import EventDetaills from "./components/Event/EventDetails";
 import EditStartup from './pages/EditStartup';
+import EditArticle from "./components/Resource/EditArticle/EditArticle";
 
 const RoutesConfig = () => {
   return (
@@ -97,6 +98,7 @@ const RoutesConfig = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/resources" element={<Resource />} />
         <Route path="/create-article" element={<CreateArticleForm />} />
+        <Route path="/edit-article/:slug" element={<EditArticle />} />
         <Route
           path="/events"
           element={

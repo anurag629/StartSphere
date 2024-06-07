@@ -4,7 +4,6 @@ import api from '../../../api/axios';
 import { useSelector } from 'react-redux';
 const Articles = ({ article,setArticle,allArticles,setAllArticles}) => {
   const userData = useSelector((state) => state.auth.userData);
-
   const handleDeleteArticle=async()=>{
     try {
         const response=await api.delete(`/article/articles/${article._id}`,{
@@ -20,8 +19,8 @@ const Articles = ({ article,setArticle,allArticles,setAllArticles}) => {
     }
   }
   return (
-    <div className=" flex-grow p-10 bg-slate-900 text-white overflow-y-auto no-scrollbar">
-      <ArticleNavbar Author={article ? article.author : null} handleDeleteArticle={handleDeleteArticle}/>
+    <div className="h-full flex-grow p-10 bg-slate-900 text-white overflow-y-auto no-scrollbar">
+      <ArticleNavbar Author={article ? article.author : null} article={article} handleDeleteArticle={handleDeleteArticle}/>
       <hr/>
       {article ? (
         <div className="content ">
