@@ -9,7 +9,7 @@ import api from '../api/axios';
 import { login, logout } from '../feature/authSlice';
 import { addPost } from '../feature/postSlice'; 
 import { setProfile } from '../feature/profileSlice';
-import { addArticle } from '../feature/articleSlice';
+// import { addArticle } from '../feature/articleSlice';
 
 const fetchAllPosts = async (token) => {
   try {
@@ -30,10 +30,10 @@ const fetchAllPosts = async (token) => {
   }
 }
 
-const fetchAllDummyArticles = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return [];
-}
+// const fetchAllDummyArticles = async () => {
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   return [];
+// }
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -104,24 +104,44 @@ const Home = () => {
   }, [user, dispatch]);
 
   // Fetch articles
-  useEffect(() => {
-    const fetchArticles = async () => {
-      if (!user || !user.Token) {
-        return;
-      }
+  // useEffect(() => {
+  //   const fetchArticles = async () => {
+  //     if (!user || !user.Token) {
+  //       return;
+  //     }
 
-      if (articles.length === 0) {
-        try {
-          const fetchedArticles = await fetchAllDummyArticles();
-          fetchedArticles.forEach(article => dispatch(addArticle(article)));
-        } catch (error) {
-          console.error("App.jsx/fetchArticles::", error);
-        }
-      }
-    };
+  //     if (articles.length === 0) {
+  //       try {
+  //         const fetchedArticles = await fetchAllDummyArticles();
+  //         fetchedArticles.forEach(article => dispatch(addArticle(article)));
+  //       } catch (error) {
+  //         console.error("App.jsx/fetchArticles::", error);
+  //       }
+  //     }
+  //   };
 
-    fetchArticles();
-  }, [user, dispatch, articles.length]);
+  //   fetchArticles();
+  // }, [user, dispatch, articles.length]);
+
+  // // Fetch articles
+  // useEffect(() => {
+  //   const fetchArticles = async () => {
+
+  //     if (articles.length === 0) {
+  //       try {
+  //         const fetchedArticles = await fetchAllArticles();
+  //         fetchedArticles.forEach(article => dispatch(addArticle(article)));
+  //       } catch (error) {
+  //         console.error("App.jsx/fetchAllArticles::", error);
+  //       }
+  //       finally {
+  //         setLoading(false);
+  //       }
+  //     }
+  //   };
+
+  //   fetchArticles();
+  // }, [dispatch, articles.length]);
 
   return (
     <div className="min-h-screen flex flex-col">

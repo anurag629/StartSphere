@@ -60,15 +60,16 @@ const CreateArticleForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("profiledata:",profileData)
+
     const toastId = toast.loading("Please wait...")
+
     const newArticle = {
       "title": title,
       "content": contentBlocks
     };
+    console.log(newArticle)
 
     try {
-      console.log(newArticle)
       const ArticleResponse = await api.post(`/article/create/${profileData._id}`, newArticle,
         {
           headers: {
@@ -77,16 +78,16 @@ const CreateArticleForm = () => {
         })
 
       toast.update(toastId, { render: "Article created succesfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
-      dispatch(addArticle(ArticleResponse));
+      dispatch(addArticle(ArticleResponse.data?.Article));
       navigate('/resources');
     } catch (error) {
       toast.update(toastId, { render: "Error creating article!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
       console.error(error);
     }
-
-    console.log(newArticle);
-    setTitle('');
-    setContentBlocks([]);
+    finally {
+      setTitle('');
+      setContentBlocks([]);
+    }
   };
 
   return (
