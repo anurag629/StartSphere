@@ -58,14 +58,14 @@ const PostCard = ({ post }) => {
               <span className="text-xs text-slate-400">{convertTimeFormat(updatedAt)} • Edited</span>
             </div>
           </div>
-          <div class="border-b border-gray-400 w-full mb-2 mt-4"></div>
+          <div className="border-b border-gray-400 w-full mb-2 mt-4"></div>
           <p className="mt-4 mb-4 text-sm">{Description.substring(0,350)}{}...see more</p>
           {Image && (
             <div className="mb-3">
               <img src={Image} alt="Post" className="w-full h-96 rounded-lg" />
             </div>
           )}
-          {/* <div class="border-b border-gray-400 w-full mb-2"></div> */}
+          {/* <div className="border-b border-gray-400 w-full mb-2"></div> */}
           <div className="flex justify-between items-center">
             <div className="flex space-x-4">
               <button className="flex items-center text-red-500 hover:text-red-700">

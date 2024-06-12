@@ -9,6 +9,7 @@ import api from './api/axios';
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.userData) || null;
+  const profile = useSelector(state => state.profile.profile) || null;
 
   // UserData
   useEffect(() => {
@@ -25,7 +26,10 @@ const App = () => {
       }
     };
 
-    checkUserData();
+    if (!user) {
+      checkUserData();
+      console.log("App:: User fetched")
+    }
   }, [dispatch]);
 
   // Fetch profile
@@ -49,7 +53,10 @@ const App = () => {
       }
     };
 
-    getProfile();
+    if (user && !profile) {
+      getProfile();
+      console.log("App:: Profile fetched")
+    }
   }, [user, dispatch]);
 
   return (

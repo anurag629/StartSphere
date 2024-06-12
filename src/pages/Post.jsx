@@ -110,7 +110,7 @@ function Post() {
                             {post?.updatedAt && <p className="text-sm text-slate-400">Uupdated on {convertTimeFormat(post?.updatedAt)}</p>}
                         </div>
                     </div>
-                    <hr class="border-t-2 border-gray-800 my-4"></hr>
+                    <hr className="border-t-2 border-gray-800 my-4"></hr>
                     <div className="py-8">
                         <div className="flex justify-center w-full mb-6">
                             <h1 className="text-2xl font-bold">{post.Title}</h1>
