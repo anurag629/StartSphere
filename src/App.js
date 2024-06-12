@@ -64,8 +64,9 @@ const App = () => {
     <div className="App">
       <ToastContainer />
       <RoutesConfig />
-      <ChatButton onClick={toggleChat} />
-      <ChatDrawer isOpen={isChatOpen} onClose={toggleChat} />
+      {user && <ChatButton onClick={toggleChat} />}
+      {user && <ChatDrawer isOpen={isChatOpen} onClose={toggleChat} />}
+
     </div>
   );
 };
