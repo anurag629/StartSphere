@@ -4,6 +4,7 @@ import postSlice from '../feature/postSlice'
 import profileSlice from '../feature/profileSlice'
 import startupSlice from '../feature/startupSlice'
 import articleSlice from '../feature/articleSlice'
+import chatSlice from '../feature/chatSlice';
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
         posts: postSlice,
         profile: profileSlice,
         startups: startupSlice,
-        articles: articleSlice
+        articles: articleSlice,
+        chat: chatSlice
     }
 })
 export default store

@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from './feature/authSlice';
 import { setProfile } from './feature/profileSlice';
 import api from './api/axios';
+import ChatButton from './components/Chat/ChatButton';
+import ChatDrawer from './components/Chat/ChatDrawer';
 
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.userData) || null;
+  const [isChatOpen, setIsChatOpen] = React.useState(false);
 
   // UserData
   useEffect(() => {
@@ -52,10 +55,17 @@ const App = () => {
     getProfile();
   }, [user, dispatch]);
 
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
+
   return (
     <div className="App">
       <ToastContainer />
       <RoutesConfig />
+      <ChatButton onClick={toggleChat} />
+      <ChatDrawer isOpen={isChatOpen} onClose={toggleChat} />
     </div>
   );
 };
