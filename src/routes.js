@@ -18,6 +18,8 @@ import EventDetaills from "./components/Event/EventDetails";
 import EditStartup from './pages/EditStartup';
 import EditArticle from "./components/Resource/EditArticle/EditArticle";
 import MyNetwork from "./components/MyNetwork/MyNetwork";
+import OthersProfile from "./pages/OthersProfile";
+
 const RoutesConfig = () => {
   return (
     <Router>
@@ -99,7 +101,7 @@ const RoutesConfig = () => {
         <Route path="/resources" element={<Resource />} />
         <Route path="/create-article" element={<CreateArticleForm />} />
         <Route path="/edit-article/:slug" element={<EditArticle />} />
-        <Route path="/my-networks" element={<MyNetwork/>}/>
+        <Route path="/my-networks" element={<MyNetwork />} />
         <Route
           path="/events"
           element={
@@ -113,6 +115,14 @@ const RoutesConfig = () => {
           element={
             <ProtectedRoute>
               <EventDetaills />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="profile/:slug"
+          element={
+            <ProtectedRoute>
+              <OthersProfile />
             </ProtectedRoute>
           }
         />

@@ -51,15 +51,6 @@ function Post() {
     const isAuthor = post && profileData ? (post.User._id === profileData._id) : false
     const userData = useSelector((state) => state.auth.userData);
 
-    // if (profileData) {
-    //     console.log("Profile: ", profileData)
-    //     console.log("Profile._id: ", profileData._id)
-    // }
-    // if (post) {
-    //     console.log("Post: ", post)
-    //     console.log("Post.User._id: ", post.User._id)
-    // }
-
     useEffect(() => {
         if (allPosts && slug) {
             const post = allPosts.find((post) => post._id === slug)
@@ -107,10 +98,10 @@ function Post() {
                         </div>
                         <div className='pt-5 mx-4'>
                             {post?.createdAt && <p className="text-sm text-slate-400">Created on {convertTimeFormat(post?.createdAt)}</p>}
-                            {post?.updatedAt && <p className="text-sm text-slate-400">Uupdated on {convertTimeFormat(post?.updatedAt)}</p>}
+                            {post?.updatedAt && <p className="text-sm text-slate-400">Updated on {convertTimeFormat(post?.updatedAt)}</p>}
                         </div>
                     </div>
-                    <hr class="border-t-2 border-gray-800 my-4"></hr>
+                    <hr className="border-t-2 border-gray-800 my-4"></hr>
                     <div className="py-8">
                         <div className="flex justify-center w-full mb-6">
                             <h1 className="text-2xl font-bold">{post.Title}</h1>

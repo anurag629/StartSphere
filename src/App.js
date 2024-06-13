@@ -11,6 +11,7 @@ import ChatDrawer from './components/Chat/ChatDrawer';
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.userData) || null;
+  const profile = useSelector(state => state.profile.profile) || null;
   const [isChatOpen, setIsChatOpen] = React.useState(false);
 
   // UserData
@@ -28,7 +29,10 @@ const App = () => {
       }
     };
 
-    checkUserData();
+    if (!user) {
+      checkUserData();
+      console.log("App:: User fetched")
+    }
   }, [dispatch]);
 
   // Fetch profile
@@ -52,7 +56,10 @@ const App = () => {
       }
     };
 
-    getProfile();
+    if (user && !profile) {
+      getProfile();
+      console.log("App:: Profile fetched")
+    }
   }, [user, dispatch]);
 
   const toggleChat = () => {

@@ -7,9 +7,8 @@ import PostFeed from '../components/Home/PostFeed';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../api/axios';
 import { login, logout } from '../feature/authSlice';
-import { addPost } from '../feature/postSlice'; 
+import { addPost } from '../feature/postSlice';
 import { setProfile } from '../feature/profileSlice';
-// import { addArticle } from '../feature/articleSlice';
 
 const fetchAllPosts = async (token) => {
   try {
@@ -30,16 +29,11 @@ const fetchAllPosts = async (token) => {
   }
 }
 
-// const fetchAllDummyArticles = async () => {
-//   await new Promise((resolve) => setTimeout(resolve, 1000));
-//   return [];
-// }
-
 const Home = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.userData) || null;
   const posts = useSelector(state => state.posts.posts);
-  const articles = useSelector(state => state.articles.articles);
+  const profile = useSelector(state => state.profile.profile) || null;
 
   // UserData
   useEffect(() => {
@@ -52,11 +46,14 @@ const Home = () => {
           dispatch(logout());
         }
       } catch (error) {
-        console.error("App.jsx/userData::", error);
+        console.error("Home.jsx/userData::", error);
       }
     };
 
-    checkUserData();
+    if (!user) {
+      checkUserData();
+      console.log("Home:: User fetched")
+    }
   }, [dispatch]);
 
   // Fetch posts
@@ -66,17 +63,18 @@ const Home = () => {
         return;
       }
 
-      if (posts.length === 0) {
-        try {
-          const fetchedPosts = await fetchAllPosts(user.Token);
-          fetchedPosts.forEach(post => dispatch(addPost(post)));
-        } catch (error) {
-          console.error("App.jsx/fetchPosts::", error);
-        }
+      try {
+        const fetchedPosts = await fetchAllPosts(user.Token);
+        fetchedPosts.forEach(post => dispatch(addPost(post)));
+      } catch (error) {
+        console.error("Home.jsx/fetchPosts::", error);
       }
     };
 
-    fetchPosts();
+    if (user && posts.length === 0) {
+      fetchPosts();
+      console.log("Home:: Posts fetched")
+    }
   }, [user, dispatch, posts.length]);
 
   // Fetch profile
@@ -96,64 +94,27 @@ const Home = () => {
           dispatch(setProfile(response.data));
         }
       } catch (error) {
-        console.error("App.jsx/getProfile::", error);
+        console.error("Home.jsx/getProfile::", error);
       }
     };
 
-    getProfile();
+    if (!profile) {
+      getProfile();
+      console.log("Home:: Profile fetched")
+    }
   }, [user, dispatch]);
-
-  // Fetch articles
-  // useEffect(() => {
-  //   const fetchArticles = async () => {
-  //     if (!user || !user.Token) {
-  //       return;
-  //     }
-
-  //     if (articles.length === 0) {
-  //       try {
-  //         const fetchedArticles = await fetchAllDummyArticles();
-  //         fetchedArticles.forEach(article => dispatch(addArticle(article)));
-  //       } catch (error) {
-  //         console.error("App.jsx/fetchArticles::", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchArticles();
-  // }, [user, dispatch, articles.length]);
-
-  // // Fetch articles
-  // useEffect(() => {
-  //   const fetchArticles = async () => {
-
-  //     if (articles.length === 0) {
-  //       try {
-  //         const fetchedArticles = await fetchAllArticles();
-  //         fetchedArticles.forEach(article => dispatch(addArticle(article)));
-  //       } catch (error) {
-  //         console.error("App.jsx/fetchAllArticles::", error);
-  //       }
-  //       finally {
-  //         setLoading(false);
-  //       }
-  //     }
-  //   };
-
-  //   fetchArticles();
-  // }, [dispatch, articles.length]);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow p-4 bg-gray-800">
+      <main className="flex-grow p-4 bg-slate-900">
         <div className="max-w-4xl mx-auto">
           <ProfileHeader />
           <PostCreation />
           <PostFeed />
         </div>
       </main>
-      <Footer />
+      <Footer /> 
     </div>
   );
 };

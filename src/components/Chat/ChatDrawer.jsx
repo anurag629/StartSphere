@@ -11,7 +11,7 @@ const ChatDrawer = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className={`fixed bottom-0 right-0 h-3/4 w-2/3 bg-gray-800 shadow-lg transform transition-transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+    <div className={`fixed bottom-0 right-0 h-3/4 w-2/3 bg-gray-800 shadow-lg transform transition-transform duration-500 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
       <div className="flex h-full">
         <ChatProfiles onSelectProfile={handleSelectProfile} />
         <div className="flex-grow flex flex-col">
