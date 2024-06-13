@@ -3,6 +3,7 @@ import React from 'react';
 import ProfileCard from '../components/Profile/ProfileCard';
 import Navbar from '../components/Home/Navbar';
 import Footer from '../components/Home/Footer';
+import Mentors from '../components/Mentors/Mentors';
 
 const Profile = () => {
   return (

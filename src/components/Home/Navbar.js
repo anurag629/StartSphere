@@ -121,6 +121,16 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
+                to="/my-networks"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0"
+                }
+              >
+                My Network
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/events"
                 className={({ isActive }) =>
                   isActive ? "text-blue-500" : "block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0"

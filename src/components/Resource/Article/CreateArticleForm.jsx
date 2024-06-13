@@ -68,7 +68,6 @@ const CreateArticleForm = () => {
       "content": contentBlocks
     };
     console.log(newArticle)
-
     try {
       const ArticleResponse = await api.post(`/article/create/${profileData._id}`, newArticle,
         {
