@@ -168,6 +168,7 @@ const ProfileCard = () => {
                     <UserStartup />
                 </div>
             </div>
+            <div className="border-b border-gray-400 w-full mb-2 mt-5"></div>
             <div className=" mt-4">
                 <div>
                     <Mentors />
