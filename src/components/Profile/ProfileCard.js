@@ -3,6 +3,7 @@ import api from '../../api/axios';
 import UserPosts from '../Home/Post/UserPosts';
 import { Link } from 'react-router-dom';
 import UserStartup from '../Startup/UserStartup';
+import Mentors from '../Mentors/Mentors';
 
 const ProfileCard = () => {
     const [profile, setProfile] = useState(null);
@@ -165,6 +166,11 @@ const ProfileCard = () => {
                     </Link>
                     <h2 className=" flex justify-center text-2xl font-bold text-white text-center mb-4">Your StartUps</h2>
                     <UserStartup />
+                </div>
+            </div>
+            <div className=" mt-4">
+                <div>
+                    <Mentors />
                 </div>
             </div>
             <div className="w-full mt-4">

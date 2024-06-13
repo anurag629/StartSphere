@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { NavLink } from "react-router-dom";
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../Images/logo2.png'
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
@@ -41,7 +40,7 @@ const Navbar = () => {
     <nav className="bg-gray-800 border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src={logo} className='w-20 h-20 rounded-full' />
+          <img src='/images/logo2.png' className='w-20 h-20 rounded-full' />
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">StartSphere</span>
         </Link>
         <div className="relative w-full max-w-md focus-within:text-gray-600">
@@ -117,6 +116,16 @@ const Navbar = () => {
                 }
               >
                 StartUps
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/my-networks"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500" : "block py-2 px-3 text-gray-400 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-500 md:p-0"
+                }
+              >
+                My Network
               </NavLink>
             </li>
             <li>
