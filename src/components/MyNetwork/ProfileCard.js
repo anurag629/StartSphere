@@ -20,6 +20,20 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
             console.error(error);
         }
     }
+    const handleRemoveMentor=async()=>{
+        const toastId = toast.loading("Please wait...");
+        try {
+            console.log("id",_id)
+            const RemoveMentorResponse = await api.delete(`/profile/remove-mentor/${profileData._id}`, {
+                data: { "mentorId": _id }
+        });
+            setProfiles(profiles.filter((element) => element._id !== _id));
+            toast.update(toastId, { render: "Mentor added successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+        } catch (error) {
+            toast.update(toastId, { render: "Error adding mentor!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+            console.error(error);
+        }
+    }
 
     return (
         <div className="w-full md:w-1/5 rounded text-white overflow-hidden shadow-lg p-4 m-4 bg-slate-700 flex flex-col">
@@ -36,7 +50,7 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
                         <button className="py-2 px-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={handleAddMentor}>
                             Message
                         </button>
-                        <button className="py-2 px-2 bg-red-500 text-white rounded hover:bg-red-400" onClick={handleAddMentor}>
+                        <button className="py-2 px-2 bg-red-500 text-white rounded hover:bg-red-400" onClick={handleRemoveMentor}>
                             Remove
                         </button>
                     </>
