@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Menu = ({ setMenuSelect }) => {
-    const [selectedMenuItem, setSelectedMenuItem] = useState('');
+    const [selectedMenuItem, setSelectedMenuItem] = useState('AddFriend');
 
     const handleUpdateMenuSelect = (e) => {
         e.preventDefault();
@@ -26,7 +26,7 @@ const Menu = ({ setMenuSelect }) => {
                         onClick={handleUpdateMenuSelect}
                         className={getButtonClass('MyFriends')}
                     >
-                        My Friends
+                        My Mentors
                     </button>
                 </li>
                 <li className="mb-2">
@@ -35,7 +35,7 @@ const Menu = ({ setMenuSelect }) => {
                         onClick={handleUpdateMenuSelect}
                         className={getButtonClass('AddFriend')}
                     >
-                        Add New Friends
+                        Add New Mentor
                     </button>
                 </li>
                 <li className="mb-2">
