@@ -18,7 +18,6 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
             toast.update(toastId, { render: "Mentor added successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
         } catch (error) {
             toast.update(toastId, { render: error.response.data, type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
-            // console.error(error);
         }
     }
     const handleRemoveMentor=async()=>{
@@ -35,7 +34,6 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
             console.error(error);
         }
     }
-
     return (
         <div className="w-full md:w-1/5 rounded text-white overflow-hidden shadow-lg p-4 m-4 bg-slate-700 flex flex-col">
             <img className="w-24 h-24 rounded-full mx-auto" src={Image ? Image : "https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg"} alt={`${Name}'s profile`} />
