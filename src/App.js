@@ -13,6 +13,7 @@ const App = () => {
   const user = useSelector(state => state.auth.userData) || null;
   const profile = useSelector(state => state.profile.profile) || null;
   const [isChatOpen, setIsChatOpen] = React.useState(false);
+  localStorage.setItem('flowbite-theme-mode', 'dark');
 
   // UserData
   useEffect(() => {
@@ -73,7 +74,6 @@ const App = () => {
       <RoutesConfig />
       {user && <ChatButton onClick={toggleChat} />}
       {user && <ChatDrawer isOpen={isChatOpen} onClose={toggleChat} />}
-
     </div>
   );
 };
