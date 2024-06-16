@@ -113,8 +113,9 @@ const PostCreation = ({ post }) => {
         console.log(response);
         navigate(`/post/${response.data.post._id}`);
       } catch (error) {
-        toast.update(id, { render: "Error creating post!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+        toast.update(id, { render: "Error creating post! Exceeding max allowed length (1000)", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
         console.error(error);
+        console.log(error);
       }
     }
     handleCloseModal();
@@ -189,6 +190,7 @@ const PostCreation = ({ post }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full p-2 rounded bg-gray-700 text-white"
+              placeholder='Title'
               required
             />
           </div>
@@ -199,6 +201,7 @@ const PostCreation = ({ post }) => {
               onChange={(e) => setDescription(e.target.value)}
               className="w-full p-2 rounded bg-gray-700 text-white"
               rows="4"
+              placeholder='Write something here... (1000 characters max)'
               required
             ></textarea>
           </div>

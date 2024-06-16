@@ -11,7 +11,7 @@ const Mentors = () => {
   useEffect(() => {
     // Replace this with your API call to fetch matched profiles
     const FetchSuggestedMentors=async()=>{
-        const suggestedMentors= await api.get(`/profile/suggestion/${profileData._id}`)
+        const suggestedMentors= await api.get(`/profile/suggestion/${profileData?._id}`)
         setProfiles(suggestedMentors.data);
         console.log(suggestedMentors.data)
     }

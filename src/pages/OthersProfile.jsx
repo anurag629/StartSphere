@@ -3,7 +3,7 @@ import api from '../api/axios'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Home/Navbar';
 import Footer from '../components/Home/Footer';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import PostCard from '../components/Home/Post/PostCard';
 
 const OthersProfile = () => {
@@ -18,49 +18,23 @@ const OthersProfile = () => {
     const allStartups = useSelector((state) => state.startups.startups) || null
     const [startups, setStartups] = useState([])
 
-    console.log("startups", startups)
-
     // getProfile
     useEffect(() => {
         const getProfile = async () => {
             try {
-                // if (slug) {
-                //     const profileResponse = await api.get(`/profile/${slug}`, {
-                //         headers: {
-                //             Authorization: `Bearer ${userData.Token}`,
-                //         },
-                //     });
-                //     setProfile(profileResponse.data);
-                //     const startupsResponse = profileResponse.data?.StartUpDetails;
-                //     setStartups(startupsResponse);
-                // }
-                // else{
-                //     navigate('/')
-                // }
-                setProfile(
-                    {
-                        "ContactInformation": {
-                            "CompanyEmail": "anurag@gmail.com",
-                            "Phone": "5678909023",
-                            "LinkedInProfile": "linkedin/in/Anurag.in",
-                            "CompanyWebsite": "anuragcompany.com",
-                            "OfficeAddress": "Bengaluru"
+                if (slug) {
+                    const profileResponse = await api.get(`profile/profileId/${slug}`, {
+                        headers: {
+                            Authorization: `Bearer ${userData.Token}`,
                         },
-                        "_id": "665f16bbddbf0e5c9dc91fb7",
-                        "User": "66699cc74ac785557180c086",
-                        "Name": "Anurag",
-                        "Email": "anurag@gmail",
-                        "Bio": "A coder that speaks.",
-                        "Role": "Content Leader at Datawars",
-                        "Image": "https://res.cloudinary.com/dnjis096o/image/upload/v1718197613/nnllni8mcpf2grxfqsot.jpg",
-                        "Experience": "15 years",
-                        "StartUpDetails": [],
-                        "createdAt": "2024-06-04T13:29:31.991Z",
-                        "updatedAt": "2024-06-04T13:33:47.375Z",
-                        "__v": 1
-                    }
-                );
-
+                    });
+                    setProfile(profileResponse.data);
+                    const startupsResponse = profileResponse.data?.StartUpDetails;
+                    setStartups(startupsResponse);
+                }
+                else {
+                    navigate('/')
+                }
             } catch (err) {
                 console.error(err);
             }
@@ -85,7 +59,7 @@ const OthersProfile = () => {
         }
     }, [profile, allStartups])
 
-    return profile ? (
+    return (
         <div className="min-h-screen flex flex-col">
             <Navbar />
             <main className="flex-grow p-4 bg-gray-900">
@@ -110,14 +84,14 @@ const OthersProfile = () => {
                                     <h1 className="w-full text-left my-4 sm:mx-4 xs:pl-4 text-white dark:text-white lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl font-serif">
                                         {profile?.Name}
                                         {/* In next line write role */}
-                                        <span className="text-gray-400 dark:text-gray-800 text-lg block">
+                                        <span className="text-gray-400 dark:text-gray-400 text-lg block">
                                             {profile?.Role}
                                         </span>
                                     </h1>
                                 </div>
                                 <div className="xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">
                                     {/* Description */}
-                                    <p className="w-fit text-gray-400 dark:text-gray-800 text-md">
+                                    <p className="w-fit text-gray-400 dark:text-gray-400 text-md">
                                         {profile?.Bio}
                                     </p>
                                     {/* Social Links */}
@@ -271,7 +245,7 @@ const OthersProfile = () => {
             </main>
             <Footer />
         </div>
-    ) : null;
+    );
 };
 
 export default OthersProfile;
