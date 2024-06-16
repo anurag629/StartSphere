@@ -13,11 +13,12 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
         const toastId = toast.loading("Please wait...");
         try {
             const AddMentorResponse = await api.post(`/profile/add-mentors/${profileData._id}`, { "mentorId": _id });
+            
             setProfiles(profiles.filter((element) => element._id !== _id));
             toast.update(toastId, { render: "Mentor added successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
         } catch (error) {
-            toast.update(toastId, { render: "Error adding mentor!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
-            console.error(error);
+            toast.update(toastId, { render: error.response.data, type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
+            // console.error(error);
         }
     }
     const handleRemoveMentor=async()=>{
