@@ -13,7 +13,7 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
 
     const handleJoinChat=async()=>{
         try {
-            const chatCreated= await axios.post(`http://localhost:7000/api/chat/accesschat?userId=${profileData._id}`,{
+            const chatCreated= await api.post(`/chat/accesschat?userId=${profileData._id}`,{
                 userId: _id
             })
             dispatch(addChat(chatCreated.data));
