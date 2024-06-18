@@ -1,5 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Card, Badge, Button } from "flowbite-react";
 
 const EventCard = ({
   _id,
@@ -16,30 +17,29 @@ const EventCard = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // 
-    const encodedTitle = encodeURIComponent(title);
-    navigate(`/events/${encodedTitle}`);
+    navigate(`/events/${_id}`);
   };
 
   return (
-    <div className="rounded-lg shadow-md p-4 bg-slate-900">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center">
-          <span className="text-sm font-medium text-white">{type}</span>
-          {isClosed ? (
-            <span className="ml-2 px-2 py-1 rounded-full bg-gray-200 text-white text-xs font-medium">
-              Ended
-            </span>
-          ) : (
-            <span className="ml-2 px-2 py-1 rounded-full bg-green-200 text-green-700 text-xs font-medium">
-              Ongoing
-            </span>
-          )}
+    <Card className="max-w-sm bg-slate-800 shadow-md">
+      <div className="flex justify-between items-center mb-2">
+        <div className="flex items-center space-x-2">
+          <Badge color='yellow'>{type}</Badge>
+          <Badge color={isClosed ? "gray" : "green"}>
+            {isClosed ? "Ended" : "Ongoing"}
+          </Badge>
         </div>
       </div>
-      <img src={image} alt={title} className="w-full rounded-md mb-4 " />
+      <img src={image} alt={title} className="w-full rounded-md mb-4" />
       <h2 className="text-lg font-bold text-white mb-2">{title}</h2>
-      <p className="text-white mb-4">{subtitle}</p>
+      <p className="text-white mb-4 text-sm">
+        {subtitle.length > 200 ? `${subtitle.substring(0, 200)}... ` : subtitle}
+        {subtitle.length > 200 && (
+          <Link to={`/events/${_id}`} className="text-blue-500 hover:underline">
+            see more
+          </Link>
+        )}
+      </p>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center">
           <svg
@@ -81,15 +81,15 @@ const EventCard = ({
           <img src={qrCode} alt="QR Code" className="w-24 h-24" />
         </div>
       )}
-      <button
+      <Button
         onClick={handleClick}
-        className={`font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
-          isClosed ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-700 text-white"
-        }`}
+        className={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isClosed ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-700 text-white"
+          }`}
+        disabled={isClosed}
       >
         {buttonText}
-      </button>
-    </div>
+      </Button>
+    </Card>
   );
 };
 
