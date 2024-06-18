@@ -7,6 +7,8 @@ import Footer from '../Home/Footer';
 import { deleteEvent, updateEvent } from '../../feature/eventSlice';
 import api from '../../api/axios';
 import { Button, Select, Datepicker, Modal, TextInput, Label, Checkbox } from "flowbite-react";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function EventsDetails() {
@@ -60,27 +62,27 @@ function EventsDetails() {
   };
 
   const handleUpdateEvent = async () => {
+    const toastId = toast.loading("Please wait...");
     try {
-      console.log("Updating event:", updatedEvent);
       const response = await api.put(`/event/update/${event._id}`, updatedEvent);
-      console.log("Event updated:", response);
       dispatch(updateEvent(response.data.event));
       setIsModalOpen(false);
-      console.log("Event updated successfully");
+      toast.update(toastId, { render: "Event updated successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     } catch (error) {
       console.error("Error updating event:", error);
+      toast.update(toastId, { render: "Error in updating event!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     }
   }
 
   const handleDelete = async () => {
+    const toastId = toast.loading("Please wait...");
     try {
-      console.log("Deleting event:", event);
       await api.delete(`/event/delete/${event._id}`);
       dispatch(deleteEvent(event._id));
       navigate('/events');
-      console.log("Event deleted successfully");
+      toast.update(toastId, { render: "Event deleted successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     } catch (error) {
-      console.error("Error deleting event:", error);
+      toast.update(toastId, { render: "Error in deleting event!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     }
   };
 

@@ -6,6 +6,8 @@ import Footer from "../components/Home/Footer";
 import Navbar from "../components/Home/Navbar";
 import { addEvent, setEvent } from "../feature/eventSlice";
 import api from "../api/axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EventPage = () => {
   const events = useSelector((state) => state.events.events) || [];
@@ -51,14 +53,15 @@ const EventPage = () => {
   };
 
   const handleCreateEvent = async () => {
-    console.log("New Event::", newEvent)
+    const toastId = toast.loading("Please wait...");
     try {
       const response = await api.post("/event/create", newEvent);
-      console.log("Event created:", response)
       dispatch(addEvent(response.data.event));
       setIsModalOpen(false);
+      toast.update(toastId, { render: "Event created successfully!", type: "success", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     } catch (error) {
       console.error("Error creating event:", error);
+      toast.update(toastId, { render: "Error in creating event!", type: "error", isLoading: false, autoClose: 2000, closeOnClick: true, pauseOnHover: true, closeButton: true });
     }
   };
 
