@@ -54,14 +54,14 @@ const ProfileCard = () => {
                         <h1 className="w-full text-left my-4 sm:mx-4 xs:pl-4 text-white dark:text-white lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl font-serif">
                             {profile?.Name}
                             {/* In next line write role */}
-                            <span className="text-gray-400 dark:text-gray-800 text-lg block">
+                            <span className="text-gray-400 dark:text-gray-400 text-lg block">
                                 {profile?.Role}
                             </span>
                         </h1>
                     </div>
                     <div className="xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">
                         {/* Description */}
-                        <p className="w-fit text-gray-400 dark:text-gray-800 text-md">
+                        <p className="w-fit text-gray-400 dark:text-gray-400 text-md">
                             {profile?.Bio}
                         </p>
                         {/* Social Links */}

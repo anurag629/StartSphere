@@ -12,7 +12,8 @@ const postSlice = createSlice({
     reducers: {
         addPost: (state, action) => {
             state.loading = false
-            state.posts.push(action.payload);
+            // state.posts.push(action.payload);
+            state.posts.unshift(action.payload);
         },
         updatePost: (state, action) => {
             const updatedPost = action.payload
