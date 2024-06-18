@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addMessage } from '../../feature/chatSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ChatInput = ({ profileId }) => {
+const ChatInput = ({ socket,selectedChatId }) => {
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
-
+  const profileData = useSelector((state) => state.profile.profile) || null;
   const handleSend = () => {
     if (message.trim()) {
-      const newMessage = {
-        sender: 'Elon Musk',
-        text: message,
-        time: new Date().toLocaleString('default', { month: 'short', day: 'numeric' })
-      };
-      dispatch(addMessage({ profileId, message: newMessage }));
+      socket.emit('sendMessage', {
+        chatId: selectedChatId,
+        senderId: profileData._id,
+        content: message
+      });
       setMessage('');
     }
   };
-
   return (
     <div className="flex items-center">
       <input 
