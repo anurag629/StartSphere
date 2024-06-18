@@ -7,6 +7,8 @@ import { setProfile } from './feature/profileSlice';
 import api from './api/axios';
 import ChatButton from './components/Chat/ChatButton';
 import ChatDrawer from './components/Chat/ChatDrawer';
+import { addSocket } from './feature/socketSlice';
+import io from 'socket.io-client';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,9 +19,11 @@ const App = () => {
 
   // UserData
   useEffect(() => {
+    const newSocket = io('wss://yourstorybackend.onrender.com');
     const checkUserData = () => {
       try {
         const userData = JSON.parse(localStorage.getItem('user')) || null;
+        dispatch(addSocket(newSocket));
         if (userData) {
           dispatch(login({ userData }));
         } else {
@@ -34,6 +38,7 @@ const App = () => {
       checkUserData();
       console.log("App:: User fetched")
     }
+    return () => newSocket.close();
   }, [dispatch]);
 
   // Fetch profile

@@ -1,14 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api/axios';
-
+import axios from 'axios';
+import { addChat, setSelectedChat } from '../../feature/socketSlice';
 const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
     const { Image, Name, Bio, Role, _id } = profile;
+    const dispatch= useDispatch()
     const profileData = useSelector((state) => state.profile.profile);
     console.log("use in", use);
 
+    const handleJoinChat=async()=>{
+        try {
+            const chatCreated= await api.post(`/chat/accesschat?userId=${profileData._id}`,{
+                userId: _id
+            })
+            dispatch(addChat(chatCreated.data));
+            dispatch(setSelectedChat(chatCreated.data));
+            console.log("chat created", chatCreated)
+        } catch (error) {
+            
+        }
+    }
     const handleAddMentor = async () => {
         const toastId = toast.loading("Please wait...");
         try {
@@ -46,7 +60,7 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
             <div className={`mt-4 ${use === "MyFriend" ? 'flex w-full justify-around' : ''}`}>
                 {use === "MyFriend" ? (
                     <>
-                        <button className="py-2 px-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={handleAddMentor}>
+                        <button className="py-2 px-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={handleJoinChat}>
                             Message
                         </button>
                         <button className="py-2 px-2 bg-red-500 text-white rounded hover:bg-red-400" onClick={handleRemoveMentor}>

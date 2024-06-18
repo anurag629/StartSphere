@@ -1,23 +1,26 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-const ChatMessages = ({ profileId }) => {
-  const messages = useSelector(state => state.chat.messages?.[profileId] || []);
+const ChatMessages = ({ selectedChat}) => {
   const profiles = useSelector(state => state.chat.profiles);
-  console.log(profiles);
-  console.log(messages);
+
+  console.log("selectedChat",selectedChat)
+  useEffect(()=>{
+   
+  },[selectedChat])
   return (
     <div>
-      {messages.map((msg, index) => (
+      {selectedChat &&  selectedChat.messages &&  selectedChat.messages.map((msg, index) => (
         <div key={index} className="mb-4">
           <div className="flex items-center mb-1">
-            <img src={profiles[index]?.image} alt={profiles[msg?.sender]?.name} className="w-8 h-8 rounded-full" />
+            <img src={msg.sender.Image} alt={msg.sender.Name} className="w-8 h-8 rounded-full" />
             <div>
-              <span className="font-semibold text-white">{msg.sender}</span>
-              <span className="text-sm text-gray-400 ml-2">{msg.time}</span>
+              <span className="font-semibold text-white">{msg.sender.Name}</span>
+              <span className="text-sm text-gray-400 ml-2">{msg.timestamp}</span>
             </div>
           </div>
-          <p className="ml-10 text-white">{msg.text}</p>
+          <p className="ml-10 text-white">{msg.content}</p>
         </div>
       ))}
     </div>

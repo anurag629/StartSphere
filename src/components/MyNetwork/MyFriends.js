@@ -19,7 +19,6 @@ function MyFriends() {
       } catch (error) {
         console.log(error)
       }
-   
         setIsLoading(false);
     }
     FetchSuggestedMentors()
