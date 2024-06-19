@@ -10,6 +10,7 @@ const Navbar = () => {
   const [username, setUsername] = useState('Guest')
   const [email, setEmail] = useState('guest@gmail.com')
   const [profileImage, setProfileImage] = useState(null)
+  
   const profileData = useSelector((state) => state.profile.profile) || {};
 
   const handleLogout = () => {
