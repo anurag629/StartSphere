@@ -10,6 +10,10 @@ const articleSlice = createSlice({
     name: 'articles',
     initialState,
     reducers: {
+        setArticle: (state, action) => {
+            state.articles = action.payload;
+            state.loading = false;
+        },
         addArticle: (state, action) => {
             state.loading = false
             state.articles.push(action.payload);
@@ -26,11 +30,14 @@ const articleSlice = createSlice({
             const updatedArticles = state.articles.filter(article => article._id !== _id);
             state.articles = updatedArticles;
         },
+        resetAllArticle: (state) => {
+            state.articles = [];
+        },
         setError: (state, action) => {
             state.error = action.payload;
         }
     }
 })
 
-export const { addArticle, updateArticle, deleteArticle, setError } = articleSlice.actions
+export const { setArticle, addArticle, updateArticle, deleteArticle, resetAllArticle, setError } = articleSlice.actions
 export default articleSlice.reducer

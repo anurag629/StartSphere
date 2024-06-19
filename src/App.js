@@ -23,9 +23,9 @@ const App = () => {
     const checkUserData = () => {
       try {
         const userData = JSON.parse(localStorage.getItem('user')) || null;
-        dispatch(addSocket(newSocket));
         if (userData) {
           dispatch(login({ userData }));
+          dispatch(addSocket(newSocket));
         } else {
           dispatch(logout());
         }

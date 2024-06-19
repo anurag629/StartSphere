@@ -3,7 +3,14 @@ import { Link } from 'react-router-dom';
 import { NavLink } from "react-router-dom";
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../feature/authSlice';
+import { resetAllArticle } from '../../feature/articleSlice';
+import { resetAllEvent } from '../../feature/eventSlice';
+import { resetAllPost } from '../../feature/postSlice';
+import { resetProfile } from '../../feature/profileSlice';
+import { resetChat } from '../../feature/socketSlice';
+import { resetAllStartup } from '../../feature/startupSlice';
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -12,10 +19,19 @@ const Navbar = () => {
   const [profileImage, setProfileImage] = useState(null)
   
   const profileData = useSelector((state) => state.profile.profile) || {};
-
+  const dispatch = useDispatch();
+  
+  // delete the store when user logs out
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
+    dispatch(logout());
+    dispatch(resetAllArticle());
+    dispatch(resetAllEvent());
+    dispatch(resetAllPost());
+    dispatch(resetProfile());
+    dispatch(resetChat());
+    dispatch(resetAllStartup());
   };
   const handleProfileClick = () => {
     navigate('/profile');
