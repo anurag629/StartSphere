@@ -11,21 +11,12 @@ const ChatDrawer = ({ isOpen, onClose }) => {
   const allChats = useSelector(state=>state.chat.allChats) || [];
   const selectedChat = useSelector(state=>state.chat.selectedChat);
   const dispatch= useDispatch();
-  // const [allChats, setAllChats] = useState([]);
-  // const [selectedChat, setSelectedChat] = useState(null);
-
   const newSocket = useSelector(state => state.chat.socket);
   console.log("new socket work", newSocket);
 
   useEffect(() => {
     if (!newSocket) return;
     const handleMessage = (message) => {
-      console.log("message received", message);
-      // dispatch(setAllChats((prevChats) =>
-      //   prevChats.map((chat) =>
-      //     chat._id === message.chat ? { ...chat, messages: [...chat.messages, message] } : chat
-      //   )
-      // ));
       const chatId= message.chat;
       dispatch(addMessage({chatId,message}))
       if (selectedChat && selectedChat._id === message.chat) {

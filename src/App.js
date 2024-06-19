@@ -7,14 +7,14 @@ import { setProfile } from './feature/profileSlice';
 import api from './api/axios';
 import ChatButton from './components/Chat/ChatButton';
 import ChatDrawer from './components/Chat/ChatDrawer';
-import { addSocket } from './feature/socketSlice';
+import { addSocket, setIsChatOpen } from './feature/socketSlice';
 import io from 'socket.io-client';
-
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.userData) || null;
   const profile = useSelector(state => state.profile.profile) || null;
-  const [isChatOpen, setIsChatOpen] = React.useState(false);
+  // const [isChatOpen, setIsChatOpen] = React.useState(false);
+  const isChatOpen = useSelector(state=>state.chat.isChatOpen) || false;
   localStorage.setItem('flowbite-theme-mode', 'dark');
 
   // UserData
@@ -69,7 +69,8 @@ const App = () => {
   }, [user, dispatch]);
 
   const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
+    console.log("click",setIsChatOpen)
+    dispatch(setIsChatOpen(!isChatOpen))
   };
 
 

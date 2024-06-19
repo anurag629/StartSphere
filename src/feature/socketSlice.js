@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 const initialState = {
     socket: null,
     allChats: [],
-    selectedChat: null
+    selectedChat: null,
+    isChatOpen: false
 };
 
 const socketSlice = createSlice({
@@ -49,9 +49,12 @@ const socketSlice = createSlice({
             state.socket = null;
             state.allChats = [];
             state.selectedChat = null;
+        },
+        setIsChatOpen:(state,action)=>{
+          state.isChatOpen=action.payload
         }
     }
 });
 
-export const { addSocket, setAllChats, getAllChats, setSelectedChat, getSelectedChat, getChat, addChat, addMessage, addMessageToSelectedChat, resetChat } = socketSlice.actions;
+export const { addSocket, setAllChats, getAllChats, setSelectedChat, getSelectedChat, getChat, addChat, addMessage, addMessageToSelectedChat, resetChat,setIsChatOpen } = socketSlice.actions;
 export default socketSlice.reducer;

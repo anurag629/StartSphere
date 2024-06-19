@@ -5,10 +5,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import api from '../../api/axios';
 import axios from 'axios';
 import { addChat, setSelectedChat } from '../../feature/socketSlice';
+import { setIsChatOpen } from '../../feature/socketSlice';
 const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
     const { Image, Name, Bio, Role, _id } = profile;
     const dispatch= useDispatch()
     const profileData = useSelector((state) => state.profile.profile);
+    const allChats = useSelector(state=>state.chat.allChats) || [];
+
+    const isChatOpen = useSelector(state=>state.chat.isChatOpen) || false;
     console.log("use in", use);
 
     const handleJoinChat=async()=>{
@@ -16,8 +20,16 @@ const ProfileCard = ({ profiles, profile, setProfiles, use }) => {
             const chatCreated= await api.post(`/chat/accesschat?userId=${profileData._id}`,{
                 userId: _id
             })
-            dispatch(addChat(chatCreated.data));
-            dispatch(setSelectedChat(chatCreated.data));
+            dispatch(setIsChatOpen(true));
+            const existingChat = allChats.find(item => item._id === chatCreated.data._id);
+            if(existingChat){
+                dispatch(setSelectedChat(existingChat))
+            }
+            else{
+                dispatch(addChat(chatCreated.data));
+                dispatch(setSelectedChat(chatCreated.data));
+            }
+            
             console.log("chat created", chatCreated)
         } catch (error) {
             

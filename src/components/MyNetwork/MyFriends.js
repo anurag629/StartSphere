@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import ProfileCard from './ProfileCard'
 import api from '../../api/axios';
-import { useSelector } from 'react-redux';
 import LoadingSkeleton from './Skeleton/LoadingSkeleton';
+import { useSelector } from 'react-redux';
+
 function MyFriends() {
     const [profiles,setProfiles] = useState([])
     const [isLoading,setIsLoading] = useState(false);
-
   const profileData = useSelector((state) => state.profile.profile);
+
 
   useEffect(() => {
     // Replace this with your API call to fetch matched profiles
