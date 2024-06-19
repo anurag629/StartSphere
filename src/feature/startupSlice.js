@@ -28,9 +28,12 @@ const startupSlice = createSlice({
         },
         setError: (state, action) => {
             state.error = action.payload;
+        },
+        resetAllStartup: (state) => {
+            state.startups = [];
         }
     }
 });
 
-export const { addStartup, updateStartup, deleteStartup, setError } = startupSlice.actions;
+export const { addStartup, updateStartup, deleteStartup, setError, resetAllStartup } = startupSlice.actions;
 export default startupSlice.reducer;

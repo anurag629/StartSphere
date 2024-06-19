@@ -9,6 +9,8 @@ import api from '../api/axios';
 import { login, logout } from '../feature/authSlice';
 import { addPost } from '../feature/postSlice';
 import { setProfile } from '../feature/profileSlice';
+import { addSocket } from '../feature/socketSlice';
+import io from 'socket.io-client';
 
 const fetchAllPosts = async (token) => {
   try {
@@ -34,14 +36,16 @@ const Home = () => {
   const user = useSelector(state => state.auth.userData) || null;
   const posts = useSelector(state => state.posts.posts);
   const profile = useSelector(state => state.profile.profile) || null;
-
+  
   // UserData
   useEffect(() => {
+    const newSocket = io('wss://yourstorybackend.onrender.com');
     const checkUserData = () => {
       try {
         const userData = JSON.parse(localStorage.getItem('user'));
         if (userData) {
           dispatch(login({ userData }));
+          dispatch(addSocket(newSocket));
         } else {
           dispatch(logout());
         }
@@ -54,6 +58,7 @@ const Home = () => {
       checkUserData();
       console.log("Home:: User fetched")
     }
+    return () => newSocket.close();
   }, [dispatch]);
 
   // Fetch posts

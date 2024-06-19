@@ -27,11 +27,14 @@ const postSlice = createSlice({
             const updatedPost = state.posts.filter(post => post._id !== _id);
             state.posts = updatedPost
         },
+        resetAllPost: (state) => {
+            state.posts = [];
+        },
         setError: (state, action) => {
             state.error = action.payload;
         }
     }
 })
 
-export const { addPost, updatePost, deletePost, setError } = postSlice.actions
+export const { addPost, updatePost, deletePost, resetAllPost, setError } = postSlice.actions
 export default postSlice.reducer
