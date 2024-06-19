@@ -37,17 +37,21 @@ const socketSlice = createSlice({
             state.allChats.unshift(newChat);
         },
         addMessage: (state, action) => {
-          const { chatId, message } = action.payload;
-          const chat = state.allChats.find(chat => chat._id === chatId);
-          chat.messages.push(message);
-      },
-      addMessageToSelectedChat: (state, action) => {
-        const message = action.payload;
-        state.selectedChat.messages.push(message);
-    }
-        
+            const { chatId, message } = action.payload;
+            const chat = state.allChats.find(chat => chat._id === chatId);
+            chat.messages.push(message);
+        },
+        addMessageToSelectedChat: (state, action) => {
+            const message = action.payload;
+            state.selectedChat.messages.push(message);
+        },
+        resetChat: (state) => {
+            state.socket = null;
+            state.allChats = [];
+            state.selectedChat = null;
+        }
     }
 });
 
-export const { addSocket,setAllChats,getAllChats,setSelectedChat,getSelectedChat,getChat,addChat,addMessage,addMessageToSelectedChat} = socketSlice.actions;
+export const { addSocket, setAllChats, getAllChats, setSelectedChat, getSelectedChat, getChat, addChat, addMessage, addMessageToSelectedChat, resetChat } = socketSlice.actions;
 export default socketSlice.reducer;
