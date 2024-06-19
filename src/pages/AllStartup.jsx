@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FilterData from "../components/Startup/FilterData";
 import Navbar from "../components/Home/Navbar";
 import Footer from "../components/Home/Footer";
 import { addStartup } from '../feature/startupSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../api/axios';
-import { useEffect } from "react";
 
 const fetchAllStartups = async () => {
   try {
@@ -47,12 +46,10 @@ const AllStartup = () => {
   }, [user, dispatch, startups.length]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-slate-800">
       <Navbar />
-      <main className="flex-grow p-4 bg-slate-800">
-        <div className="">
-          <FilterData />
-        </div>
+      <main className="flex-grow p-4 relative">
+        <FilterData />
       </main>
       <Footer />
     </div>
