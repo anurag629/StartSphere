@@ -31,7 +31,7 @@ const MyNetwork = () => {
     return (
         <>
             <Navbar />
-            <div className="min-h-screen bg-slate-500 p-4 flex">
+            <div className="min-h-screen bg-slate-800 p-4 flex">
                 <div className="w-1/4 p-4">
                     <Menu setMenuSelect={setMenuSelect} />
                 </div>
