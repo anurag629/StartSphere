@@ -4,7 +4,10 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteStartup as deleteStartupFromStore } from '../feature/startupSlice';
 import Navbar from '../components/Home/Navbar';
 import Footer from '../components/Home/Footer';
-import api from '../api/axios'
+import { Tabs } from 'flowbite-react';
+import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi';
+import { MdDashboard } from 'react-icons/md';
+import api from '../api/axios';
 
 function Startup() {
     const [startup, setStartup] = useState(null);
@@ -25,9 +28,6 @@ function Startup() {
     }, [allStartups, slug, navigate]);
 
     const deleteStartup = async () => {
-        console.log("Delete startup me ::", startup._id, userData.Token)
-        // await new Promise((resolve) => setTimeout(resolve, 1000));
-        console.log("Delete startup");
         try {
             const response = await api.delete(`startup/delete/${startup._id}`, {
                 headers: {
@@ -36,7 +36,7 @@ function Startup() {
             });
             console.log(response);
             dispatch(deleteStartupFromStore(startup._id));
-            alert('Startup deleted successfully!')
+            alert('Startup deleted successfully!');
             navigate('/startups');
         } catch (error) {
             console.error("Error updating startup:", error);
@@ -47,83 +47,146 @@ function Startup() {
     };
 
     return startup ? (
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-gray-900 text-white">
             <Navbar />
-            <main className="flex-grow p-4 bg-slate-800">
-                <div className="max-w-4xl mx-auto bg-slate-700 text-white rounded-md shadow-lg">
-                    <div className="py-8 px-6">
-                        <div className="flex justify-center mb-4 relative p-2">
+            <main className="flex-grow p-4">
+                <div className="max-w-6xl mx-auto bg-gray-800 text-white rounded-md shadow-lg p-6">
+                    <div className="flex justify-between items-center mb-6">
+                        <div className="flex items-center">
                             {startup.Logo && (
                                 <img
                                     src={startup.Logo}
                                     alt={startup.StartUpName}
-                                    className="rounded-xl w-32 h-32 object-cover"
+                                    className="rounded-lg w-16 h-16 object-cover mr-4"
                                 />
                             )}
-                            {isFounder && (
-                                <div className="absolute right-6 top-6">
-                                    <Link to={`/startups`}>
-                                        <button className="mr-3 bg-green-400 px-2 py-1 text-black font-semibold rounded-lg shadow-md hover:bg-green-500">
-                                            Save
-                                        </button>
-                                    </Link>
-                                    <Link to={`/edit-startup/${startup._id}`}>
-                                        <button className="mr-3 bg-yellow-400 px-2 py-1 text-black font-semibold rounded-lg shadow-md hover:bg-yellow-500">
-                                            Edit
-                                        </button>
-                                    </Link>
-                                    <button className="bg-red-400 px-2 py-1 text-black font-semibold rounded-lg shadow-md hover:bg-red-500" onClick={deleteStartup}>
-                                        Delete
+                            <div>
+                                <h1 className="text-3xl font-bold">{startup.StartUpName}</h1>
+                            </div>
+                        </div>
+                        {isFounder && (
+                            <div>
+                                <Link to={`/startups`}>
+                                    <button className="mr-3 bg-green-500 px-4 py-2 text-black font-semibold rounded-lg shadow-md hover:bg-green-600">
+                                        Save
                                     </button>
-                                </div>
-                            )}
-                        </div>
-                        <div className="text-center mb-6">
-                            <h1 className="text-4xl font-bold">{startup.StartUpName}</h1>
-                            <p className="text-lg text-white mt-2">Founded by {startup.FounderName} in {startup.FoundingYear}</p>
-                        </div>
-                        <div className="space-y-4 text-white justify-center">
-                            <p className="text-center text-xl font-medium">{startup.CompanyDes}</p>
-                            <div>
-                                <h2 className="text-2xl font-semibold mb-2">Growth</h2>
-                                <ul className="list-disc list-inside">
-                                    {startup.Growth.map((growth) => (
-                                        <li key={growth._id}>
-                                            {growth.Year}: ${growth.Revenue} revenue
-                                        </li>
-                                    ))}
-                                </ul>
+                                </Link>
+                                <Link to={`/edit-startup/${startup._id}`}>
+                                    <button className="mr-3 bg-yellow-500 px-4 py-2 text-black font-semibold rounded-lg shadow-md hover:bg-yellow-600">
+                                        Edit
+                                    </button>
+                                </Link>
+                                <button className="bg-red-500 px-4 py-2 text-black font-semibold rounded-lg shadow-md hover:bg-red-600" onClick={deleteStartup}>
+                                    Delete
+                                </button>
                             </div>
-                            <div>
-                                <h2 className="text-2xl font-semibold mb-2">Details</h2>
-                                <p>Number of Employees: {startup.NumberOfEmployees}</p>
-                                <p>Target Market: {startup.TargetMarket}</p>
-                                <p>Current Stage: {startup.CurrentStage}</p>
-                                <p>Key Features: {startup.KeyFeatures}</p>
-                                <p>Investors: {startup.Inverstors}</p>
-                                <p>Evaluation: ${startup.Evaluation}</p>
-                                <p>Revenue: ${startup.Revenue}</p>
-                            </div>
-                            <div>
-                                <h2 className="text-2xl font-semibold mb-2">Funding Raised</h2>
-                                <ul className="list-disc list-inside">
-                                    {startup.FundingRaised.map((fund) => (
-                                        <li key={fund._id}>
-                                            {fund.CompanyName} - {fund.EquityHolds}% equity, ${fund.Amount} raised
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div>
-                                <h2 className="text-2xl font-semibold mb-2">Contact Information</h2>
-                                <p>Email: {startup.ContactInformation.CompanyEmail || 'N/A'}</p>
-                                <p>Phone: {startup.ContactInformation.Phone || 'N/A'}</p>
-                                <p>LinkedIn: {startup.ContactInformation.LinkedInProfile || 'N/A'}</p>
-                                <p>Website: {startup.ContactInformation.CompanyWebsite || 'N/A'}</p>
-                                <p>Office Address: {startup.ContactInformation.OfficeAddress || 'N/A'}</p>
-                            </div>
-                        </div>
+                        )}
                     </div>
+                    <Tabs aria-label="Tabs with underline" variant="underline" className="dark">
+                        <Tabs.Item active title="Overview" icon={HiUserCircle}>
+                            <div className="mt-4">
+                                <h2 className="text-2xl font-semibold mb-4">{startup.StartUpName} Overview</h2>
+                                <p className="text-lg mb-6 text-gray-100">{startup.CompanyDes}</p>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Founding Year</h3>
+                                        <p className='text-gray-400'>{startup.FoundingYear}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Founder Name</h3>
+                                        <p className='text-gray-400'>{startup.FounderName}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Number of Employees</h3>
+                                        <p className='text-gray-400'>{startup.NumberOfEmployees}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Target Market</h3>
+                                        <p className='text-gray-400'>{startup.TargetMarket}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Current Stage</h3>
+                                        <p className='text-gray-400'>{startup.CurrentStage}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Key Features</h3>
+                                        <p className='text-gray-400'>{startup.KeyFeatures}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Investors</h3>
+                                        <p className='text-gray-400'>{startup.Inverstors}</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Evaluation</h3>
+                                        <p className='text-gray-400'>${startup.Evaluation}M</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold">Revenue</h3>
+                                        <p className='text-gray-400'>${startup.Revenue}K</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Tabs.Item>
+                        <Tabs.Item title="Funding" icon={MdDashboard}>
+                            <div className="mt-4">
+                                <h3 className="text-xl font-semibold mb-2">Cumulative Funding Raised Over Time ($)</h3>
+                                <ul>
+                                    {startup.FundingRaised.map((fund, index) => (
+                                        <li key={index}>
+                                            <div className="flex justify-between">
+                                                <span>{fund.CompanyName}</span>
+                                                <span>${fund.Amount}K</span>
+                                            </div>
+                                            <div className="flex justify-between text-gray-400">
+                                                <span>Equity Holds: {fund.EquityHolds}%</span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </Tabs.Item>
+                        <Tabs.Item title="Growth" icon={HiAdjustments}>
+                            <div className="mt-4">
+                                <h3 className="text-xl font-semibold mb-2">Growth Over Time</h3>
+                                {/* <ul>
+                                    {startup.Growth.map((growth, index) => (
+                                        <li key={index}>
+                                            <div className="flex justify-between">
+                                                <span>{growth.Year}</span>
+                                                <span>${growth.Revenue}K</span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul> */}
+                                <p className='text-gray-400' >Not mentioned!</p>
+                            </div>
+                        </Tabs.Item>
+                        <Tabs.Item title="Contacts" icon={HiClipboardList}>
+                            <div className="mt-4">
+                                <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
+                                <div>
+                                    <h4 className="font-semibold">Company Email</h4>
+                                    <p className='text-gray-400'>{startup.ContactInformation.CompanyEmail || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Phone</h4>
+                                    <p className='text-gray-400'>{startup.ContactInformation.Phone || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">LinkedIn Profile</h4>
+                                    <p className='text-gray-400'>{startup.ContactInformation.LinkedInProfile || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Company Website</h4>
+                                    <p className='text-gray-400'>{startup.ContactInformation.CompanyWebsite || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold">Office Address</h4>
+                                    <p className='text-gray-400'>{startup.ContactInformation.OfficeAddress || 'N/A'}</p>
+                                </div>
+                            </div>
+                        </Tabs.Item>
+                    </Tabs>
                 </div>
             </main>
             <Footer />

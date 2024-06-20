@@ -36,7 +36,7 @@ const Home = () => {
   const user = useSelector(state => state.auth.userData) || null;
   const posts = useSelector(state => state.posts.posts);
   const profile = useSelector(state => state.profile.profile) || null;
-  
+
   // UserData
   useEffect(() => {
     const newSocket = io('wss://yourstorybackend.onrender.com');
@@ -80,7 +80,8 @@ const Home = () => {
       fetchPosts();
       console.log("Home:: Posts fetched")
     }
-  }, [user, dispatch, posts.length]);
+  }, [dispatch, posts.length]);
+  // }, [user, dispatch, posts.length]);
 
   // Fetch profile
   useEffect(() => {
@@ -119,7 +120,7 @@ const Home = () => {
           <PostFeed />
         </div>
       </main>
-      <Footer /> 
+      <Footer />
     </div>
   );
 };

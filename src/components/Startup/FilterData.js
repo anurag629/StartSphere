@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import StartupCard from "./StartupCard";
 import { useSelector } from "react-redux";
 import { Button, Drawer } from "flowbite-react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faBars } from '@fortawesome/free-solid-svg-icons';
+import { FaFilter } from "react-icons/fa";
 
 function FilterData() {
   const allStartups = useSelector((state) => state.startups.startups);
@@ -100,7 +99,7 @@ function FilterData() {
       {!isSidebarOpen && (
         <div className="fixed top-24 left-4 z-50">
           <Button onClick={handleToggleSidebar}>
-            <FontAwesomeIcon icon={faFilter} size="lg" />
+            <FaFilter className="text-blue-500 size-7"/>
           </Button>
         </div>
       )}
@@ -108,7 +107,7 @@ function FilterData() {
         className="transition-transform duration-400 transform bg-gray-200 text-white"
       >
         <Drawer.Header title="Filter Options" />
-        <Drawer.Items className="bg-gray-900 text-white">
+        <Drawer.Items className="bg-gray-800 text-white">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
             <div className="mb-4">
               <label htmlFor="companyValuation" className="block font-bold mb-2">

@@ -48,7 +48,7 @@ const AllStartup = () => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-800">
       <Navbar />
-      <main className="flex-grow p-4 relative">
+      <main className="flex-grow p-4 px-8 relative">
         <FilterData />
       </main>
       <Footer />
