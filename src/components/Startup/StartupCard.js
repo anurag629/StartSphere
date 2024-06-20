@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import { Button, Card, Label, TextInput } from "flowbite-react";
 
 const StartupCard = ({ startup }) => {
   const {
@@ -20,46 +21,70 @@ const StartupCard = ({ startup }) => {
   } = startup;
 
   return (
-    <div className="bg-slate-700 p-6 rounded-lg shadow-md max-w-md mx-auto text-white">
-      <Link to={`/startups/${_id}`}>
-        <div className="flex items-center mb-4">
+    <div className="max-w-md mx-auto p-6">
+      <Card className="rounded-lg shadow-md">
+        <div className="flex flex-col items-center mb-4">
           <img
             src={Logo}
             alt={`${StartUpName} logo`}
-            className="w-16 h-16 rounded-full object-cover text-white"
+            className="h-36 w-fit object-contain rounded"
           />
-          <div className="ml-4">
-            <h3 className="text-2xl font-bold text-white">{StartUpName}</h3>
-            <p className="text-white">{FounderName}</p>
+          <h3 className="mt-3 text-2xl font-bold text-gray-900 dark:text-white">{StartUpName}</h3>
+          <p className="text-gray-700 dark:text-gray-400">{FounderName}</p>
+        </div>
+        <p className="text-gray-700 dark:text-gray-400 mb-4">
+          {CompanyDes.length > 150 ? `${CompanyDes.substring(0, 150)}... ` : CompanyDes}
+          {CompanyDes.length > 150 && (
+            <Link to={`/startups/${_id}`} className="text-blue-500 hover:underline">
+              see more
+            </Link>
+          )}
+        </p>
+        <div className="mb-4">
+          <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Details</h4>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label>Founded:</Label>
+              <TextInput readOnly type="text" value={FoundingYear} className="bg-slate-700 text-white" />
+            </div>
+            <div>
+              <Label>Employees:</Label>
+              <TextInput readOnly type="text" value={NumberOfEmployees} className="bg-slate-700 text-white" />
+            </div>
+            <div>
+              <Label>Target Market:</Label>
+              <TextInput readOnly type="text" value={TargetMarket} className="bg-slate-700 text-white" />
+            </div>
+            <div>
+              <Label>Current Stage:</Label>
+              <TextInput readOnly type="text" value={CurrentStage} className="bg-slate-700 text-white" />
+            </div>
+            <div>
+              <Label>Key Features:</Label>
+              <TextInput readOnly type="text" value={KeyFeatures} className="bg-slate-700 text-white" />
+            </div>
+            <div>
+              <Label>Investors:</Label>
+              <TextInput readOnly type="text" value={Inverstors} className="bg-slate-700 text-white" />
+            </div>
+            <div>
+              <Label>Evaluation:</Label>
+              <TextInput readOnly type="text" value={`$${Evaluation}M`} className="bg-slate-700 text-white" />
+            </div>
+            <div>
+              <Label>Revenue:</Label>
+              <TextInput readOnly type="text" value={`$${Revenue}M`} className="bg-slate-700 text-white" />
+            </div>
           </div>
         </div>
-        <p className="text-white mb-4">{CompanyDes}</p>
-        <div className="mb-4">
-          <h4 className="text-lg font-semibold text-white">Details</h4>
-          <p className="text-white">Founded: {FoundingYear}</p>
-          <p className="text-white">Employees: {NumberOfEmployees}</p>
-          <p className="text-white">Target Market: {TargetMarket}</p>
-          <p className="text-white">Current Stage: {CurrentStage}</p>
-          <p className="text-white">Key Features: {KeyFeatures}</p>
-          <p className="text-white">Investors: {Inverstors}</p>
-          <p className="text-white">Evaluation: ${Evaluation}M</p>
-          <p className="text-white">Revenue: ${Revenue}M</p>
-        </div>
-        <div className="mb-4">
-          <h4 className="text-lg font-semibold text-white">Funding Raised</h4>
-          {FundingRaised ? (
-            FundingRaised.map((fund, index) => (
-              <div key={index} className="text-white">
-                <p>Company: {fund.CompanyName}</p>
-                <p>Equity Holds: {fund.EquityHolds}%</p>
-                <p>Amount: ${fund.Amount}M</p>
-              </div>
-            ))
-          ) : (
-            <p className="text-white">No funding information available.</p>
-          )}
-        </div>
-      </Link>
+        <Link to={`/startups/${_id}`}>
+          <Button
+            className={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline bg-blue-500 hover:bg-blue-700 text-white`}
+          >
+            For More Details
+          </Button>
+        </Link>
+      </Card>
     </div>
   );
 };
