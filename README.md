@@ -12,7 +12,7 @@ A comprehensive platform designed to help emerging entrepreneurs navigate the st
 5. [📊 Project Details](#-project-details)
 6. [⚙️ Installation and Setup](#️-installation-and-setup)
 7. [💡 Usage](#-usage)
-8. [🖼️ Screenshots](#-screenshots)
+8. [🖼️ Screenshots](#%EF%B8%8F-screenshots)
 9. [📈 Impact Metrics](#-impact-metrics)
 10. [🤝 Contributing](#-contributing)
 11. [📜 License](#-license)
