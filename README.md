@@ -159,14 +159,14 @@ Here are some screenshots of the application to give you a visual overview:
    ![User Profile](./Screenshots/Profile.png)
 
 3. **📢 Feed with Posts, Comments, and Likes**  
-   ![Feed](./Screenshots/Feed.png)
+   ![Feed](./Screenshots/Feeds.png)
 
 4. **🏢 Startup Listings and Filters**  
-   ![Startup Listings](./Screenshots/Startups.png)  
-   ![Startup Filters](./Screenshots/StartupFilters.png)
+   ![Startup Listings](./Screenshots/StartUps.png)  
+   ![Startup Filters](./Screenshots/startup_filters.png)
 
 5. **🤝 My Friend List and Friend Suggestions**  
-   ![My Friend List](./Screenshots/FriendsList.png)  
+   ![My Friend List](./Screenshots/MyFriendList.png)  
    ![Friend Suggestions](./Screenshots/FriendSuggestions.png)
 
 6. **💬 Real-Time Chat**  
