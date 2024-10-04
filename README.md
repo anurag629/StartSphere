@@ -153,31 +153,31 @@ npm start
 Here are some screenshots of the application to give you a visual overview:
 
 1. **🔐 User Authentication (Sign Up / Log In Page)**  
-   ![User Authentication](./screenshots/Auth.png)
+   ![User Authentication](./Screenshots/Auth.png)
 
 2. **👤 User Profile (Create/Update Profile)**  
-   ![User Profile](./screenshots/Profile.png)
+   ![User Profile](./Screenshots/Profile.png)
 
 3. **📢 Feed with Posts, Comments, and Likes**  
-   ![Feed](./screenshots/Feed.png)
+   ![Feed](./Screenshots/Feed.png)
 
 4. **🏢 Startup Listings and Filters**  
-   ![Startup Listings](./screenshots/Startups.png)  
-   ![Startup Filters](./screenshots/StartupFilters.png)
+   ![Startup Listings](./Screenshots/Startups.png)  
+   ![Startup Filters](./Screenshots/StartupFilters.png)
 
 5. **🤝 My Friend List and Friend Suggestions**  
-   ![My Friend List](./screenshots/FriendsList.png)  
-   ![Friend Suggestions](./screenshots/FriendSuggestions.png)
+   ![My Friend List](./Screenshots/FriendsList.png)  
+   ![Friend Suggestions](./Screenshots/FriendSuggestions.png)
 
 6. **💬 Real-Time Chat**  
-   ![Chat](./screenshots/Chat.png)
+   ![Chat](./Screenshots/Chat.png)
 
 7. **🎫 Event Organizing Page**  
-   ![Event Organizing](./screenshots/Events.png)
+   ![Event Organizing](./Screenshots/Events.png)
 
 8. **📝 Article and Resource Sharing**  
-   ![Articles](./screenshots/Articles.png)  
-   ![Create Articles](./screenshots/CreateArticles.png)
+   ![Articles](./Screenshots/Articles.png)  
+   ![Create Articles](./Screenshots/CreateArticles.png)
 
 ---
 
